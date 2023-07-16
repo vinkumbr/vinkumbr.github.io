@@ -9,9 +9,9 @@ profile:
   image: Vinay_pic.JPG
   image_circular: true # crops the image to make it circular
   address: >
-    <p>L114 Batiment Lagrange</p>
-    <p>INRIA Sophia Antipolis</p>
-    <p>Valbonne, France</p>
+    <p>firstname.lastname[AT]inria.fr</p>
+    <p>firstname: vinay-kumar</p>
+    <p>lastname: bindiganavile-ramadas</p>
 
 news: true  # includes a list of news items
 latest_posts: true  # includes a list of the newest posts
