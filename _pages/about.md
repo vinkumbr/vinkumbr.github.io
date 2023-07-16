@@ -14,9 +14,9 @@ profile:
     <p class="text-nowrap">lastname: bindiganavile-ramadas</p>
 
 news: true  # includes a list of news items
-latest_posts: true  # includes a list of the newest posts
-selected_papers: true # includes a list of papers marked as "selected={true}"
-social: true  # includes social icons at the bottom of the page
+latest_posts: false  # includes a list of the newest posts
+selected_papers: false # includes a list of papers marked as "selected={true}"
+social: false  # includes social icons at the bottom of the page
 ---
 I am a post-doctoral researcher at [INRIA Sophia Antipolis - Méditerranée](https://www.inria.fr/fr/centre-inria-sophia-antipolis-mediterranee) working with [Konstantin Avrachenkov](https://www-sop.inria.fr/members/Konstantin.Avratchenkov/me.html) in the [NEO](https://team.inria.fr/neo/) team. I did my Ph.D. in the Department of ECE at the Indian Institute of Science under the guidance of [Navin Kashyap](https://ece.iisc.ac.in/~nkashyap/). My thesis was titled "***Probabilistic Forwarding of Coded Packets for Broadcasting over Networks***".
 
