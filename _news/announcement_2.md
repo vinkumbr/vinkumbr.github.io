@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Talk on ***Community detection on block models with geometric kernels*** at in INFORMS Applied Probability Society (APS) Conference, Nancy, France.  
+Talk on ***Community detection on block models with geometric kernels*** at the INFORMS Applied Probability Society (APS) Conference, Nancy, France.  
