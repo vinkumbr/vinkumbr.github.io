@@ -9,7 +9,7 @@ profile:
   image: Vinay_pic.JPG
   image_circular: true # crops the image to make it circular
   address: >
-    <p>L-114, Batiment Lagrange</p>
+    <p>L114 Batiment Lagrange</p>
     <p>INRIA Sophia Antipolis</p>
     <p>Valbonne, France</p>
 
