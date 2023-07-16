@@ -9,7 +9,7 @@ profile:
   image: Vinay_pic.JPG
   image_circular: true # crops the image to make it circular
   address: >
-    <p>fname[DOT]lname[AT]inria.fr</p>
+    <p>fname[DOT]lname[AT]inria[DOT]fr</p>
     <p>fname: vinay-kumar</p>
     <p class="text-nowrap">lname: bindiganavile-ramadas</p>
 
