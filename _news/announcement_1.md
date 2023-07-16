@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-A simple inline announcement.
+Paper on ***Spatial Queues with Nearest Neighbour Shifts*** accepted to the International Teletraffic Congress (ITC 35), Turin, Italy.

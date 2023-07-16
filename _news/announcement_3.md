@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-A simple inline announcement with Markdown emoji! :sparkles: :smile:
+Talk on Community detection and SDP formulation with the AROMATH team at INRIA.
