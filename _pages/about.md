@@ -11,7 +11,7 @@ profile:
   address: >
     <p>firstname.lastname[AT]inria.fr</p>
     <p>firstname: vinay-kumar</p>
-    <p>lastname: bindiganavile-ramadas</p>
+    <p class="text-nowrap">lastname: bindiganavile-ramadas</p>
 
 news: true  # includes a list of news items
 latest_posts: true  # includes a list of the newest posts
