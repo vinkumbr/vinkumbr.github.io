@@ -6,7 +6,7 @@ subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Moto. Etc.
 
 profile:
   align: right
-  image: prof_pic.jpg
+  image: Vinay_pic.jpg
   image_circular: false # crops the image to make it circular
   address: >
     <p>555 your office number</p>
@@ -18,9 +18,6 @@ latest_posts: true  # includes a list of the newest posts
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
-This is Vinay Kumar 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+I am a post-doctoral researcher at [INRIA Sophia Antipolis - Méditerranée](https://www.inria.fr/fr/centre-inria-sophia-antipolis-mediterranee) working with [Konstantin Avrachenkov](https://www-sop.inria.fr/members/Konstantin.Avratchenkov/me.html) in the [NEO](https://team.inria.fr/neo/) team. I did my Ph.D. in the Department of ECE at the Indian Institute of Science under the guidance of [Navin Kashyap](https://ece.iisc.ac.in/~nkashyap/). My thesis was titled "***Probabilistic Forwarding of Coded Packets for Broadcasting over Networks***".
 
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
-
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](http://fortawesome.github.io/Font-Awesome/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+Broadly, my research falls in the area of ***complex networks***. I am interested in problems that involve a graph structure and complex interactions between the network elements. My research goal is to propose and analyze robust mathematical models that capture different physical phenomena observed on practical networks.
