@@ -1,21 +1,18 @@
-"Adams":
-  - firstname: ["Edwin", "E.", "E. P.", "Edwin Plimpton"]
-    url: https://en.wikipedia.org/wiki/Edwin_Plimpton_Adams
+"Kashyap":
+  - firstname: ["Navin", "N."]
+    url: https://ece.iisc.ac.in/~nkashyap/
 
-"Podolsky":
-  - firstname: ["Boris", "B.", "B. Y.", "Boris Yakovlevich"]
-    url: https://en.wikipedia.org/wiki/Boris_Podolsky
+"Yogeshwaran":
+  - firstname: ["Dhandapani", "D."]
+    url: https://sites.google.com/site/yogeshwaranacademics/home
 
-"Rosen":
-  - firstname: ["Nathan", "N."]
-    url: https://en.wikipedia.org/wiki/Nathan_Rosen
+"Leskela":
+  - firstname: ["Lasse", "L."]
+    url: https://math.aalto.fi/~lleskela/
 
-"Bach": 
-  - firstname: ["Johann Sebastian", "J. S."]
-    url: https://en.wikipedia.org/wiki/Johann_Sebastian_Bach
-
-  - firstname: ["Carl Philipp Emanuel", "C. P. E."]
-    url: https://en.wikipedia.org/wiki/Carl_Philipp_Emanuel_Bach
+"Avrachenkov": 
+  - firstname: ["Konstantin", "K."]
+    url: https://www-sop.inria.fr/members/Konstantin.Avratchenkov/me.html
 
 "Przibram":
   - firstname: ["Karl"]
