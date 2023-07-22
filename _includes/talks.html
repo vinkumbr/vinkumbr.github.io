@@ -15,8 +15,10 @@
             <a class="news-title" href="{{ item.video }}">[Video]</a>
             {%- endif %}
             {% if item.slides %}
-            <a class="news-title" href="{{ item.slides }}">[Slides]</a>
+            <a href="{{ item.slides.pdf | prepend: '/assets/talk_slides/'| relative_url }}" class="btn btn-sm z-depth-0" role="button">PDF</a>
             {%- endif %}
+            <!--<a class="news-title" href="{{ item.slides }}">[Slides]</a>
+            {%- endif %}-->
           </td>
           <td> {{item.location}} </td>
         </tr>
