@@ -1,4 +1,5 @@
-<div class="news">
+<div class="talks">
+    {{ site.talks }}
     {% if site.talks != blank -%}
     {%- assign talks_size = site.talks | size -%}
     <div class="table-responsive" {% if include.limit and site.announcements.scrollable and talks_size > 3 %}style="max-height: 60vw"{% endif %}>
