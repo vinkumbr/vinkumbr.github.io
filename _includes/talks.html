@@ -10,10 +10,12 @@
           <td class="text-nowrap">
           {{ item.date | date: "%b %Y" }}</td>
           <td>
-            {% if item.inline -%}
-              {{ item.content | remove: '<p>' | remove: '</p>' | emojify }}
-            {%- else -%}
-              <a class="news-title" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+            {{ item.content | remove: '<p>' | remove: '</p>' | emojify }}
+            {% if item.video %}
+            <a class="news-title" href="{{ item.video }}">[Video]</a>
+            {%- endif %}
+            {% if item.slides %}
+            <a class="news-title" href="{{ item.slides }}">[Slides]</a>
             {%- endif %}
           </td>
           <td> {{item.location}} </td>
