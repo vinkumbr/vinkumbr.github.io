@@ -1,13 +1,17 @@
 ---
 layout: page
-title: submenus
+title: Research
 nav: true
-nav_order: 6
+nav_order: 1
 dropdown: true
+permalink: /overview/
 children: 
-    - title: publications
+    - title: Overview
+      permalink: /overview/
+    - title: divider
+    - title: Publications
       permalink: /publications/
     - title: divider
-    - title: projects
-      permalink: /projects/
+    - title: Presentations
+      permalink: /talks/
 ---
