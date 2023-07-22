@@ -12,6 +12,7 @@ nav_order: 1
   {% for user in site.data.talks.talk_titles %}
     <ul class="card-text font-weight-light list-group list-group-flush">
       <li class="list-group-item">{{ site.data.talks.talk_title: site.data.talks.talk_conf @site.data.talks.talk_venue }}</li>
-</ul>
+    </ul>
   {% endfor %}
 </div>
+{% endif %}
