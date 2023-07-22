@@ -1,0 +1,35 @@
+<div class="news">
+    {% if site.talks != blank -%}
+    {%- assign talks_size = site.talks | size -%}
+    <div class="table-responsive" {% if include.limit and site.announcements.scrollable and talks_size > 3 %}style="max-height: 60vw"{% endif %}>
+      <table class="table table-sm table-borderless">
+      {%- assign talks = site.talks | reverse -%}
+      {% assign talks_limit = talks_size %}
+      {% for item in talks limit: talks_limit %}
+        <tr>
+          <th scope="row" class="text-nowrap">{{ item.date | date: "%b %Y" }}</th>
+          <td>
+            {% if item.inline -%}
+              {{ item.content | remove: '<p>' | remove: '</p>' | emojify }}
+            {%- else -%}
+              <a class="news-title" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+            {%- endif %}
+          </td>
+        </tr>
+      {%- endfor %}
+      </table>
+    </div>
+  {%- else -%}
+    <p>No news so far...</p>
+  {%- endif %}
+  </div>
+
+{% if site.data.talks.talk_titles %}
+<div class="d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center">
+  {% for user in site.data.talks.talk_titles %}
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"><p class="font-weight-bold">{{ user }}</p> {{site.data.talks.talk_conf}},  {{site.data.talks.talk_venue }}</li>
+    </ul>
+  {% endfor %}
+</div>
+{% endif %}
