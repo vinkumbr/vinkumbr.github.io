@@ -12,13 +12,18 @@
           <td>
             {{ item.content | remove: '<p>' | remove: '</p>' | emojify }}
             {% if item.video %}
-            <a class="news-title" href="{{ item.video }}">[Video]</a>
-            {%- endif %}
+            <a class="news-title" class="btn btn-sm z-depth-0" role="button" href="{{ item.video }}">[Video]</a>
+            {% endif %}
+            {% if item.podcast %}
+            <a class="news-title" class="btn btn-sm z-depth-0" role="button" href="{{ item.podcast }}">[PODCAST]</a>
+            {% endif %}
             {% if item.slides %}
-            <a href="{{ item.slides.pdf | prepend: '/assets/talk_slides/'| relative_url }}" class="btn btn-sm z-depth-0" role="button">PDF</a>
-            {%- endif %}
-            <!--<a class="news-title" href="{{ item.slides }}">[Slides]</a>
-            {%- endif %}-->
+            {% if item.slides contains '://' %}
+            <a href="{{ item.slides }}" class="btn btn-sm z-depth-0" role="button">[Slides]</a>
+            {% else %}
+            <a href="{{ item.slides | prepend: '/assets/talk_slides/' | relative_url}}" class="btn btn-sm z-depth-0" role="button">[Slides]</a>
+            {% endif %}
+            {% endif %}
           </td>
           <td> {{item.location}} </td>
         </tr>
