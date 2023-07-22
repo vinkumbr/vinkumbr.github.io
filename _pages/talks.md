@@ -7,4 +7,4 @@ nav: false
 nav_order: 1
 ---
 <!-- _pages/talks.md -->
-{% include talks.html%}
+{% include talks.html -%}
