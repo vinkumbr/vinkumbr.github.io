@@ -1,12 +1,19 @@
 ---
 layout: page
-title: project 2
-description: a project with a background image
-img: assets/img/3.jpg
-importance: 2
-category: work
+title: Bheemboy / Coursereg
+description: 
+img: assets/img/12.jpg
+importance: 1
+category: iisc
+related_publications: einstein1956investigations, einstein1950meaning
 ---
+Coursereg is a webapp for managing course registrations at academic institutions. It takes into account the academic necessities of a student like registration, enrolling to courses etc. and also the faculty for course offering and approval. 
 
+Joint work with Arthi Ramaniam, Bhargava Srivatsa, Nihesh Rathod, Parimal Parag, Rajesh Sunderasan, Sagar Gubbi, Suman Panchal.
+
+Github repository : <a href="https://github.com/s-gv/bheemboy.git">https://github.com/s-gv/bheemboy.git</a>
+
+<!--
 Every project has a beautiful feature showcase page.
 It's easy to include images in a flexible 3-column grid format.
 Make your photos 1/3, 2/3, or full width.
@@ -78,3 +85,4 @@ Here's the code for the last row of images above:
 </div>
 ```
 {% endraw %}
+-->
