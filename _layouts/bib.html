@@ -136,6 +136,9 @@
 
           <!-- Links/Buttons -->
           <div class="links">
+          {% if entry.status %}
+          <button type="button" class="btn btn-warning btn-sm">Accepted</button>
+          {% endif %}
           {%- if entry.abstract %}
             <a class="abstract btn btn-sm z-depth-0" role="button">Abs</a>
           {%- endif %}
