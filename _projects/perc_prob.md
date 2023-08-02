@@ -7,6 +7,7 @@ importance: 1
 category: iisc
 related_publications: 
 ---
+***Acknowledgements***- Department of Electrical Communication Engineering (ECE) and Computational Data Sciences (CDS) and the Center for Networked Intelligence (CNI), Indian Institute of Science (IISc), Bengaluru, India.
 ### Site percolation on $$\mathbb{Z}^2$$ 
 
 The below plot is obtained by finding the largest cluster of open sites on a $$501 \times 501$$ square grid.
