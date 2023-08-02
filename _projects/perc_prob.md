@@ -5,7 +5,7 @@ description:
 img: assets/img/12.jpg
 importance: 1
 category: iisc
-related_publications: 
+related_publications: 9246296, vinay_kumar_analysis_2023
 ---
 ***Acknowledgements***- Department of Electrical Communication Engineering (ECE) and Computational Data Sciences (CDS) and the Center for Networked Intelligence (CNI), Indian Institute of Science (IISc), Bengaluru, India.
 ### Site percolation on $$\mathbb{Z}^2$$ 
