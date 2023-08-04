@@ -16,7 +16,7 @@ theta_lambda = data["theta_lambda"]
 theta_lambda_random = data["theta_lambda_random"]
 theta_lambda_251 = data["theta_lambda_251"]
 
-df={'lambda':lbda,'theta_lambda':theta_lambda}
+df={'lambda':lbda,'theta_lambda':theta_lambda_251}
 fig = px.line(df,x='lambda',y='theta_lambda',hover_name='theta_lambda')
 fig.update_layout(
     title=r'$\text{Percolation probability on a }RGG(\lambda,1)$',
