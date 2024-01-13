@@ -9,9 +9,9 @@ profile:
   image: Vinay_alt.JPG
   image_circular: false # crops the image to make it circular
   address: >
-    <p>fname[DOT]lname[AT]inria.fr</p>
-    <p>fname: vinay-kumar</p>
-    <p class="text-nowrap">lname: bindiganavile-ramadas</p>
+    <p>fname[DOT]lname[AT]tue.nl</p>
+    <p>fname: v.k</p>
+    <p class="text-nowrap">lname: bindiganavile.ramadas</p>
 
 news: true  # includes a list of news items
 latest_posts: false  # includes a list of the newest posts
