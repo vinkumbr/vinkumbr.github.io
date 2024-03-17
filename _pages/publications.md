@@ -2,7 +2,7 @@
 layout: page
 permalink: /publications/
 title: Publications
-description: publications by categories in reversed chronological order.
+description: In reverse chronological order. Copyright resides with the publisher in case of published articles. In all other cases, it resides with the author(s).
 nav: false
 nav_order: 1
 ---

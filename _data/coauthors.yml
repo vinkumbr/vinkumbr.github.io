@@ -14,18 +14,10 @@
   - firstname: ["Konstantin", "K."]
     url: https://www-sop.inria.fr/members/Konstantin.Avratchenkov/me.html
 
-"Przibram":
-  - firstname: ["Karl"]
-    url: https://link.springer.com/article/10.1007/s00016-019-00242-z
+"Litvak":
+  - firstname: ["Nelly", "N."]
+    url: https://www.tue.nl/en/research/researchers/nelly-litvak
 
-"Schrödinger":
-  - firstname: ["Erwin"]
-    url: https://en.wikipedia.org/wiki/Erwin_Schr%C3%B6dinger
-
-"Lorentz":
-  - firstname: ["Hendrik Antoon"]
-    url: https://en.wikipedia.org/wiki/Hendrik_Lorentz
-
-"Planck":
-  - firstname: ["Max"]
-    url: https://en.wikipedia.org/wiki/Max_Planck
+"Hofstad":
+  - firstname: ["Remco van der","R. van der"]
+    url: https://www.win.tue.nl/~rhofstad/
