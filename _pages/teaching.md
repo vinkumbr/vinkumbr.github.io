@@ -2,10 +2,13 @@
 layout: page
 permalink: /teaching/
 title: Teaching
-description: I have been a teaching assistant for the following courses
+description: I have taught the following courses
 nav: true
 nav_order: 2
 ---
+### Instructor
+***Probability and Statistics for CS*** in Feb-Apr 2024 offered with Noela M&#252;ller (lecturer), Fabian Burghart, Florian Henning and Nelly Litvak (other instructors) at TU Eindhoven.
+### Teaching Assistant
 ***Error Control Coding*** in Sep-Jan 2021 offered by Navin Kashyap and P.Vijay Kumar in the Department of ECE, IISc, Bengaluru.
 
 ***Error Control Coding*** in Aug-Dec 2020 and Aug-Dec 2018 offered by Navin Kashyap in the Department of ECE, IISc, Bengaluru.
