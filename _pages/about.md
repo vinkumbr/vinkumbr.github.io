@@ -6,7 +6,7 @@ permalink: /
 
 profile:
   align: right
-  image: Vinay_alt.JPG
+  image: Vinay_bro.JPG
   image_circular: false # crops the image to make it circular
   address: >
     <p>fname[DOT]lname[AT]tue.nl</p>
