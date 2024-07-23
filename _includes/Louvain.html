@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script>
+  const data = {'nodes': [{'id': 0,
+   'group': 0,
+   'order': 21,
+   'initialCluster': 0,
+   'x': 32.19221076622863,
+   'y': 34.48678471165234},
+  {'id': 1,
+   'group': 0,
+   'order': 10,
+   'initialCluster': 1,
+   'x': -6.1515561138972785,
+   'y': -10.1285634919675},
+  {'id': 2,
+   'group': 0,
+   'order': 1,
+   'initialCluster': 2,
+   'x': 15.491474876800062,
+   'y': -13.555222112285028},
+  {'id': 3,
+   'group': 0,
+   'order': 20,
+   'initialCluster': 3,
+   'x': 1.4906050892116223,
+   'y': 18.42130751923823},
+  {'id': 4,
+   'group': 0,
+   'order': 16,
+   'initialCluster': 4,
+   'x': 41.75878772336577,
+   'y': 10.033856782310371},
+  {'id': 5,
+   'group': 0,
+   'order': 0,
+   'initialCluster': 5,
+   'x': -6.977649318231367,
+   'y': 48.57716547013567},
+  {'id': 6,
+   'group': 0,
+   'order': 14,
+   'initialCluster': 6,
+   'x': 26.017050623597537,
+   'y': 13.475841646795791},
+  {'id': 7,
+   'group': 0,
+   'order': 18,
+   'initialCluster': 7,
+   'x': 22.107554350373732,
+   'y': 27.436492180256565},
+  {'id': 8,
+   'group': 0,
+   'order': 13,
+   'initialCluster': 8,
+   'x': 10.128487168616306,
+   'y': 17.200914396000154},
+  {'id': 9,
+   'group': 0,
+   'order': 17,
+   'initialCluster': 9,
+   'x': 26.935904667147746,
+   'y': 45.164893731638415},
+  {'id': 10,
+   'group': 0,
+   'order': 11,
+   'initialCluster': 10,
+   'x': 52.66156276816757,
+   'y': -5.414392633532861},
+  {'id': 11,
+   'group': 0,
+   'order': 4,
+   'initialCluster': 11,
+   'x': 30.379716838377043,
+   'y': -8.315862014998904},
+  {'id': 12,
+   'group': 1,
+   'order': 24,
+   'initialCluster': 12,
+   'x': -44.22607864989677,
+   'y': -1.8123549920973303},
+  {'id': 13,
+   'group': 1,
+   'order': 12,
+   'initialCluster': 13,
+   'x': -100.0,
+   'y': 29.990566596042072},
+  {'id': 14,
+   'group': 1,
+   'order': 9,
+   'initialCluster': 14,
+   'x': -92.82890037071941,
+   'y': 8.050082508038193},
+  {'id': 15,
+   'group': 1,
+   'order': 23,
+   'initialCluster': 15,
+   'x': -64.63035386160647,
+   'y': 32.75398940871948},
+  {'id': 16,
+   'group': 1,
+   'order': 3,
+   'initialCluster': 16,
+   'x': -79.87562866069578,
+   'y': 19.322816123059},
+  {'id': 17,
+   'group': 1,
+   'order': 6,
+   'initialCluster': 17,
+   'x': -45.227664431004065,
+   'y': 24.334547732914267},
+  {'id': 18,
+   'group': 1,
+   'order': 15,
+   'initialCluster': 18,
+   'x': -62.83437740370065,
+   'y': 7.885717758511039},
+  {'id': 19,
+   'group': 2,
+   'order': 2,
+   'initialCluster': 19,
+   'x': 53.964393274533315,
+   'y': -40.10727061666903},
+  {'id': 20,
+   'group': 2,
+   'order': 19,
+   'initialCluster': 20,
+   'x': 35.29923015276506,
+   'y': -36.59095663636292},
+  {'id': 21,
+   'group': 2,
+   'order': 22,
+   'initialCluster': 21,
+   'x': 35.47554027713922,
+   'y': -51.45862300566153},
+  {'id': 22,
+   'group': 2,
+   'order': 5,
+   'initialCluster': 22,
+   'x': 45.25453715124429,
+   'y': -71.85914248367955},
+  {'id': 23,
+   'group': 2,
+   'order': 8,
+   'initialCluster': 23,
+   'x': 57.93398077246316,
+   'y': -53.643835715499634},
+  {'id': 24,
+   'group': 2,
+   'order': 7,
+   'initialCluster': 24,
+   'x': 15.66117230972049,
+   'y': -44.248752862557204}],
+ 'links': [{'source': 0, 'target': 3},
+  {'source': 0, 'target': 4},
+  {'source': 0, 'target': 5},
+  {'source': 0, 'target': 6},
+  {'source': 0, 'target': 8},
+  {'source': 0, 'target': 9},
+  {'source': 0, 'target': 10},
+  {'source': 1, 'target': 2},
+  {'source': 1, 'target': 3},
+  {'source': 1, 'target': 6},
+  {'source': 1, 'target': 11},
+  {'source': 1, 'target': 18},
+  {'source': 1, 'target': 20},
+  {'source': 2, 'target': 6},
+  {'source': 2, 'target': 7},
+  {'source': 2, 'target': 8},
+  {'source': 2, 'target': 21},
+  {'source': 3, 'target': 4},
+  {'source': 3, 'target': 6},
+  {'source': 3, 'target': 8},
+  {'source': 3, 'target': 9},
+  {'source': 3, 'target': 11},
+  {'source': 3, 'target': 12},
+  {'source': 4, 'target': 7},
+  {'source': 4, 'target': 8},
+  {'source': 4, 'target': 10},
+  {'source': 4, 'target': 11},
+  {'source': 4, 'target': 20},
+  {'source': 5, 'target': 7},
+  {'source': 5, 'target': 8},
+  {'source': 5, 'target': 9},
+  {'source': 5, 'target': 15},
+  {'source': 6, 'target': 7},
+  {'source': 6, 'target': 8},
+  {'source': 6, 'target': 9},
+  {'source': 6, 'target': 10},
+  {'source': 7, 'target': 8},
+  {'source': 7, 'target': 9},
+  {'source': 7, 'target': 11},
+  {'source': 8, 'target': 10},
+  {'source': 8, 'target': 17},
+  {'source': 9, 'target': 11},
+  {'source': 10, 'target': 11},
+  {'source': 10, 'target': 19},
+  {'source': 10, 'target': 23},
+  {'source': 11, 'target': 19},
+  {'source': 11, 'target': 21},
+  {'source': 11, 'target': 24},
+  {'source': 12, 'target': 14},
+  {'source': 12, 'target': 15},
+  {'source': 12, 'target': 16},
+  {'source': 12, 'target': 17},
+  {'source': 12, 'target': 18},
+  {'source': 12, 'target': 24},
+  {'source': 13, 'target': 14},
+  {'source': 13, 'target': 15},
+  {'source': 13, 'target': 16},
+  {'source': 13, 'target': 18},
+  {'source': 14, 'target': 15},
+  {'source': 14, 'target': 16},
+  {'source': 15, 'target': 16},
+  {'source': 15, 'target': 17},
+  {'source': 15, 'target': 18},
+  {'source': 16, 'target': 17},
+  {'source': 16, 'target': 18},
+  {'source': 17, 'target': 18},
+  {'source': 19, 'target': 20},
+  {'source': 19, 'target': 21},
+  {'source': 19, 'target': 22},
+  {'source': 19, 'target': 23},
+  {'source': 19, 'target': 24},
+  {'source': 20, 'target': 21},
+  {'source': 20, 'target': 22},
+  {'source': 20, 'target': 23},
+  {'source': 20, 'target': 24},
+  {'source': 21, 'target': 22},
+  {'source': 21, 'target': 23},
+  {'source': 21, 'target': 24},
+  {'source': 22, 'target': 23},
+  {'source': 22, 'target': 24},
+  {'source': 23, 'target': 24}],
+ 'moves': [{'type': 'RelabelNode', 'node': 5, 'newlabel': 9},
+  {'type': 'RelabelNode', 'node': 2, 'newlabel': 1},
+  {'type': 'RelabelNode', 'node': 19, 'newlabel': 22},
+  {'type': 'RelabelNode', 'node': 16, 'newlabel': 13},
+  {'type': 'RelabelNode', 'node': 11, 'newlabel': 21},
+  {'type': 'RelabelNode', 'node': 22, 'newlabel': 23},
+  {'type': 'RelabelNode', 'node': 17, 'newlabel': 18},
+  {'type': 'RelabelNode', 'node': 24, 'newlabel': 23},
+  {'type': 'RelabelNode', 'node': 14, 'newlabel': 13},
+  {'type': 'RelabelNode', 'node': 10, 'newlabel': 22},
+  {'type': 'RelabelNode', 'node': 8, 'newlabel': 7},
+  {'type': 'RelabelNode', 'node': 6, 'newlabel': 1},
+  {'type': 'RelabelNode', 'node': 18, 'newlabel': 13},
+  {'type': 'RelabelNode', 'node': 4, 'newlabel': 7},
+  {'type': 'RelabelNode', 'node': 7, 'newlabel': 9},
+  {'type': 'RelabelNode', 'node': 20, 'newlabel': 23},
+  {'type': 'RelabelNode', 'node': 3, 'newlabel': 7},
+  {'type': 'RelabelNode', 'node': 0, 'newlabel': 7},
+  {'type': 'RelabelNode', 'node': 21, 'newlabel': 23},
+  {'type': 'RelabelNode', 'node': 15, 'newlabel': 13},
+  {'type': 'RelabelNode', 'node': 12, 'newlabel': 13},
+  {'type': 'RelabelNode', 'node': 19, 'newlabel': 23},
+  {'type': 'RelabelNode', 'node': 11, 'newlabel': 9},
+  {'type': 'RelabelNode', 'node': 17, 'newlabel': 13},
+  {'type': 'RelabelNode', 'node': 10, 'newlabel': 7},
+  {'type': 'RelabelNode', 'node': 6, 'newlabel': 7},
+  {'type': 'Aggregate'},
+  {'type': 'RelabelNode', 'node': 9, 'newlabel': 7},
+  {'type': 'RelabelNode', 'node': 1, 'newlabel': 7},
+  {'type': 'Aggregate'},
+  {'type': 'Flatten'}]};
+</script>
+
+<style>
+  .arrow-target {
+    marker-end: url(#arrow)
+  }
+  .arrow-source {
+    marker-start: url(#arrow)
+  }
+</style>
+
+<body>
+	<div class="container">
+		<div id="container" class="row"></div>
+		<div class="row d-flex flex-row">
+			<div id="startButton" class="p-1 btn btn-primary"><span class="fa-stack"><i class="fas fa-undo fa-xl"></i></span></div>
+			<div id="moveButton" class="p-1 btn btn-primary"><span class="fa-stack"><i class="fa-solid fa-forward fa-xl"></i></span></div>
+			<div class="p-2 ml-auto"><p id="modularityDisplay" class="text-center" style="margin-bottom: 0px; margin-right: 10px;"></p></div>
+		</div>
+	</div>
+  
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script>
+    function chart() {
+      // Specify the dimensions of the chart.
+      const width = 400;
+      const height = 300;
+
+      var moveIndex = 0;
+
+
+      // The force simulation mutates links and nodes, so create a copy
+      // so that re-evaluating this cell produces the same result.
+      const links = data.links.map(d => ({...d}));
+      const nodes = data.nodes.map(d => ({...d}));
+	  const degrees = {};
+	  links.forEach(l => {
+		if (!degrees[l.source])
+			degrees[l.source] = 0;
+		if (!degrees[l.target])
+			degrees[l.target] = 0;
+		degrees[l.source]++;
+		degrees[l.target]++;
+	  });
+	  const usedLabels = [... new Set(data.moves.filter(move => move.type=='RelabelNode').map(move => move.newlabel))];
+
+      
+      // Specify the color scale.
+      const color = d3.scaleOrdinal(d3.schemePaired);
+      const colors = ['red','orange','yellow','green','blue','indigo','violet'];
+      const clusterColorScale = d3.scaleLinear().domain(colors.map((c,i) => (i / (colors.length-1)) * (nodes.length - 1) )).range(colors);
+      const cluster2color = {};
+
+	  // This object stores for each (super)node a list of lowest-level node objects.
+      var id2nodes = {};
+	  // This object stores the clustering as a partition of the current (super)nodes
+      var clustering = {};
+      nodes.forEach(n => {
+        id2nodes[n['id']] = [n];
+        clustering[n['id']] = [n['id']];
+        //cluster2color[n['id']] = clusterColorScale(n.order);
+      });
+	  usedLabels.forEach((c,i) => {
+		cluster2color[c] = color(i);
+	  });
+
+      
+
+      // Create a simulation with several forces.
+      const simulation = d3.forceSimulation(nodes)
+          .force("link", d3.forceLink(links).id(d => d.id))
+          .force("charge", d3.forceManyBody())
+          .force("center", d3.forceCenter(width / 2, height / 2))
+          .on("tick", ticked);
+
+      // Create the SVG container.
+      const svg = d3.create("svg")
+          .attr("width", width)
+          .attr("height", height)
+          .attr("viewBox", [0, 0, width, height])
+          .attr("style", "max-width: 100%; height: auto;");
+
+      const defs = svg.append("defs");
+      // When a node gets relabeled, we show an arrowhead on the edge.
+      // We want this arrowhead to be colored, but this requires us to define an
+      // arrowhead in every possible color (https://stackoverflow.com/questions/16664584/changing-an-svg-markers-color-css)
+      nodes.forEach(n => {
+        var i = n.id;
+        defs.append("marker")
+          .attr("id","arrow"+i)
+          .attr("viewBox","-19 -5 10 10")
+          .attr("refX",0)
+          .attr("refY",0)
+          .attr('stroke', cluster2color[i])
+          .attr('fill', cluster2color[i])
+          .attr("markerWidth",4)
+          .attr("markerHeight",4)
+          .attr("orient","auto-start-reverse")
+          .append("path")
+          .attr("d", "M-19,-5L-9,0L-19,5")
+          .attr("class","arrowHead");
+      });
+      
+
+      // Add a line for each link, and a circle for each node.
+      const link = svg.append("g")
+          .attr("stroke", "#999")
+          .attr("stroke-opacity", 0.6)
+        .selectAll()
+        .data(links)
+        .join("line")
+          .attr("stroke-width", 1.5);
+
+      const node = svg.append("g")
+          .attr("stroke", "#fff")
+          .attr("stroke-width", 1.5)
+        .selectAll()
+        .data(nodes)
+        .join("circle")
+          .attr("r", 7)
+          .attr("fill", 'black');
+
+      node.append("title")
+          .text(d => d.id);
+
+      // Add a drag behavior.
+      node.call(d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
+
+      // Set the position attributes of links and nodes each time the simulation ticks.
+      function ticked() {
+        link
+            .attr("x1", d => d.source.x)
+            .attr("y1", d => d.source.y)
+            .attr("x2", d => d.target.x)
+            .attr("y2", d => d.target.y);
+
+        node
+            .attr("cx", d => d.x)
+            .attr("cy", d => d.y);
+      }
+
+      // Reheat the simulation when drag starts, and fix the subject position.
+      function dragstarted(event) {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        event.subject.fx = event.subject.x;
+        event.subject.fy = event.subject.y;
+      }
+
+      // Update the subject (dragged node) position during drag.
+      function dragged(event) {
+        event.subject.fx = event.x;
+        event.subject.fy = event.y;
+      }
+	  
+	  function flatClustering(clustering,id2nodes) {
+		  return Object.entries(clustering).reduce((o,entry) => ({
+			...o,
+			[entry[0]]: entry[1].reduce((o,i) => o.concat(id2nodes[i]),[])
+		  }),{});
+	  }
+
+      // Restore the target alpha so the simulation cools after dragging ends.
+      // Unfix the subject position now that it’s no longer being dragged.
+      function dragended(event) {
+        if (!event.active) simulation.alphaTarget(0);
+        // Freeze after dragging
+        //event.subject.fx = null;
+        //event.subject.fy = null;
+      }
+
+      function clusterSize(c) {
+        return clustering[c].reduce((cumulative,i) => {
+			if (!id2nodes[i]) {
+				console.log('clusterSize: '+i+' not in id2nodes');
+				//console.log(id2nodes);
+				//console.log(clustering);
+			}
+			return cumulative+id2nodes[i].length
+		},0)
+      }
+
+      function recolor() {
+        node.attr('fill', d => (clusterSize(d.cluster)==1 ? 'gray' : cluster2color[d.cluster]));
+        link.attr('stroke', l => {
+          if (l.source.cluster == l.target.cluster) {
+            return cluster2color[l.source.cluster];
+          }
+          return 'gray';
+        });
+      }
+	  
+      function modularity() {
+		const sumDegSqd = Object.values(degrees).reduce((s,d) => s+d**2,0);
+		const m = data.links.length;
+		const communityDegSums = {};
+		nodes.forEach(n => {
+			if (!communityDegSums[n.cluster])
+				communityDegSums[n.cluster] = 0;
+			communityDegSums[n.cluster]+=degrees[n.id];
+		});
+		var communityDegSqd=Object.values(communityDegSums).reduce((s,d) => s+d**2,0);
+		var linksInside = links.filter(l => l.source.cluster==l.target.cluster).length;
+		return linksInside/m-(communityDegSqd-sumDegSqd)/(4*m**2);
+	  }
+
+      function initialize() {
+        // Initialize singleton clusters
+        moveIndex=0;
+        clustering = {};
+		id2nodes = {};
+        nodes.forEach(n => {
+		  // We convert the initial cluster to a string, because it will be used
+		  // as a key and keys will otherwise be automatically converted to strings 
+		  var label = n['initialCluster']+'';
+          n['cluster'] = label;
+		  id2nodes[n['id']] = [n];
+		  if (!clustering[label]) {
+			clustering[label] = []
+		  }
+          clustering[label].push(n['id']);
+        });
+        recolor();
+	    // Remove arrowheads
+	    link.style('marker-end','initial').style('marker-start','initial');
+		document.getElementById('modularityDisplay').innerHTML = '';
+      }
+
+      function move() {
+        if (moveIndex>=data.moves.length) 
+          return;
+        const action = data.moves[moveIndex++];
+        if (action.type=="RelabelNode") {
+          var oldlabel = id2nodes[action.node][0]['cluster'];
+          var ids = id2nodes[action.node].map(n => n.id);
+		  // Set arrowheads
+          link.style('marker-end', l => ((ids.includes(l.source.id) && l.target.cluster==action.newlabel) ? 'url(#arrow'+action.newlabel+')' : 'initial'));
+          link.style('marker-start', l => ((ids.includes(l.target.id) && l.source.cluster==action.newlabel) ? 'url(#arrow'+action.newlabel+')' : 'initial'));
+          if (!clustering[action.newlabel]) {
+            clustering[action.newlabel] = [];
+          }
+		  //console.log(action);
+		  //console.log(id2nodes[action.node]);
+		  //console.log(clustering[action.newlabel]);
+		  // Update clustering
+          clustering[oldlabel].splice(clustering[oldlabel].indexOf(action.node), 1);
+		  clustering[action.newlabel].push(action.node);
+		  // Update clusters of nodes
+          id2nodes[action.node].forEach(n => {
+            n.cluster = action.newlabel;
+          });
+		  
+          if (clustering[oldlabel].length==0) {
+            delete clustering[oldlabel];
+          }
+        } else if (action.type=="Aggregate") {
+          // Simply copy clustering to id2nodes and retrieve the objects
+          id2nodes = flatClustering(clustering,id2nodes);
+		  //console.log('keys:')
+          Object.keys(clustering).forEach(k => {
+            clustering[k] = [k];
+          });
+		  // Remove arrowheads
+		  link.style('marker-end','initial').style('marker-start','initial');
+
+        } else {
+          // Flatten
+        }
+        recolor();
+		document.getElementById('modularityDisplay').innerHTML = 'Modularity: '+modularity().toFixed(3);
+      }
+
+      // When this cell is re-run, stop the previous simulation. (This doesn’t
+      // really matter since the target alpha is zero and the simulation will
+      // stop naturally, but it’s a good practice.)
+      //invalidation.then(() => simulation.stop());
+	  initialize();
+
+      return {
+        'svg': svg.node(), 
+        'graph': data,
+        'node': node,
+        'link': link,
+        'start': initialize,
+        'move': move
+      };
+    }
+    const animation = chart();
+    document.getElementById('container').appendChild(animation.svg);
+    document.getElementById('startButton').onclick = animation.start;
+    document.getElementById('moveButton').onclick = animation.move;
+  </script>
+</body>
