@@ -2,7 +2,7 @@
 layout: page
 title: Percolation probability 
 description: 
-img: assets/img/12.jpg
+img: assets/img/perc_plot.png
 importance: 1
 category: iisc
 related_publications: 9246296, vinay_kumar_analysis_2023

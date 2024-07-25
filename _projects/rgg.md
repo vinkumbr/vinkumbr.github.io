@@ -2,7 +2,7 @@
 layout: page
 title: Random geometric graph
 description: 
-img: assets/img/louvain.png
+img: assets/img/rgg.png
 importance: 6
 category: iisc
 related_publications: 
