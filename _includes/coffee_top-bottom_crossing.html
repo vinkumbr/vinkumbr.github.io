@@ -1,0 +1,180 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coffee Percolation Animation</title>
+  <style>
+    /* Add some basic styling to center the SVG on the page */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      background-color: #000000;
+    }
+    svg {
+      border: 3px solid rgb(255, 255, 255);
+    }
+  </style>
+</head>
+<body>
+
+<!-- The SVG container will be injected here by JavaScript -->
+<div id="coffee-top-bottom"></div>
+
+<script>
+    function createCoffeePercolationrandom() {
+      const width = 400;
+      const height = 400;
+      const cols = 10;
+      const rows = 9;
+      const p = 0.65;
+      const offset = 10;
+      const radius = width / (cols * 2);
+      const spacing = radius * 1.88;
+      const stripWidth = width * 0.95;
+      const stripOffset = (width - stripWidth) / 2;
+  
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("width", width);
+      svg.setAttribute("height", height);
+  
+
+      // Add light blue strip on top
+    const topStrip = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    topStrip.setAttribute("x", stripOffset);
+    topStrip.setAttribute("width", stripWidth);
+    topStrip.setAttribute("height", radius * 1.5);
+    topStrip.setAttribute("fill", "lightblue");
+    svg.appendChild(topStrip);
+
+    // Add thin yellow strip at the bottom
+    const bottomStrip = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    bottomStrip.setAttribute("x", stripOffset);
+    bottomStrip.setAttribute("y", height - radius * 1.5);
+    bottomStrip.setAttribute("width", stripWidth);
+    bottomStrip.setAttribute("height", radius * 1.5);
+    bottomStrip.setAttribute("fill", "yellow");
+    svg.appendChild(bottomStrip);
+
+    // Add black strips on either side
+    const leftBlackStrip = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    leftBlackStrip.setAttribute("width", stripOffset);
+    leftBlackStrip.setAttribute("height", height);
+    leftBlackStrip.setAttribute("fill", "black");
+    svg.appendChild(leftBlackStrip);
+
+    const rightBlackStrip = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    rightBlackStrip.setAttribute("x", width - stripOffset);
+    rightBlackStrip.setAttribute("width", stripOffset);
+    rightBlackStrip.setAttribute("height", height);
+    rightBlackStrip.setAttribute("fill", "black");
+    svg.appendChild(rightBlackStrip);
+    
+      const circles = [];
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const x = c * spacing + radius + offset + (r % 2 === 0 ? 0 : radius);
+          const y = r * spacing + radius;
+          const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          circle.setAttribute("cx", x);
+          circle.setAttribute("cy", y + radius * 1.5);
+          circle.setAttribute("r", radius);
+          circle.setAttribute("stroke", "#6F4E37");
+          circle.setAttribute("stroke-width", "2");
+          circle.setAttribute("fill", "white");
+          svg.appendChild(circle);
+          circles.push({ circle, r, c });
+        }
+      }
+  
+      async function animateFilling() {
+        let filledCircles = new Set();
+  
+        for (let c = 0; c < cols; c++) {
+          const index = c;
+          if (Math.random() < p) { 
+            circles[index].circle.setAttribute("fill", "#6F4E37");
+            filledCircles.add(`0-${c}`);
+          }
+        }
+  
+        for (let r = 1; r < rows; r++) {
+          await new Promise(resolve => setTimeout(resolve, 500));
+          let newFilledCircles = new Set();
+  
+          for (let c = 0; c < cols; c++) {
+            const index = r * cols + c;
+            const aboveLeft = `${r - 1}-${c - 1}`;
+            const aboveRight = `${r - 1}-${c + 1}`;
+            const directlyAbove = `${r - 1}-${c}`;
+  
+            if (r % 2 === 0) {
+              if (filledCircles.has(aboveLeft) || filledCircles.has(directlyAbove)) {
+                if (Math.random() < p) {
+                  circles[index].circle.setAttribute("fill", "#6F4E37");
+                  newFilledCircles.add(`${r}-${c}`);
+                }
+              }
+            } else {
+              if (filledCircles.has(aboveRight) || filledCircles.has(directlyAbove)) {
+                if (Math.random() < p) {
+                  circles[index].circle.setAttribute("fill", "#6F4E37");
+                  newFilledCircles.add(`${r}-${c}`);
+                }
+              }
+            }
+          }
+          filledCircles = new Set([...filledCircles, ...newFilledCircles]);
+        }
+  
+        highlightPercolationPath(filledCircles);
+  
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        circles.forEach(({ circle }) => circle.setAttribute("fill", "white"));
+  
+        animateFilling();
+      }
+  
+      function highlightPercolationPath(filledCircles) {
+        const queue = [...Array(cols).keys()]
+          .filter(c => filledCircles.has(`0-${c}`))
+          .map(c => ({ r: 0, c }));
+  
+        const visited = new Set();
+        const path = new Set();
+  
+        while (queue.length) {
+          const { r, c } = queue.shift();
+          if (visited.has(`${r}-${c}`)) continue;
+          visited.add(`${r}-${c}`);
+          path.add(`${r}-${c}`);
+  
+          if (r === rows - 1) {
+            path.forEach(key => {
+              const [row, col] = key.split('-').map(Number);
+              const index = row * cols + col;
+              circles[index].circle.setAttribute("fill", "blue");
+            });
+            return;
+          }
+  
+          const neighbors = [`${r + 1}-${c}`, `${r + 1}-${c - 1}`, `${r + 1}-${c + 1}`];
+          neighbors.forEach(n => {
+            if (filledCircles.has(n) && !visited.has(n)) {
+              queue.push({ r: r + 1, c: Number(n.split('-')[1]) });
+            }
+          });
+        }
+      }
+  
+      animateFilling();
+      return svg;
+    }
+  
+    document.getElementById('coffee-top-bottom').appendChild(createCoffeePercolationrandom());
+  </script>
+  
+
+</body>
+</html>

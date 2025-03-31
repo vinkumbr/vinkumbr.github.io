@@ -1,0 +1,165 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coffee Percolation Animation</title>
+  <style>
+    /* Add some basic styling to center the SVG on the page */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      background-color: #000000;
+    }
+    svg {
+      border: 3px solid rgb(255, 255, 255);
+    }
+  </style>
+</head>
+<body>
+
+<!-- The SVG container will be injected here by JavaScript -->
+<div id="coffee-animation"></div>
+
+<script>
+  // The updated JavaScript code for the coffee percolation animation
+  function createCoffeePercolationrandom() {
+    const width = 400;
+    const height = 400;
+    const cols = 10;
+    const rows = 9;
+    const p = 0.65;
+    const offset = 10;
+    const radius = width / (cols * 2); // Adjusted so circles just touch
+    const spacing = radius * 1.88;
+    const stripWidth = width * 0.95; // Restrict blue and yellow strips within black strips
+    const stripOffset = (width - stripWidth) / 2;
+
+    // Create the SVG container
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("width", width);
+    svg.setAttribute("height", height);
+
+    // Add light blue strip on top
+    const topStrip = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    topStrip.setAttribute("x", stripOffset);
+    topStrip.setAttribute("width", stripWidth);
+    topStrip.setAttribute("height", radius * 1.5);
+    topStrip.setAttribute("fill", "lightblue");
+    svg.appendChild(topStrip);
+
+    const circles = [];
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const x = c * spacing + radius + offset + (r % 2 === 0 ? 0 : radius);
+        const y = r * spacing + radius;
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+
+        circle.setAttribute("cx", x);
+        circle.setAttribute("cy", y + radius * 1.5); // Adjust for strip
+        circle.setAttribute("r", radius);
+        circle.setAttribute("stroke", "#6F4E37");
+        circle.setAttribute("stroke-width", "2");
+        circle.setAttribute("fill", "white");
+
+        svg.appendChild(circle);
+        circles.push({ circle, r, c }); // Store circle with its row and column
+      }
+    }
+
+    // Add thin yellow strip at the bottom
+    const bottomStrip = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    bottomStrip.setAttribute("x", stripOffset);
+    bottomStrip.setAttribute("y", height - radius * 1.5);
+    bottomStrip.setAttribute("width", stripWidth);
+    bottomStrip.setAttribute("height", radius * 1.5);
+    bottomStrip.setAttribute("fill", "yellow");
+    svg.appendChild(bottomStrip);
+
+    // Add black strips on either side
+    const leftBlackStrip = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    leftBlackStrip.setAttribute("width", stripOffset);
+    leftBlackStrip.setAttribute("height", height);
+    leftBlackStrip.setAttribute("fill", "black");
+    svg.appendChild(leftBlackStrip);
+
+    const rightBlackStrip = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    rightBlackStrip.setAttribute("x", width - stripOffset);
+    rightBlackStrip.setAttribute("width", stripOffset);
+    rightBlackStrip.setAttribute("height", height);
+    rightBlackStrip.setAttribute("fill", "black");
+    svg.appendChild(rightBlackStrip);
+
+    async function animateFilling() {
+      let filledCircles = []; // To keep track of filled circles in each row
+
+      // First row: Fill with probability p 
+      for (let c = 0; c < cols; c++) {
+        const index = c; // First row (r = 0)
+        if (Math.random() < p) { // 60% chance to fill the circle
+          circles[index].circle.setAttribute("fill", "#6F4E37");
+          filledCircles.push({ r: 0, c }); // Track filled circle in the first row
+        }
+      }
+
+      // Subsequent rows: Check the two circles above for each circle and fill with probability p 
+      for (let r = 1; r < rows; r++) {
+        await new Promise(resolve => setTimeout(resolve, 500)); // Observable built-in delay
+        const newFilledCircles = []; // For the current row
+
+        for (let c = 0; c < cols; c++) {
+          const index = r * cols + c;
+
+          // Check if any of the two circles above it are filled (vertically or diagonally)
+          const aboveLeft = (r - 1) * cols + (c - 1); // Top-left diagonal (if c > 0)
+          const aboveRight = (r - 1) * cols + (c + 1); // Top-right diagonal (if c < cols-1)
+          const directlyAbove = (r - 1) * cols + c; // Directly above
+
+          if (r % 2 === 0) {
+            if (
+              (c > 0 && circles[aboveLeft] && circles[aboveLeft].circle.getAttribute("fill") === "#6F4E37") || // Top-left filled
+              circles[directlyAbove].circle.getAttribute("fill") === "#6F4E37" // Directly above filled
+            ) {
+              if (Math.random() < p) { // 60% chance to fill the circle
+                circles[index].circle.setAttribute("fill", "#6F4E37");
+                newFilledCircles.push({ r, c }); // Track filled circle in the current row
+              }
+            }
+          } else {
+            if (
+              (c < cols - 1 && circles[aboveRight] && circles[aboveRight].circle.getAttribute("fill") === "#6F4E37") || // Top-right filled
+              circles[directlyAbove].circle.getAttribute("fill") === "#6F4E37" // Directly above filled
+            ) {
+              if (Math.random() < p) { // 60% chance to fill the circle
+                circles[index].circle.setAttribute("fill", "#6F4E37");
+                newFilledCircles.push({ r, c }); // Track filled circle in the current row
+              }
+            }
+          }
+        }
+
+        filledCircles = [...filledCircles, ...newFilledCircles];
+      }
+
+      // After the animation finishes, reset
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Pause before resetting
+      circles.forEach(({ circle }) => circle.setAttribute("fill", "white"));
+
+      // Call animateFilling again to repeat the animation
+      animateFilling();
+    }
+
+    // Start the animation loop
+    animateFilling();
+
+    return svg;
+  }
+
+  // Append the generated SVG to the DOM
+  document.getElementById('coffee-animation').appendChild(createCoffeePercolationrandom());
+</script>
+
+</body>
+</html>
