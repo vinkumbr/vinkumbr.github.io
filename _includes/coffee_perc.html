@@ -10,10 +10,9 @@
       justify-content: center;
       align-items: center;
       margin: 0;
-      background-color: #000000;
     }
     svg {
-      border: 3px solid rgb(255, 255, 255);
+      border: 10px solid rgb(255, 255, 255);
     }
   </style>
 </head>
@@ -36,10 +35,9 @@
     const stripWidth = width * 0.95; // Restrict blue and yellow strips within black strips
     const stripOffset = (width - stripWidth) / 2;
 
-    // Create the SVG container
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.setAttribute("width", width);
-    svg.setAttribute("height", height);
+      svg.setAttribute("width", width+radius*1.5);
+      svg.setAttribute("height", height);
 
     // Add light blue strip on top
     const topStrip = document.createElementNS("http://www.w3.org/2000/svg", "rect");
@@ -80,14 +78,14 @@
 
     // Add black strips on either side
     const leftBlackStrip = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    leftBlackStrip.setAttribute("width", stripOffset);
+    leftBlackStrip.setAttribute("width", radius * 1.3);
     leftBlackStrip.setAttribute("height", height);
     leftBlackStrip.setAttribute("fill", "black");
     svg.appendChild(leftBlackStrip);
 
     const rightBlackStrip = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    rightBlackStrip.setAttribute("x", width - stripOffset);
-    rightBlackStrip.setAttribute("width", stripOffset);
+    rightBlackStrip.setAttribute("x", width-0.5*radius);
+    rightBlackStrip.setAttribute("width", radius * 1.2);
     rightBlackStrip.setAttribute("height", height);
     rightBlackStrip.setAttribute("fill", "black");
     svg.appendChild(rightBlackStrip);
