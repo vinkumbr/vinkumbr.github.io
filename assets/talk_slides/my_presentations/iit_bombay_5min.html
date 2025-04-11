@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Community detection on geometric graphs</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/night.css" id="theme">
+		<link rel="stylesheet" href="../dist/addons/envs.css" id="envs">
+		<style type="text/css" media="screen">
+			.slides section.has-dark-background,
+			.slides section.has-dark-background h2 {
+				color: #fff;
+			}
+			.slides section.has-light-background,
+			.slides section.has-light-background h2 {
+				color: #222;
+			}
+		</style>
+		<style>
+			.container{
+				display: flex;
+			}
+			.col{
+				flex: 1;
+			}
+			</style>
+			<style>
+				canvas {
+					border: 1px solid rgb(247, 245, 245);
+				}
+			</style>
+			<!--Styles for text-->
+			<style>
+			.small {
+				font-size: 25px;
+			  }
+			.medium {
+			font-size: 35px;
+			}
+			</style>
+			<style>
+				.circle {
+					width: 50px; /* Adjust size */
+					height: 50px; /* Adjust size */
+					border-radius: 50%;
+					border: 4px solid #3498db;
+					background-color: transparent; /* Circle color */
+					position: absolute;
+					top: 50%; /* Adjust vertical position */
+					left: 50%; /* Adjust horizontal position */
+					transform: translate(-50%, -50%);
+				}
+			</style>
+			<style>
+				.line-height-adjust {
+					line-height: 0.8;
+				}
+			</style>
+	</head>
+
+    <body>
+
+		<div class="reveal">
+
+			<div class="slides">
+
+				<section>
+					<h3  style="margin-top: 2cm;">Brief Introduction</h3>
+					<h4 id="yellow_heading"  style="margin-top: 3cm;">B. R. Vinay Kumar</h4>
+					<p id="small" style="margin-top: 3cm;">Indian Institute of Technology-Bombay<br>January, 2025<br>Mumbai, India</psmall>
+				</section>
+				
+
+				<section data-auto-animate>
+					<h3>Research Interests</h3>
+					<div class="small">
+					<h4>Capture real-world phenomena using ideas from random graphs and network science.</h4>
+					<div class="container">
+						<div class="col small">
+						<video data-fragment-index="1" data-autoplay loop src="./Images/Beginning.mp4" height="200"></video><h4>Wireless networks</h4></div>
+						<div class="col small">
+						<img data-fragment-index="1" src="./Images/facebook.jpg" height="200" style="margin-top: 0px; margin-bottom: 0px;"/><h4>Social networks</h4></div>
+						<div class="col small">
+						<img data-fragment-index="1" src="./Images/Belgian_phone_network.jpg" height="200" width="90%" style="margin-top: 0px;margin-bottom: 0px;"/><h4>Data science</h4></div>
+						</div>
+					<br>
+						<ul>
+						<li class="fragment" data-fragment-index="2"><span id="springgreen">Geometric graphs</span>? Vertices are embedded in a metric space and edges depend on the distance between nodes.</li>
+						<li class="fragment" data-fragment-index="2">Presence of short edges and abundance of triangles.</li>
+					</ul>
+					<br><br>
+					<div class="fragment">
+					<h4 id="yellow">Questions?</h4>
+					<ol><li>How does the network structure affect processes or information on the network?</li>
+						<li>Can local algorithms help to solve a global problem? </li>
+						<li>Does geometry help in solving a global problem efficiently?</li></ol>
+				</div></div>
+				</section>
+
+
+                <section>
+                    <h3>Research Profile</h3>
+                    <div class="container" style="display: flex; gap: 0px; margin: 0px;">
+                        <!-- First Column -->
+                        <div class="col" style="flex: 2;">
+                            <ol>
+                                <li class="small fragment" data-fragment-index="1" style="color: palegoldenrod;">Probabilistic broadcast with coded packets </li>
+                                <div class="small fragment" data-fragment-index="1">
+                                    <ul style="padding-left: 0px;">
+                                        <li>Proposed and analysed a probabilistic forwarding mechanism with coded packets.</li>
+                                        <li>Counterintuitive result: Using additional coded packets can reduce energy consumption.</li>
+                                    </ul>
+                                </div>
+								<div class=" line-height-adjust"><br></div>
+                                <div class="fragment"data-fragment-index="2">
+                                <li class="small" style="color:palegoldenrod;" >Community detection on geometric graphs</li>
+                                <ul style="padding-left: 0px;">
+                                    <li class="small">Conditions when no algorithm can recover the communities.</li>
+                                    <li class="small">Linear-time local algorithm for community recovery.</li>
+                                </ul>
+                                </div>
+								<div class=" line-height-adjust"><br></div>
+                                <div class="fragment"data-fragment-index="4">
+                                <li class="small" style="color: palegoldenrod;" >Community detection on hypergraphs</li>
+                                <ul style="padding-left: 0px;">
+                                    <li class="small">Proposed a semi-definite algorithm for recovering communities using the similarity matrix.</li>
+                                </ul>
+                            </div>
+							<div class=" line-height-adjust"><br></div>
+                            <div class="fragment"data-fragment-index="5">
+                                <li class="small" style="color: palegoldenrod;" data-fragment-index="4">Spatial queues</li>
+                                <ul style="padding-left: 0px;" data-fragment-index="5">
+                                    <li class="small">Analysed nearest neighbour dynamics in a queueing setting.</li>
+                                    <li class="small">Characterized the fraction of overloaded servers for queues that are spatially distributed.</li>
+                                </ul>
+                            </div>
+                            </ol>
+                        </div>
+                        
+                        <!-- Second Column -->
+                        <div class="col" style="flex: 1;">
+                            <video class="fragment" data-fragment-index="1" data-autoplay loop src="./Images/Beginning.mp4" height="200"></video>
+                            <div class="r-stack">
+                                <img class="fragment" data-fragment-index="2" src="./Images/ERG_edges.png" width = "200" height="200"/>
+                                <img class="fragment"
+                                data-fragment-index="3" src="./Images/ERG_problem.png" width = "200" height="200"/>
+                            </div>
+                            <img class="fragment" data-fragment-index="5" src="./Images/evcs_nn.png" width = "360" height="200"/>
+                        </div>
+                    </div>
+                </section>
+
+				<section class="small">
+					<h3>List of Publications</h3>
+					<div style="font-size: 22px;">
+					<ul style="list-style-type:none;">
+						<h4 id="paleturquoise" style="margin-bottom: 0px;">Preprint</h4>
+<ul style="margin-top: 0px;">
+<li>
+	K. Avrachenkov, <span style="color: palegoldenrod">B. R. Vinay Kumar</span>,  and L. Leskelä, 
+	"<i>Community Detection on Block Models with Geometric Kernels</i>", 
+	Online:<a href="https://arxiv.org/abs/2403.02802"> https://arxiv.org/abs/2403.02802</a>.
+</li>
+</ul>
+
+<h4 id="paleturquoise" style="margin-bottom: 0px;">Journal</h4>
+<ul>
+<li>
+	<span style="color: palegoldenrod">B. R. Vinay Kumar</span> and L. Leskelä, 
+	"<i>Spatial Queues with Nearest Neighbour Shifts</i>", 
+	<em><span style="color: coral;">Performance Evaluation</span></em>, p.102448, Oct 2024.
+</li>
+<li>
+	<span style="color: palegoldenrod">B. R. Vinay Kumar</span>, N. Kashyap and D. Yogeshwaran, 
+	"<i>An Analysis of Probabilistic Forwarding of Coded Packets on Random Geometric Graphs</i>", 
+	<em><span style="color: coral;">Performance Evaluation</span></em>, p.102343, Feb 2023.
+</li>
+<li>
+	<span style="color: palegoldenrod">B. R. Vinay Kumar</span> and N. Kashyap, 
+	"<i>Probabilistic Forwarding of Coded Packets on Networks</i>", 
+	<em><span style="color: coral;">IEEE/ACM Transactions on Networking</span></em>, vol. 29, no. 1, pp. 234 - 247, 2021.
+</li>
+</ul>
+
+<h4 id="paleturquoise" style="margin-bottom: 0px;">Conference proceedings</h4>
+<ul>
+<li>
+	<span style="color: palegoldenrod">B. R. Vinay Kumar</span>, 
+	"<i>Spatial Queues with Nearest Neighbour Shifts</i>", 
+	in Proc. <em>International Teletraffic Congress (<span style="color: coral;">ITC 35</span>)</em>, Turin, Oct 3-5, 2023.
+</li>
+<li>
+	K. Alaluusua, K. Avrachenkov, <span style="color: palegoldenrod">B. R. Vinay Kumar</span>, and L. Leskelä, 
+	"<i>Multilayer Hypergraph Clustering using the Aggregate Similarity Matrix</i>", 
+	<em>18th Workshop on Algorithms and Models for the Web Graph (<span style="color: coral;">WAW 2023</span>)</em>, Toronto, May 23-26, 2023.
+</li>
+<li>
+	<span style="color: palegoldenrod">B. R. Vinay Kumar</span>, N. Kashyap, D. Yogeshwaran, 
+	"<i>An Analysis of Probabilistic Forwarding of Coded Packets on Random Geometric Graphs</i>", 
+	in <em>Proc. 19th International Symposium on Modeling and Optimization in Mobile, Ad hoc, and Wireless Networks (<span style="color: coral;">WiOpt 2021</span>)</em>, Oct 8-11, 2021.
+</li>
+<li>
+	<span style="color: palegoldenrod">B. R. Vinay Kumar</span>, N. Kashyap, 
+	"<i>Probabilistic Forwarding of Coded Packets on Networks</i>", 
+	in <em>Proc. IEEE International Symposium on Information Theory (<span style="color: coral;">ISIT 2019</span>)</em>, Paris, Jul 7-12, 2019.
+</li>
+<li>
+	<span style="color: palegoldenrod">B. R. Vinay Kumar</span>, R. Antony and N. Kashyap, 
+	"<i>The Effect of Introducing Redundancy in a Probabilistic Forwarding Protocol</i>", 
+	in <em>Proc. 2018 National Conference on Communications (<span style="color: coral;">NCC 2018</span>)</em>, IIT-Hyderabad, Feb 25-28, 2018.
+</li>
+</ul>		
+					  </ul>  
+					</div>
+				</section>
+
+                <section>
+					<h3>Research Interests</h3>
+					<div class="small">
+					<ul><li id="springgreen">Community detection</li>
+						<ul class="small"><li>Geometric graphs</li><li>Inhomogeneous graphs</li><li>Hypergraphs</li></ul>
+						<br>
+						<li id="springgreen">Spatial queues</li><ul class="small"><li>Load balancing</li><li>Spatial distribution of overloaded servers</li></ul>
+						<br>
+					<li class="fragment" data-fragment-index="1" id="paleturquoise">Statistical inference on random graphs</li>
+					<br>
+					<li class="fragment" data-fragment-index="1" id="paleturquoise">Theoretical validation for observations in network science</li>
+				</ul>
+				</div>
+				<br>
+				<div class="small fragment">
+					<h4 id="yellow">Questions?</h4>
+					<ol><li>How does the network structure affect processes or information on the network?</li>
+						<li>Can local algorithms help to solve a global problem? </li>
+						<li>Does geometry help in solving a global problem efficiently?</li></ol>
+				</div>
+				</section>
+
+
+<section>
+    <h3>Teaching Profile</h3>
+	<div class="small">
+    <ul><li id="paleturquoise">Teaching assistant / Instructor</li>
+    <ol><li>Error Correcting Codes - Dept. of ECE @ IISc</li>
+        <li>Probability Models - Dept. of Mathematics @ IISc</li>
+    <li>Probability and Statistics for Computer Science - Dept. of M&CS @TU/e</li>
+    <li>Probability and Statistics for Mechanical Engineers - Dept. of M&CS @TU/e</li></ol>
+	<br>
+    <li id="paleturquoise">Lecturer</li>  <ol><li>Network Statistics - Dept. of M&CS @TU/e</li></ol>
+	<br>
+	<li class="fragment" data-fragment-index="2"><span id="paleturquoise">Courses @ IIT-B</span> </li>
+	<ol class="fragment small" data-fragment-index="2">
+		<li><strong>Graphs and Networks</strong>: graph terminologies, connectivity, adjacency and Laplacian matrices, spectral properties, trees,  spanning trees, directed graphs, graph algorithms</li>
+		<li><strong>Network Statistics</strong>: random graph models, network motifs, community detection, link prediction, contagion processes on networks, spectral graph theory</li><li><strong>Network Science</strong>: small-world networks, hubs, directed and weighted networks, clustering, multilayer networks, hypergraph models, SIR models</li>
+	</ol>
+	<br>
+	<li class="fragment"><span  id = "paleturquoise">Teaching methodology</span>: explanatory videos, online workbooks, competency based grading</li>
+    </ul>
+</div>
+</section>
+<section>
+	<div  style="text-align: center;">
+		<br><br><br><br><br>
+		<span id="springgreen">Thank you.</span>
+</div>
+</section>            </div>
+		</div>
+
+<script src="../dist/reveal.js"></script>
+<script src="../plugin/math/math.js"></script>
+<script>
+	Reveal.initialize({
+		history: true,
+		transition: 'linear',
+
+		mathjax2: {
+			config: 'TeX-AMS_HTML-full',
+			TeX: {
+				Macros: {
+					R: '\\mathbb{R}',
+					set: [ '\\left\\{#1 \\; ; \\; #2\\right\\}', 2 ]
+				}
+			}
+		},
+
+		// There are three typesetters available
+		// RevealMath.MathJax2 (default)
+		// RevealMath.MathJax3
+		// RevealMath.KaTeX
+		//
+		// More info at https://revealjs.com/math/
+		plugins: [ RevealMath.MathJax2 ]
+	});
+</script>
+<script>
+	const myHeading = document.getElementById("yellow_heading");
+	myHeading.style.color = "#e7ad52";
+</script>
+<!-- Resources -->
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+<script src="../dist/addons/maps2.js"></script>
+	</body>
+</html>

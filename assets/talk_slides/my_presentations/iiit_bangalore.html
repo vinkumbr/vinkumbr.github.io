@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Community detection on geometric graphs</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/night.css" id="theme">
+		<link rel="stylesheet" href="../dist/addons/envs.css" id="envs">
+		<style type="text/css" media="screen">
+			.slides section.has-dark-background,
+			.slides section.has-dark-background h2 {
+				color: #fff;
+			}
+			.slides section.has-light-background,
+			.slides section.has-light-background h2 {
+				color: #222;
+			}
+		</style>
+		<style>
+			.container{
+				display: flex;
+			}
+			.col{
+				flex: 1;
+			}
+			</style>
+			<style>
+				canvas {
+					border: 1px solid rgb(247, 245, 245);
+				}
+			</style>
+			<!--Styles for text-->
+			<style>
+			.small {
+				font-size: 25px;
+			  }
+			.medium {
+			font-size: 35px;
+			}
+			</style>
+	</head>
+
+    <body>
+
+		<div class="reveal">
+
+			<div class="slides">
+
+				<!-- <section>
+					<h3  style="margin-top: 2cm;">Community detection on geometric graphs</h3>
+					<p id = "subheading"> A local-to-global perspective</p>
+					<h4 id="yellow_heading"  style="margin-top: 3cm;">B. R. Vinay Kumar</h4>
+					<p id="small" style="margin-top: 3cm;">Indian Institute of Technology-Bombay<br>August 19, 2024<br>Mumbai, India</psmall>
+				</section> -->
+				<section>
+					<h3  style="margin-top: 2cm;">Research presentation</h3>
+					<h4 id="yellow_heading"  style="margin-top: 5cm;">B. R. Vinay Kumar</h4>
+					<p id="small" style="margin-top: 3cm;">International Institute of Information Technology-Bangalore<br>November 25, 2024</psmall>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Background</h3>
+					<div class="small">
+						<h4 class="fragment" data-fragment-index="0">Capture real-world phenomena using ideas from random graphs and network science.</h4>
+						<img class="fragment" style="margin-top: 0; margin-bottom: 0;" data-fragment-index="1" src="./Images/city_mobile_network.gif" width = "32%" height="200"/>
+						<!--<img class="fragment" style="margin-top: 0; margin-bottom: 0;" data-fragment-index="1" src="./Images/Smart-Cities-GIF-01.gif" width = "33%" height="200"/>-->
+						<video class="fragment" style="margin-top: 0; margin-bottom: 0;" data-fragment-index="1" data-autoplay loop src="./Images/Beginning.mp4" width="33%" height="200"></video>
+						<h4 class="fragment" data-fragment-index="1">Wireless networks</h4>
+						<img class="fragment" style="margin-top: 0; margin-bottom: 0;" data-fragment-index="2" src="./Images/facebook.jpg" width = "32%" height="200"/>
+						<!--<img class="fragment" style="margin-top: 0; margin-bottom: 0;" data-fragment-index="2" src="./Images/airports-network.gif" width = "33%" height="200"/>-->
+						<img class="fragment" style="margin-top: 0; margin-bottom: 0;" data-fragment-index="2" data-autoplay loop src="./Images/Belgian_phone_network.jpg" width="32%" height="200">
+						<h4 class="fragment" data-fragment-index="2">Social networks &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;  Data science</h4>
+				</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Background</h3>
+					<div class="small">
+					<h4>Capture real-world phenomena using ideas from random graphs and network science.</h4>
+					<div class="container">
+						<div class="col small">
+						<video data-fragment-index="1" data-autoplay loop src="./Images/Beginning.mp4" height="200"></video><h4>Wireless networks</h4></div>
+						<div class="col small">
+						<img data-fragment-index="1" src="./Images/facebook.jpg" height="200" style="margin-top: 0px; margin-bottom: 0px;"/><h4>Social networks</h4></div>
+						<div class="col small">
+						<img data-fragment-index="1" src="./Images/Belgian_phone_network.jpg" height="200" width="90%" style="margin-top: 0px;margin-bottom: 0px;"/><h4>Data science</h4></div>
+						</div>
+					<br>
+						<ul>
+						<li><span id="springgreen">Geometric graphs</span>? Vertices are embedded in a metric space and edges depend on the distance between nodes.</li>
+						<li>Presence of short edges and abundance of triangles.</li>
+					</ul>
+					<br><br>
+					<div class="fragment">
+					<h4 id="yellow">Questions?</h4>
+					<ol><li>How does the network structure affect processes or information on the network?</li>
+						<li>Can local algorithms help to solve a global problem? </li>
+						<li>Does geometry help in solving a global problem efficiently?</li></ol>
+				</div></div>
+				</section>
+
+
+				<section>
+					<h3>Probabilistic broadcast with coded packets</h3>
+					<div class="container">
+						<div class="col small fragment" data-fragment-index="1" style="position: absolute; top: 150px; left: -600px;">
+					<div class="vid_container">
+						<video id="glass" width="1000" height="500" controls>
+							<source src="./Images/ProbForwarding.mp4" type="video/mp4">
+						</video><br>\(\hspace{15cm} k\) data packets
+					</div></div>
+					<div class="col small fragment" data-fragment-index="3" style="position: absolute; top: 150px; left: -180px;">
+					<div class="vid_container">
+						<video id="glass2" width="1000" height="500" controls loop>
+							<source src="./Images/ProbFwdingCoding.mp4#t=0,22" type="video/mp4">
+						</video><br>\(\hspace{15cm} n\) coded packets
+					</div></div>
+					<div class="col small" style="position: absolute; top: 150px; left: 790px;">
+						<ul><li class="fragment" data-fragment-index="1"><span id="gold">Goal</span> Broadcast the $k$ data packets from the source with minimum transmissions.</li>
+							<li class="fragment" data-fragment-index="3"><span id="gold">Coding scheme</span>: Any node receiving at least $k$ out of the $n$ coded packets is able to recover the $k$ data packets from the source. </li>
+						</ul>
+						<img class="fragment" data-fragment-index="4" src="./Images/opt_fram_prob.png" width="320" height="200">
+					</div>
+					</div>
+				</section>
+
+				<section>
+					<h3>Spatial Queues</h3>
+					<div class="container">
+						<div class="col small">
+					<div class="r-stack">
+						<div class="fragment" data-fragment-index="0"><div class="fragment fade-out" data-fragment-index="2">
+						<img  src="./Images/evcs_dist.png" width = "600" height="600" style="margin-top: 0px; margin-bottom: 0px;"/></div></div>
+						<img class="fragment" data-fragment-index="2" src="./Images/evcs_nn.png" width = "600" height="500"/>
+						</div>
+					</div>
+					<div class="col small" style="text-align: left;">
+						<br>
+						<p id="tiny" class="fragment"  data-fragment-index="1"> J. Kang, C. Kan, and Z. Lin, “Are Electric Vehicles Reshaping the City? An Investigation of the Clustering of Electric Vehicle Owners’ Dwellings and Their Interaction with Urban Spaces,” ISPRS International Journal of Geo-Information, vol. 10, no. 5, May 2021.
+						</p><br>
+						<div class="fragment" data-fragment-index="3">
+						<h4>Model</h4>
+						<ul><li>Charging stations distributed as a PPP</li><br>
+						<li>Customers follow nearest neighbour mobility strategies</li><br>
+						<li>Characterize overloaded servers in the system</li><br>
+						<li>Spatial distribution of overloaded servers?</li><br></ul>
+					</div></div>
+					</div>
+				</section>
+
+				<section>
+					<h3>Community detection</h3>
+
+					<div class="r-stack">
+						<img data-fragment-index="0" src="./Images/communities_coauthorship.png" width = "800" height="600"/>
+						<img class="fragment" data-fragment-index="1" src="./Images/erg_model.png" width = "800" height="600"/>
+						<img class="fragment" data-fragment-index="3" src="./Images/same_community_edges.png" width = "800" height="600"/>
+						<img class="fragment" data-fragment-index="3" src="./Images/erg_model_diff_comm_edges.png" width = "800" height="600"/>
+						</div>
+					<!-- <div class="container">
+						<div class="col-3" style="height: 400px; width:800px; position: absolute; top: 80px; left: 5%;">
+					<div id="chartdiv"></div></div> -->
+					<!--<div><img src="../dist/addons/Images/communities_coauthorship.png"></div>
+					<div class="col">-->
+					<!-- <div data-id="1" style="background: red; position: absolute; top: 600px; left: 5%; width: 15px; height: 15px;"> </div> <h6 class="small", style = "position: absolute; top: 590px; left: 10%; height: 10px;">Operations research</h6>
+					<div data-id="1" style="background: #77ff00; position: absolute; top: 600px; left: 60%; width: 15px; height: 15px;"> </div> <h6 class="small", style = "position: absolute; top: 590px; left: 65%; height: 10px;">Within communities</h6>
+					<div data-id="2" style="background: rgb(255, 221, 69); position: absolute; top: 670px; left: 5%; width: 15px; height: 15px;"></div>
+					<h6 class="small", style = "position: absolute; top: 660px; left: 10%; height: 10px;">Game theory</h6>
+					<div data-id="2" style="background: #0000ff; position: absolute; top: 670px; left: 60%; width: 15px; height: 15px;"></div>
+					<h6 class="small", style = "position: absolute; top: 660px; left: 65%; height: 10px;">Across communities</h6> -->
+				</section>
+<!--
+				<section data-auto-animate>
+					<h3>Model</h3>
+					<div class="container">
+
+						<div class="col">
+							<canvas id="poissonCanvas" width="400" height="400"></canvas>
+							<script src="poisson.js"></script>
+							<p class="small">\[S=\left[\frac{-1}{2},\frac{1}{2}\right]^d\]</p>
+							<div class="r-stack">
+							<img  data-fragment-index="0" src="./Images/RGG_nodes.png" width = "400" height="400"/>
+							<img class = "fragment current-visible" data-fragment-index="0" src="./Images/ERG_nodes.png" width = "400" height="400"/>
+							<img class = "fragment" src="./Images/ERG_edges.png" width = "400" height="400"/>
+							</div>
+							
+						</div>
+						
+						<div class="col small">
+							<ul>
+								<li>Poisson point process  <span id="orange">\(\mathbb{X}\)</span>\(= \{X_u\}_{u=1}^N\) of intensity \(\lambda n\)</li>
+								<br>
+								<li class="fragment">Two communities: <span id="mauve">\(	\sigma\)</span>\( = \sigma(1),\cdots,\sigma(N)\) 
+								<br>
+								\(\mathbf{P}(\sigma(u)=\)<span id="red	">\(+1\)</span>\()=\mathbf{P}(\sigma(u)=\)<span id="yellow">\(-1\)</span>\() = \frac{1}{2}\)
+								</li>
+								<br>
+								<li class="fragment">Connection functions: $$f_{in}(\cdot), f_{out}(\cdot): S \times S \to [0,1]$$</li>
+							</ul>
+							<p class="fragment">Given locations <span id="orange">\(\mathbb{X}\)</span> and communities <span id="mauve">\(	\sigma\)</span></p>
+							<p class="fragment">\[A_{uv}=1 \begin{cases}\text{w.p. } f_{in }(X_u,X_v) & \text{if 	} \sigma(u)=\sigma(v)\\
+							\text{w.p. } f_{out}(X_u,X_v) & \text{if } \sigma(u) \neq \sigma(v)  \end{cases}\]</p>
+						</div>
+						
+						</div>
+				</section>
+			-->
+
+
+				<section>
+					<h3>Model</h3>
+					<div class="container">
+
+						<div class="col">
+							<!--<canvas id="poissonCanvas" width="400" height="400"></canvas>
+							<script src="poisson.js"></script>-->
+							<p class="small">Torus \( S=\left[\frac{-1}{2},\frac{1}{2}\right]^d\)</p>
+							<div class="r-stack">
+							<img data-fragment-index="0" src="./Images/RGG_nodes.png" width = "400" height="400"/>
+							<img class="fragment" data-fragment-index="1" src="./Images/ERG_nodes.png" width = "400" height="400"/>
+							<img class="fragment" data-fragment-index="3" src="./Images/ERG_edges.png" width = "400" height="400"/>
+							</div>
+							<p class="fragment small" data-fragment-index="4"><span id="springgreen">\(\mathbf{A}\)</span> \(\sim GKBM(\lambda,n,d,p,q,\varphi)\)</p>
+						</div>
+						
+						<div class="col small">
+							<ul>
+								<li>Poisson point process  <span id="orange">\(\mathbb{X}\)</span>\(= \{X_u\}_{u=1}^N\) of intensity \(\lambda n\)</li>
+								<br>
+								<li class="fragment" data-fragment-index="1">Two communities: <span id="mauve">\(	\sigma\)</span>\( = \big(\sigma(1),\cdots,\sigma(N)\big)\) 
+								\[\mathbf{P}(\sigma(u)=\color{#f86d6d}{+1})=\mathbf{P}(\sigma(u)=\color{#ffde20}{-1}) = \frac{1}{2}\]
+								</li>
+								<li class="fragment" data-fragment-index="2">Geometric kernel: \(\varphi: \mathbb{R}_+ \to [0,1]\)</li>
+								<br>
+								<li class="fragment" data-fragment-index="2">Connection probabilities: <ol><li>Within community: $p$</li><li>Between community: $q$</li></ol></li>
+								<!--<li>Connection functions: $$f_{in}(\cdot), f_{out}(\cdot): S \times S \to [0,1]$$</li>-->
+							</ul>
+							<p class="fragment" data-fragment-index="3">Given locations <span id="orange">\(\mathbb{X}\)</span> and communities <span id="mauve">\(	\sigma\)</span></p>
+							<p class="fragment" data-fragment-index="3">\[A_{uv}=1 \text{   w.p.   }\begin{cases} p \varphi\Big(\|X_u-X_v\|\Big) & \text{if 	} \sigma(u)=\sigma(v)\\
+							q \varphi \Big(\|X_u-X_v\|\Big) & \text{if } \sigma(u) \neq \sigma(v)  \end{cases}\]</p>
+							
+						</div>
+						</div>
+				</section>
+					
+				<section data-auto-animate>
+					<h3> Problem Formulation</h3>
+					<div class="small fragment" data-fragment-index="1">
+					<p><span id="springgreen">\(\mathbf{A}\)</span> \(\sim GKBM(\lambda,n,d,p,q,\varphi)\)</p>
+					<p class="small"><span id="coral">Problem:</span> Given the locations <span id="orange">\(\mathbb{X}\)</span> and the graph <span id="springgreen">\(\mathbf{A}\)</span>, recover <span id="mauve">\(	\sigma_n\)</span> exactly.
+					</div>
+					<div class="r-stack">
+						<img class="fragment" data-fragment-index="2" src="./Images/ERG_edges.png" width = "350" height="350"/>
+						<img class="fragment"
+						data-fragment-index="3" src="./Images/ERG_problem.png" width = "350" height="350"/>
+						<img class="fragment"
+						data-fragment-index="5" src="./Images/ERG_edges.png" width = "350" height="350"/>
+						<img class="fragment "
+						data-fragment-index="6" src="./Images/ERG_swap_comm.png" width = "350" height="350"/>
+					</div>
+					<div class="small fragment"					data-fragment-index="4">An estimate <span id="mauve">\(	\hat{\sigma}_n\)</span> of <span id="mauve">\(	\sigma_n\)</span> is said to recover the communities exactly if 
+					
+					\[\lim_{n\to \infty}\mathbb{P}\big(	\color{#a689e0}{\hat{\sigma}_n} \in\{\pm \color{#a689e0}{\sigma_n} \}\big) = 1 \]
+					</div>
+				</section>
+
+
+				<section>
+					<h3>Main results</h3>
+					<img  src="./Images/kernel.png" width = "400" height="200"/>
+					<div class="small">Define \(\kappa = \sup_{x \in \Gamma}x, \ \ 0<\kappa<\infty\) and
+					\[I_{\varphi}(p,q) := 2\int_{\mathbb{R}_+}\big[1-\sqrt{pq}\varphi(x)-\sqrt{(1-p\varphi(x))(1-q\varphi(x))}\big]dx\]
+					<span id="gold">Converse:</span> If <span id="coral">\(\lambda \kappa<1\)</span> or <span id="paleturquoise">\(\lambda I_{\varphi}(p,q) < 1\)</span>, then exact recovery is not possible using any algorithm.<br><br>
+					<span id="gold">Achievability:</span>  If <span id="coral">\(\lambda \kappa >1\)</span> and <span id="paleturquoise">\(\lambda I_{\varphi}(p,q) > 1\)</span>, then there exists a linear time algorithm (in the number of edges) achieving exact recovery.
+					</div>
+				</section>
+
+                <section>
+                    <h3>Community detection on hypergraphs</h3>
+                    <p><span id="paleturquoise">Collaboration networks:</span> higher-order interactions</p>
+                    <img class="fragment" data-fragment-index="2" src="./Images/author_names_hyperedge.png" width = "800" height="200"/>
+                    <p class="fragment" data-fragment-index="2">Proposed and analysed a <span id="gold">semi-definite programming (SDP)</span> algorithm.</p>
+                    <p class="fragment" data-fragment-index="2">Obtained conditions on model parameters for community recovery.</p>
+                </section>
+                <section>
+					<!-- <h3>Conclusions</h3>
+					<div class="small">
+						<ul><li><span id="coral">\(\lambda \kappa<1\)</span> or <span id="paleturquoise"> \(\lambda I_{\varphi}(p,q) < 1\)</span>, then communities cannot be recovered. </li>
+							<li><span id="coral">\(\lambda \kappa>1\)</span> and <span id="paleturquoise">\(\lambda I_{\varphi}(p,q) > 1\)</span>, then exact community recovery possible using a <span id="skyblue"> linear time </span>algorithm. </li>
+						<li> <span id="springgreen"> Multiple communities </span> and <span id="orange"> higher dimensions.</span></li>
+					<li> Main takeaway: <span id="skyblue"> Geometry helps in global inference tasks.</span></li></ul>
+				</div> -->
+				<div>
+					<h3>Current and future work</h3>
+					<div class="small">
+					<ul><li id="springgreen">Graphs with node inhomogenities and long-distance edges.</li>
+						<br>
+						<li id="orange">Joint kernel estimation and community detection.</li>
+						<li id="orange">Detecting communities with no information of location or in the semi-supervised regime.</li>
+						<li id="orange">Spectral and SDP algorithms.<span style="font-size: 15px;">[Abbe, Fan, Wang, Zhong (2020)]</span></li>
+						<br>
+					<li id="lightred">Inference problems on dynamic graphs</li>
+				<li id="lightred"> Community detection and percolation. </li>
+			<li id="lightred">Percolation games and games on geometric graphs.</li></ul>
+				</div></div>
+				</section>
+
+				<section>
+					<h3>Teaching profile</h3>
+					<div class="small">
+					<ul><li><span id="skyblue">Teaching aids</span>: online assignments, explanatory videos, in-class interactive quizzes</li>
+                        <li><span id="skyblue">Courses @ TU/e</span>: Probability and Statistics, Network Statistics</li>
+						<li class="fragment"><span id="skyblue">Courses @ IIIT-Bangalore</span>
+						<table style="font-size: 22px; width:90%; border-collapse: collapse;">
+							<tr style="border-bottom: 1px solid black;">
+								<th width = "40%"><strong>Existing courses</strong></th>
+								<th width = "40%"><strong>New courses</strong></th>
+							</tr>
+							<tr>
+								<td>DS / AI 608 Network Science for the Web</td>
+								<td rowspan="2"><strong>Probability models:</strong> basic probability, conditional probability, Markov chains, Poisson processes, random walks on graphs, random graphs</td>
+							</tr>
+							<tr>
+								<td>AI 512 Maths for Machine Learning</td>
+							</tr>
+							<tr>
+								<td>SM 202 Maths 4</td>
+                                <td rowspan="3"><strong>Network Statistics</strong>: random graph models, network motifs, community detection, link prediction, contagion processes on networks, spectral graph theory</td>
+							</tr>
+							<tr>
+								<td>ESS 103 Signals and Systems</td>
+								
+							</tr>
+							<tr>
+								<td>NC 501 Networking and Communication</td>
+                                
+							</tr>
+							<tr>
+								<td>EG 101 Computer Networks*</td>
+                                <td rowspan="3"><strong> Graphs and Networks:</strong>: graph terminologies, connectivity, adjacency and Laplacian matrices, spectral properties, trees, BFS, spanning trees, graph algorithms, network routing</td>
+							</tr>
+							<tr></tr>
+							<tr>
+								<td>NC 601 Wireless Access Network*</td>
+							</tr>
+						</table></li><br>
+					<li class="fragment"><span id="skyblue">Inter-disciplinary field</span>: adaptable to different levels of mathematical difficulty</li></ul>
+					</div>
+				</section>
+
+				<section>
+					<div  style="text-align: center;">
+                        <br><br><br><br><br>
+						<span id="springgreen">Thank you !!</span>
+				</div>
+				</section>
+
+            </div>
+		</div>
+
+<script src="../dist/reveal.js"></script>
+<script src="../plugin/math/math.js"></script>
+<script>
+	Reveal.initialize({
+		history: true,
+		transition: 'linear',
+
+		mathjax2: {
+			config: 'TeX-AMS_HTML-full',
+			TeX: {
+				Macros: {
+					R: '\\mathbb{R}',
+					set: [ '\\left\\{#1 \\; ; \\; #2\\right\\}', 2 ]
+				}
+			}
+		},
+
+		// There are three typesetters available
+		// RevealMath.MathJax2 (default)
+		// RevealMath.MathJax3
+		// RevealMath.KaTeX
+		//
+		// More info at https://revealjs.com/math/
+		plugins: [ RevealMath.MathJax2 ]
+	});
+</script>
+<script>
+	const myHeading = document.getElementById("yellow_heading");
+	myHeading.style.color = "#e7ad52";
+</script>
+<!-- Resources -->
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+<script src="../dist/addons/maps2.js"></script>
+	</body>
+</html>
