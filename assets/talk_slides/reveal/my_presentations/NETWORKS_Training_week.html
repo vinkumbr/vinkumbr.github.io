@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Community detection on geometric graphs</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/night.css" id="theme">
+		<link rel="stylesheet" href="../dist/addons/envs.css" id="envs">
+		<style type="text/css" media="screen">
+			.slides section.has-dark-background,
+			.slides section.has-dark-background h2 {
+				color: #fff;
+			}
+			.slides section.has-light-background,
+			.slides section.has-light-background h2 {
+				color: #222;
+			}
+		</style>
+		<style>
+			.container{
+				display: flex;
+			}
+			.col{
+				flex: 1;
+			}
+			</style>
+			<style>
+				canvas {
+					border: 1px solid rgb(247, 245, 245);
+				}
+			</style>
+			<!--Styles for text-->
+			<style>
+			.small {
+				font-size: 25px;
+			  }
+			.medium {
+			font-size: 35px;
+			}
+			.smaller{
+				font-size: 20px;
+			}
+			</style>
+			<style>
+				.circle {
+					width: 50px; /* Adjust size */
+					height: 50px; /* Adjust size */
+					border-radius: 50%;
+					border: 4px solid #3498db;
+					background-color: transparent; /* Circle color */
+					position: absolute;
+					top: 50%; /* Adjust vertical position */
+					left: 50%; /* Adjust horizontal position */
+					transform: translate(-50%, -50%);
+				}
+			</style>
+	</head>
+
+    <body>
+
+		<div class="reveal">
+
+			<div class="slides">
+
+				<section>
+					<h3  style="margin-top: 2cm;">Community detection on geometric graphs</h3>
+					<p id = "subheading"> A local-to-global perspective</p>
+					<h4 style="margin-top: 3cm;"> <span id="yellow_heading"  >B. R. Vinay Kumar</span></h4>
+					<p id="small" style="margin-top: 3cm;">NETWORKS Training week<br>April 9, 2025<br>Kaap Doorn, Netherlands</psmall>
+				</section>
+				
+
+				<section data-auto-animate>
+					<h3>Geometric graphs</h3>
+					<div class="small">
+					<div class="container">
+						<div class="col small">
+						<video data-fragment-index="1" data-autoplay loop src="./Images/Beginning.mp4" height="200"></video><h4>Wireless networks</h4></div>
+						<div class="col small">
+						<img data-fragment-index="1" src="./Images/facebook.jpg" height="200" style="margin-top: 0px; margin-bottom: 0px;"/><h4>Social networks</h4></div>
+						<div class="col small">
+						<img data-fragment-index="1" src="./Images/Belgian_phone_network.jpg" height="200" width="90%" style="margin-top: 0px;margin-bottom: 0px;"/><h4>Data science</h4></div>
+						</div>
+					<br>
+						<ul>
+						<li><span id="springgreen">Geometric graphs</span>? Vertices are embedded in a metric space and edges depend on the distance between nodes.</li>
+						<li>Presence of short edges and abundance of triangles.</li>
+					</ul>
+					<br><br>
+					<div class="fragment">
+					<h4 id="yellow">Questions?</h4>
+					<ol><li>How does the network structure affect processes or information on the network?</li>
+						<li>Can local algorithms help to solve a global problem? </li>
+						<li>Does geometry help in solving a global problem efficiently?</li></ol>
+				</div></div>
+				</section>
+
+				<section>
+					<h3>Community detection</h3>
+					<div class="small">
+					<h4>Partition the vertex set of a graph into subsets <span id="paleturquoise">meaningfully</span>.</h4>
+					<div class="container">
+						<div class="col">
+							<div class="r-stack">
+								<img class="fragment current-visible" data-fragment-index="1" src="./Images/small_network.png" width = "400" height="400"/>
+								<img class="fragment" data-fragment-index="2" src="./Images/small_network_communities.png" width = "400" height="400"/>
+
+								</div>
+						</div>
+					<div class="col">
+						<br><br>
+						<span class="fragment" data-fragment-index="3">Group of nodes that are more connected to one another than to the rest of the network.</span>
+						<br><br><br>
+						<h4 class="fragment">Two approaches</h4>
+						<ul class="fragment">
+							<li><span id="gold">Model-based methods:</span> Build a model from data and design algorithms for the model. </li>
+							<li><span id="gold">Model-free methods:</span> Modularity based methods, Louvain algorithm etc. </li>
+						</ul>
+					</div>
+					</div>
+				
+				</div>	
+				</section>
+
+				<section data-auto-animate>
+					<h3>Community detection</h3>
+					<h5 data-fragment-index="0">Co-authorship networks</h5>
+					<div class="r-stack">
+						<img data-fragment-index="0" src="./Images/communities_coauthorship.png" width = "700" height="500"/>
+						<img class="fragment" data-fragment-index="1" src="./Images/erg_model.png" width = "700" height="500"/>
+						<img class="fragment" data-fragment-index="3" src="./Images/same_community_edges.png" width = "700" height="500"/>
+						<img class="fragment" data-fragment-index="3" src="./Images/erg_model_diff_comm_edges.png" width = "700" height="500"/>
+						</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3>Community detection</h3>
+					<div class="container">
+
+						<div class="col">
+						
+						<img data-fragment-index="0" src="./Images/communities_coauthorship.png" width = "800" height="360"/>
+						<div class="circle" style="top: 240px; left: 320px;"></div>
+					</div>
+					<div class="col small">
+						<br><br><br>
+						<p>Interactions depend on:</p>
+						<ul><li>Node communities</li><li>Distance between nodes</li><li>Vertex weights</li></ul>
+					</div>
+
+				</div>
+				<h4>Co-authorship networks</h4>
+			</section>
+
+
+
+				<section>
+					<h3>Model</h3>
+					<div class="container">
+
+						<div class="col">
+							<!--<canvas id="poissonCanvas" width="400" height="400"></canvas>
+							<script src="poisson.js"></script>-->
+							<p class="small">Torus \( S=\left[\frac{-1}{2},\frac{1}{2}\right]^d\)</p>
+							<div class="r-stack">
+							<img data-fragment-index="0" src="./Images/RGG_nodes.png" width = "400" height="400"/>
+							<img class="fragment" data-fragment-index="1" src="./Images/ERG_nodes.png" width = "400" height="400"/>
+							<img class="fragment" data-fragment-index="3" src="./Images/ERG_edges.png" width = "400" height="400"/>
+							</div>
+							<p class="fragment small" data-fragment-index="4"><span id="springgreen">\(\mathbf{A}\)</span> \(\sim GKBM(\lambda,n,d,\kappa_{\text{in}},\kappa_{\text{out}})\)</p>
+						</div>
+						
+						<div class="col-sm- small small"width="90%">
+							<ul>
+								<li>Poisson point process  <span id="orange">\(\mathbb{X}\)</span>\(= \{X_u\}_{u=1}^N\) of intensity \(\lambda n\)</li>
+							<ul>
+								<li>Sample $N \sim \text{Poi}(\lambda n)$.</li>
+								<li> Choose \(X_1,X_2,\cdots,X_N\) uniformly from $S$.</li>
+							</ul>
+								<br>
+								<li class="fragment" data-fragment-index="1">Weights: <span id="orange">\(\mathbf{W}\)</span>=\(\big(W_1,W_2,\cdots, W_N\big), \ \ W_i\in \mathcal{W} \sim F_W(\cdot)\)</li>
+								<br>
+								<li class="fragment" data-fragment-index="1">Two communities: <span id="mauve">\(	\sigma\)</span>\( = \big(\sigma(1),\cdots,\sigma(N)\big)\) 
+								\[\mathbf{P}(\sigma(u)=\color{#f86d6d}{+1})=\mathbf{P}(\sigma(u)=\color{#ffde20}{-1}) = \frac{1}{2}\]
+								</li>
+								<li class="fragment" data-fragment-index="2">Geometric kernels: \(\kappa_{\text{in}},\kappa_{\text{out}}: \mathbb{R}^+\times\mathcal{W}\times \mathcal{W}\to [0,1]\)</li>
+								<li class="fragment" data-fragment-index="2">\(\alpha_{n,d} = \big(n/\log n\big)^{1/d}\)</li>
+								<!--<li class="fragment" data-fragment-index="2">Connection probabilities: <ol><li>Within community: $p$</li><li>Between community: $q$</li></ol></li>
+								<li>Connection functions: $$f_{in}(\cdot), f_{out}(\cdot): S \times S \to [0,1]$$</li>-->
+							</ul>
+							<p class="fragment" data-fragment-index="3">Given locations <span id="orange">\(\mathbb{X}\)</span>, weights <span id="orange">\(\mathbf{W}\)</span> and communities <span id="mauve">\(\sigma\)</span></p>
+							<p class="fragment" data-fragment-index="3">\[A_{uv}=1 \text{   w.p.   }\begin{cases} \kappa_{\text{in}}\big(\alpha_{n,d}\|X_u-X_v\|,W_u,W_v\big) & \text{if 	} \sigma(u)=\sigma(v)\\
+								\kappa_{\text{out}}\big(\alpha_{n,d}\|X_u-X_v\|,W_u,W_v\big) & \text{if } \sigma(u) \neq \sigma(v)  \end{cases}\]</p>
+							
+						</div>
+						</div>
+				</section>
+					
+				<section data-auto-animate>
+					<h3> Problem Formulation</h3>
+					<div class="small fragment" data-fragment-index="1">
+					<p><span id="springgreen">\(\mathbf{A}\)</span> \(\sim GKBM(\lambda,n,d,\kappa_{\text{in}},\kappa_{\text{out}})\)</p>
+					<p class="small"><span id="coral">Problem:</span> Given the locations <span id="orange">\(\mathbb{X}\)</span>, the weights <span id="orange">\(\mathbf{W}\)</span> and the graph <span id="springgreen">\(\mathbf{A}\)</span>, recover <span id="mauve">\(	\sigma_n\)</span> exactly.
+					</div>
+					<div class="r-stack">
+						<img class="fragment" data-fragment-index="2" src="./Images/ERG_edges.png" width = "350" height="350"/>
+						<img class="fragment"
+						data-fragment-index="3" src="./Images/ERG_problem.png" width = "350" height="350"/>
+						<img class="fragment"
+						data-fragment-index="5" src="./Images/ERG_edges.png" width = "350" height="350"/>
+						<img class="fragment "
+						data-fragment-index="6" src="./Images/ERG_swap_comm.png" width = "350" height="350"/>
+					</div>
+					<div class="small fragment"	data-fragment-index="4">An estimate <span id="mauve">\(	\hat{\sigma}_n\)</span> of <span id="mauve">\(	\sigma_n\)</span> is said to recover the communities exactly if 
+					
+					\[\lim_{n\to \infty}\mathbb{P}\big(	\color{#a689e0}{\hat{\sigma}_n} \in\{\pm \color{#a689e0}{\sigma_n} \}\big) = 1 \]
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h3> Problem Formulation</h3>
+					<div class="container">
+					<div class="col-4" >	
+					<div class="small">
+					<p><span id="springgreen">\(\mathbf{A}\)</span> \(\sim GKBM(\lambda,n,d,\kappa_{\text{in}},\kappa_{\text{out}})\)</p>
+					<p class="small"><span id="coral">Problem:</span> Given locations <span id="orange">\(\mathbb{X}\)</span>, weights <span id="orange">\(\mathbf{W}\)</span>, and graph <span id="springgreen">\(\mathbf{A}\)</span>, recover <span id="mauve">\(	\sigma_n\)</span> exactly.
+					</div>
+					<img style="margin-bottom: -5px; margin-top: -5px;" src="./Images/ERG_swap_comm.png" width = "350" height="350"/>
+					<div class="small">An estimate <span id="mauve">\(	\hat{\sigma}_n\)</span> of <span id="mauve">\(	\sigma_n\)</span> is said to recover the communities exactly if 
+					
+					\[\lim_{n\to \infty}\mathbb{P}\big(	\color{#a689e0}{\hat{\sigma}_n} \in\{\pm \color{#a689e0}{\sigma_n} \}\big) = 1 \]
+					</div>
+				</div>
+				<div class="col" style="font-size: 20px;">
+					<h4>Prior work</h4>
+					<img style="margin-top: -5px; margin-right: 0%;" src="./Images/abs_kernel.png" width = "320" height="120"/>
+					<ol><li>Abbe, E., Baccelli, F., and Sankararaman, A., 2021. Community detection on Euclidean random graphs. Information and Inference: A Journal of the IMA, 10(1), 109-160.</li>
+					<li>Gaudio, J., Niu, X. and Wei, E., 2024. Exact community recovery in the geometric SBM. In Proceedings of the 2024 Annual ACM-SIAM Symposium on Discrete Algorithms (SODA), 2158-2184.</li>
+					<li>Gaudio, J., Guan, C., Niu, X. and Wei, E., 2024. Exact Label Recovery in Euclidean Random Graphs. arXiv preprint arXiv:2407.11163.</li></ol>
+				</div>
+				</div>
+				</section>
+
+
+				<section data-auto-animate>
+					<h3>Main results</h3>
+					<div class="container">
+
+						<div class="col">
+							<!--<canvas id="poissonCanvas" width="400" height="400"></canvas>
+							<script src="poisson.js"></script>-->
+							<p class="small">Torus \( S=\left[\frac{-1}{2},\frac{1}{2}\right]^d\)</p>
+							<div class="r-stack">
+							<img src="./Images/ERG_edges.png" width = "300" height="250"/>
+							</div>
+							<p class="smaller" data-fragment-index="1"><span id="springgreen">\(\mathbf{A}\)</span> \(\sim GKBM(\lambda,n,d,\kappa_{\text{in}},\kappa_{\text{out}})\)</p>
+						</div>
+						<div class="fragment col">
+					<!--<img  src="./Images/kernel.png" width = "400" height="220"/>-->
+					<br><br>
+					<div class="small">Define \(s =  \max \{\text{supp}(\kappa_{\text{in}}),\text{supp}(\kappa_{\text{out}})\} <\infty, \text{ and }\) 
+					</div>
+					<div class="small"><span id="paleturquoise">\[\mathcal{I}(\kappa_{\text{in}},\kappa_{\text{out}}) := \inf_{w_0}\  \mathbb{E}_W[I(w_0,W)]\]</span>
+					</div>
+					<div class="smaller">
+						\[I(w_0,w) = 2 \int_{\mathbb{R}^d} \Big(1-\sqrt{\kappa_{\text{in}}(x) \kappa_{\text{out}}(x)}-\sqrt{\big(1-\kappa_{\text{in}}(x)\big)\big(1-\kappa_{\text{out}}(x)\big)} \Big) dx,\]
+					</div>
+					<div class="small">with \(\kappa_{\text{in}}(x) \equiv \kappa_{\text{in}}(x,w_0,w)\) and \( \kappa_{\text{out}}(x)\equiv \kappa_{\text{out}}(x,w_0,w)\)</div></div>
+					</div>
+					<br>
+					<div class="fragment small">
+						<span id="gold">Converse:</span> If <span id="coral">\(\lambda s<1\)</span> or <span id="paleturquoise">\(\lambda \mathcal{I}(\kappa_{\text{in}},\kappa_{\text{out}}) < 1\)</span>, then exact recovery is not possible using any algorithm.<br><br>
+						<span id="gold">Achievability:</span>  If <span id="coral">\(\lambda s >1\)</span> and <span id="paleturquoise">\(\lambda \mathcal{I}(\kappa_{\text{in}},\kappa_{\text{out}})> 1\)</span>, then there exists a linear time algorithm (in the number of edges) achieving exact recovery.
+						</div>
+				</section>
+
+
+				<section data-auto-animate>
+					<h3>Impossibility: Idea</h3>
+					<div class="small">		
+						<div data-id="init">		
+					 If <span id="coral">\(\lambda s<1\)</span> or <span id="paleturquoise">\(\lambda \mathcal{I}(\kappa_{\text{in}},\kappa_{\text{out}}) < 1\) </span>, then exact recovery is not possible. 
+					 <span style="font-size: smaller;"><span id="paleturquoise">\[\mathcal{I}(\kappa_{\text{in}},\kappa_{\text{out}}) := \inf_{w_0}\  \mathbb{E}_W[I(w_0,W)],\] </span>\[I(w_0,w) = 2 \int_{\mathbb{R}^d} \Big(1-\sqrt{\kappa_{\text{in}}(x) \kappa_{\text{out}}(x)}-\sqrt{\big(1-\kappa_{\text{in}}(x)\big)\big(1-\kappa_{\text{out}}(x)\big)} \Big) dx,\]</span>
+					</div>
+					<br>
+					<ul text-align="left">
+						<li class="fragment" data-fragment-index="1"><span id="skyblue">Genie-based estimator:</span> Given the communities of all nodes except the origin, find its community. </li>
+						<br> 
+						<li class="fragment" data-fragment-index="2"><span id="skyblue" >Hypothesis testing problem:</span> governed by the Chernoff-Hellinger divergence.</li>
+						<br> 
+						<li class="fragment" data-fragment-index="3	"> Prob. of error \(\ge  n^{-\lambda \mathbb{E}_W[I(w_0,W)]}\)</li> 
+						<br> 
+						<li style="padding: 0%;" class="fragment" data-fragment-index="3">Under some assumptions on the weight distribution, this can be strengthened to <br> Error probability \( \ge n^{-\lambda \mathcal{I}(\kappa_{\text{in}},\kappa_{\text{out}})} \)</li>
+						<br> 
+					<li class="fragment" data-fragment-index="4">Total number of errors \(\approx \lambda n^{1-\lambda \mathcal{I}(\kappa_{\text{in}},\kappa_{\text{out}})} \to \infty\) when <span id="paleturquoise">\(\lambda \mathcal{I}(\kappa_{\text{in}},\kappa_{\text{out}}) < 1\) </span></li>
+					<div class="r-stack">
+							<br><br></div>
+						</ul>
+					</div>
+				</section>
+
+
+				<section data-auto-animate>
+					<h3>Model-1d</h3>
+					<div class="container">
+
+						<div class="col">
+							<!--<canvas id="poissonCanvas" width="400" height="400"></canvas>
+							<script src="poisson.js"></script>-->
+							<p class="small">Torus \( S=\left[\frac{-1}{2},\frac{1}{2}\right]\)</p>
+							<div class="r-stack">
+							<img data-fragment-index="0" src="./Images/model_1d.png" width = "400" height="50"/>
+							<img class="fragment" data-fragment-index="1" src="./Images/model_1d_torus.png" width = "400" height="400"/>
+							</div>
+							<p class="fragment small" data-fragment-index="2"><span id="springgreen">\(\mathbf{A}\)</span> \(\sim GKBM(\lambda,n,p,q,\varphi)\)</p>
+						</div>
+						
+						<div class="col small">
+							<ul>
+								<li>Poisson point process  <span id="orange">\(\mathbb{X}\)</span>\(= \{X_u\}_{u=1}^N\) of intensity \(\lambda n\)</li>
+								<br>
+								<li>Two communities: <span id="mauve">\(	\sigma\)</span>\( = \big(\sigma(1),\cdots,\sigma(N)\big)\) 
+								\[\mathbf{P}(\sigma(u)=\color{#f86d6d}{+1})=\mathbf{P}(\sigma(u)=\color{#ffde20}{-1}) = \frac{1}{2}\]
+								</li>
+								<li class="fragment" data-fragment-index="2">Geometric kernel: \(\varphi: S \times S \to [0,1]\)</li>
+								<br>
+								<li class="fragment" data-fragment-index="2">Connection probabilities: <ol><li>Within community: $p$</li><li>Between community: $q$</li></ol></li>
+								<!--<li>Connection functions: $$f_{in}(\cdot), f_{out}(\cdot): S \times S \to [0,1]$$</li>-->
+							</ul>
+							<p class="fragment" data-fragment-index="2">Given locations <span id="orange">\(\mathbb{X}\)</span> and communities <span id="mauve">\(	\sigma\)</span></p>
+							<p class="fragment" data-fragment-index="2">\[A_{uv}=1 \text{   w.p.   }\begin{cases} p \varphi\Big(\|X_u-X_v\|\Big) & \text{if 	} \sigma(u)=\sigma(v)\\
+							q \varphi \Big(\|X_u-X_v\|\Big) & \text{if } \sigma(u) \neq \sigma(v)  \end{cases}\]</p>
+							
+						</div>
+						</div>
+				</section>
+
+				<section>
+					<h3>Achievability</h3>
+					<span class="medium">Q. How to recover the communities exactly when <span id="paleturquoise">\(\lambda I_{\varphi}(p,q) > 1\)</span>?</span> 
+					<div class="container">
+					<div class="col small">
+						<br>
+					<h4 class="fragment"
+					data-fragment-index="1">Three phase algorithm:</h4>
+					<span class="fragment"
+					data-fragment-index="1">Recall \(\color{#FF7F50}{\kappa}\): maximum interaction distance</span>
+					<br><br>
+					<ul>					<h4  style="margin-top: 0; margin-bottom: 0;" class="fragment"
+					data-fragment-index="2"><span id="skyblue">Initialization Phase</span></h4>
+						<ul style="margin-top: 0; margin-bottom: 0;">
+							<li class="fragment"
+							data-fragment-index="2">Divide into blocks of size \(\frac{\color{#FF7F50}{\kappa}}{2}\frac{\log n}{n}\).</li>
+							<li class="fragment"
+							data-fragment-index="2">Recover exactly in an initial block.</li>
+						</ul>
+						<br>
+						<h4  style="margin-top: 0; margin-bottom: 0;" class="fragment"
+					data-fragment-index="4"><span id="skyblue">Propagation Phase</span></h4>
+						<ul style="margin-top: 0;">
+							<li class="fragment"
+							data-fragment-index="4">Propagate from a recovered block to an adjacent block and so on.</li>
+							<li class="fragment"
+							data-fragment-index="4">Number of mistakes in each block is at most a constant.</li>
+						</ul>
+						<br>
+						<h4  style="margin-top: 0; margin-bottom: 0;" class="fragment"
+						data-fragment-index="7"><span id="skyblue">Refinement Phase</span></h4>
+							<ul style="margin-top: 0;">
+								<li class="fragment"
+								data-fragment-index="7">Genie-based correction step</li>
+							</ul>
+						</ul>
+					</div>
+					<div class="col small">
+						<img class="fragment"
+						data-fragment-index="1" src="./Images/kernel.png" width = "400" height="200"/>
+						<div class="r-stack">
+						<img class="fragment current-visible"
+						data-fragment-index="2" src="./Images/block_division.png" width = "400" height="300"/>
+						<img class="fragment current-visible"
+						data-fragment-index="3" src="./Images/initialization.png" width = "400" height="300"/>
+						<img class="fragment current-visible"
+						data-fragment-index="4"   src="./Images/propagation.png" width = "400" height="300"/>
+						<img class="fragment current-visible"
+						data-fragment-index="5" src="./Images/next_block_propa.png" width = "500" height="100"/>
+						<img class="fragment current-visible"
+						data-fragment-index="6" src="./Images/propagation2.png" width = "400" height="300"/>
+						<img class="fragment current-visible"
+						data-fragment-index="7" src="./Images/refine0.png" width = "500" height="100"/>
+						<img class="fragment current-visible"
+						data-fragment-index="8" src="./Images/refine1.png" width = "500" height="100"/>
+						<img class="fragment current-visible"
+						data-fragment-index="9" src="./Images/refine_image.png" width = "500" height="100"/>
+						<img class="fragment current-visible"
+						data-fragment-index="10" src="./Images/refinement.png" width = "400" height="300"/>
+						<span class="fragment current-visible"
+					data-fragment-index=11" id="paleturquoise">Linear time algorithm</span>
+						</div>
+					</div>
+			</div>
+				</section>
+
+				<section>
+					<h3>Conclusions</h3>
+					<div class="small">
+						<ul><li><span id="coral">\(\lambda s<1\)</span> or <span id="paleturquoise"> \(\lambda \mathcal{I}(\kappa_{\text{in}},\kappa_{\text{out}}) < 1\)</span>, then communities cannot be recovered. </li>
+							<br>
+							<li><span id="coral">\(\lambda s>1\)</span> and <span id="paleturquoise">\(\mathcal{I}(\kappa_{\text{in}},\kappa_{\text{out}}) > 1\)</span>, then exact community recovery possible using a <span id="skyblue"> linear time </span>algorithm. </li>
+							<br>
+						<li> <span id="springgreen"> Multiple communities </span> and <span id="orange"> higher dimensions.</span></li>
+						<br>
+					<li> Main takeaway: <span id="skyblue"> Geometry helps in global inference tasks.</span></li></ul>
+				</div><br>
+				<div class="fragment" data-fragment-index="2">
+					<h3>Future work</h3>
+					<div class="small">
+						<ul>
+						<li id="orange">Joint kernel estimation and community detection.</li>
+						<br>
+						<li id="orange">Detecting communities with no information of location or in the semi-supervised regime.</li>
+						<br>
+						<li id="orange">Spectral and SDP algorithms.</li>
+						</ul>
+				</div></div>
+				</section>
+
+
+				<section>
+					<div  style="text-align: center;">
+						<br><br>
+						For community recovery<br>
+						On networks with geometry;<br>
+						Using the location,<br>
+						Helps in detection,<br>
+						In time that grows linearly.<br>
+						<br><br><br><br>
+						<span id="springgreen">Thank you !!</span>
+				</div>
+				</section>
+            </div>
+		</div>
+
+<script src="../dist/reveal.js"></script>
+<script src="../plugin/math/math.js"></script>
+<script>
+	Reveal.initialize({
+		history: true,
+		transition: 'linear',
+
+		mathjax2: {
+			config: 'TeX-AMS_HTML-full',
+			TeX: {
+				Macros: {
+					R: '\\mathbb{R}',
+					set: [ '\\left\\{#1 \\; ; \\; #2\\right\\}', 2 ]
+				}
+			}
+		},
+
+		// There are three typesetters available
+		// RevealMath.MathJax2 (default)
+		// RevealMath.MathJax3
+		// RevealMath.KaTeX
+		//
+		// More info at https://revealjs.com/math/
+		plugins: [ RevealMath.MathJax2 ]
+	});
+</script>
+<script>
+	const myHeading = document.getElementById("yellow_heading");
+	myHeading.style.color = "#e7ad52";
+</script>
+<!-- Resources -->
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+<script src="../dist/addons/maps2.js"></script>
+	</body>
+</html>

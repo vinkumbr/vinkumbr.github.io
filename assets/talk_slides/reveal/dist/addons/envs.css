@@ -1,0 +1,85 @@
+/*********************************************
+ * CUSTOM ENVIRONMENTS
+ *********************************************/
+ p#small {
+    font-size:25px;
+    }
+
+    p#tiny {
+        font-size:15px;
+        }
+
+p#subheading {
+    font-size:30px;
+    }
+
+#chartdiv {
+        width: 100%;
+        height: 600px;
+      }
+
+.reveal .block {
+border: 5px solid skyblue;
+width: 1000px;
+margin: auto;
+border-radius: 10px;
+background-color:rgb(26, 25, 25);
+padding: 0.25em;
+text-align: left;
+box-shadow: 3px 3px 4px rgb(204, 201, 201);
+}
+
+.vid_container {
+    width: 1000px;
+    display: block;
+    overflow: hidden;
+    height: 2000px;
+}
+
+#glass {
+    margin-right: -1050px;
+}
+
+#glass2 {
+    margin-right: -1150px;
+}
+
+.circ {
+    height: 25px;
+    width: 25px;
+    background-color: aliceblue;
+    border-radius: 50%;
+    display: inline-block;
+    border-width: 100px;
+    border-color:rgb(240, 198, 13);
+  }
+
+.limerick {
+    border: 5px solid;
+    position: absolute;
+    top: 100%;
+    left: 40%;
+    transform: translate(50%, -50%);
+    padding: 10px;
+  }
+
+.reveal bem {
+    font-weight: 600;
+    color: orange;
+  }
+/*code{white-space:nowrap;}*/
+
+/* Custom text colors*/
+:root {
+    --custom-emph: rgb(153, 0, 0);}
+#orange{  color:#f59517}
+#mauve{color: #a689e0;}
+#red{color: #ff2020;}
+#yellow{color: #ffde20;}
+#skyblue{color: #66B2FF;}
+#lightred{color: #f86d6d;}
+#coral{color: #FF7F50;} /* kappa */
+#springgreen{color: #00FF7F;}
+#lilac{color: #C8A2C8;}
+#paleturquoise{color: #AFEEEE;}
+#gold{color: #DAA520;}
