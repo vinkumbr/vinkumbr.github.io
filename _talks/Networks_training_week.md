@@ -7,4 +7,4 @@ related_posts: false
 location: NETWORKS Training Week, Kaap Doorn, Netherlands.
 ---
 
-***Community detection on geometric graphs***  
+***Community detection on geometric graphs***  <a href="https://vinkumbr.github.io/reveal_public/my_presentations/NETWORKS_Training_week.html#/">[SLIDES]</a>
