@@ -3,8 +3,8 @@ layout: page
 title: Knight on a chessboard
 description: 
 img: assets/img/knight.png
-importance: 5
-category: 
+importance: 6
+category: iisc
 related_publications: 
 ---
 
