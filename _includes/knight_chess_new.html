@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Knight Random Walk</title>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+
+  #controls {
+    margin-bottom: 10px;
+  }
+
+  #board {
+    display: grid;
+    grid-template-columns: repeat(8, 60px);
+    grid-template-rows: repeat(8, 60px);
+    border: 2px solid black;
+    width: 480px;
+  }
+
+  .square {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .light { background: #f0d9b5; }
+  .dark  { background: #b58863; }
+
+  .label {
+    position: absolute;
+    font-size: 10px;
+    opacity: 0.8;
+  }
+
+  .rank-label { left: 4px; top: 4px; }
+  .file-label { right: 4px; bottom: 4px; }
+
+  .knight {
+    font-size: 50px;
+  }
+
+  #probabilities {
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: repeat(8, 60px);
+    width: 480px;
+    font-size: 11px;
+  }
+
+  .prob-cell {
+    text-align: center;
+    padding: 4px;
+    border: 1px solid #ccc;
+  }
+</style>
+</head>
+
+<body>
+
+<div id="controls">
+  Start square:
+  <input id="startSquare" value="e4" size="2">
+  Steps:
+  <input id="steps" type="number" value="10000" min="1">
+  <button onclick="startSimulation()">Start</button>
+</div>
+
+<div id="board"></div>
+<div id="probabilities"></div>
+
+<script>
+const boardEl = document.getElementById("board");
+const probEl = document.getElementById("probabilities");
+
+const MAX_ANIMATION_TIME = 10000; // ms
+const MAX_FRAMES = 200;
+
+let squares = [];
+
+const knightMoves = [
+  [2,1],[1,2],[-1,2],[-2,1],
+  [-2,-1],[-1,-2],[1,-2],[2,-1]
+];
+
+// ---------- Board utilities ----------
+function squareIndex(file, rank) {
+  return rank * 8 + file;
+}
+
+function parseSquare(sq) {
+  const file = sq.charCodeAt(0) - 97;
+  const rank = 8 - parseInt(sq[1]);
+  return squareIndex(file, rank);
+}
+
+function legalMoves(pos) {
+  const f = pos % 8;
+  const r = Math.floor(pos / 8);
+  return knightMoves
+    .map(([df, dr]) => [f + df, r + dr])
+    .filter(([nf, nr]) => nf >= 0 && nf < 8 && nr >= 0 && nr < 8)
+    .map(([nf, nr]) => squareIndex(nf, nr));
+}
+
+// ---------- Draw board ----------
+function drawBoard() {
+  boardEl.innerHTML = "";
+  squares = [];
+
+  for (let r = 0; r < 8; r++) {
+    for (let f = 0; f < 8; f++) {
+      const sq = document.createElement("div");
+      sq.className = "square " + ((r + f) % 2 ? "dark" : "light");
+
+      if (f === 0) {
+        const rank = document.createElement("span");
+        rank.textContent = 8 - r;
+        rank.className = "label rank-label";
+        sq.appendChild(rank);
+      }
+
+      if (r === 7) {
+        const file = document.createElement("span");
+        file.textContent = String.fromCharCode(97 + f);
+        file.className = "label file-label";
+        sq.appendChild(file);
+      }
+
+      boardEl.appendChild(sq);
+      squares.push(sq);
+    }
+  }
+}
+
+// ---------- Fast simulation ----------
+function simulateKnight(start, steps) {
+  const visits = Array(64).fill(0);
+  const path = [start];
+  let current = start;
+
+  for (let i = 0; i < steps; i++) {
+    visits[current]++;
+    const moves = legalMoves(current);
+    current = moves[Math.floor(Math.random() * moves.length)];
+    path.push(current);
+  }
+
+  return { visits, path };
+}
+
+// ---------- Downsample for rendering ----------
+function downsamplePath(path) {
+  if (path.length <= MAX_FRAMES) return path;
+  const stride = path.length / MAX_FRAMES;
+  return Array.from({ length: MAX_FRAMES },
+    (_, i) => path[Math.floor(i * stride)]
+  );
+}
+
+// ---------- Animate ----------
+function animatePath(renderPath) {
+  let i = 0;
+  const delay = MAX_ANIMATION_TIME / renderPath.length;
+
+  const id = setInterval(() => {
+    squares.forEach(s => s.querySelector(".knight")?.remove());
+
+    const k = document.createElement("div");
+    k.textContent = "♞";
+    k.className = "knight";
+    squares[renderPath[i]].appendChild(k);
+
+    i++;
+    if (i >= renderPath.length) clearInterval(id);
+  }, delay);
+}
+
+// ---------- Probabilities ----------
+function renderProbabilities(visits, total) {
+  probEl.innerHTML = "";
+  const max = Math.max(...visits);
+
+  visits.forEach(v => {
+    const p = v / total;
+    const cell = document.createElement("div");
+    cell.className = "prob-cell";
+    cell.style.background = `rgba(0, 120, 255, ${v / max})`;
+    cell.textContent = p.toFixed(3);
+    probEl.appendChild(cell);
+  });
+}
+
+// ---------- Main ----------
+function startSimulation() {
+  drawBoard();
+
+  const steps = +document.getElementById("steps").value;
+  const start = parseSquare(
+    document.getElementById("startSquare").value
+  );
+
+  const { visits, path } = simulateKnight(start, steps);
+  const renderPath = downsamplePath(path);
+
+  animatePath(renderPath);
+  setTimeout(() => {
+  renderProbabilities(visits, steps);
+}, MAX_ANIMATION_TIME);
+}
+
+drawBoard();
+</script>
+
+</body>
+</html>
