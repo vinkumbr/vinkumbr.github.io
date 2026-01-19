@@ -2,7 +2,7 @@
 layout: page
 title: Knight on a chessboard
 description: 
-img: assets/img/knight.jpg
+img: assets/img/knight.png
 importance: 5
 category: 
 related_publications: 
