@@ -1,0 +1,143 @@
+<html>
+<head>
+    <title>Kruskal Count - Number Version</title>
+    <style>
+        body { 
+            font-family: "Times New Roman", Times, serif; 
+            text-align: center; 
+            background: #fdfdfd; 
+            margin: 0; 
+            padding: 5px;
+            overflow: hidden; /* Ensures no scrolling */
+        }
+        .title { color: Blue; font-size: 1.4rem; margin: 5px 0; }
+        .instructions { 
+            max-width: 850px; 
+            margin: 0 auto 10px auto; 
+            font-size: 0.95rem; 
+            line-height: 1.2; 
+        }
+        
+        /* Grid set to 9 columns as requested */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr); 
+            gap: 5px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            /* Responsive height based on screen height to prevent vertical scrolling */
+            height: 8vh; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background-color: white;
+            border: 1px solid #999;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .trap-style {
+            /* No border initially */
+        }
+
+        .revealed {
+            border: 5px solid black !important;
+            background-color: #fff0f0; /* Optional: slight tint to help it pop */
+        }
+
+        /* Regular click feedback */
+        .clicked {
+            background-color: #eef;
+            border: 2px solid #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="title">The Kruskal Count Card Trick</div>
+
+<div class="instructions">
+    The cards below were ordered by shuffling a deck (Ace=1, Face Cards=5). Click any card in the first row. 
+    Move that many cards to the right, wrapping rows. You will usually end up on the <b>thick-bordered trap card</b>.
+</div>
+
+<div id="game-board" class="card-grid"></div>
+
+<div style="margin-bottom: 15px;margin-top: 15px;">
+    <button onclick="revealTrap()" style="padding: 10px 20px; font-size: 1rem; cursor: pointer;">
+        Reveal Trap Card
+    </button>
+</div>
+
+<script type="text/javascript">
+    const board = document.getElementById('game-board');
+    let deck = [];
+    for (let i = 1; i <= 52; i++) { deck.push(i); }
+
+    let tame = 0;
+    let cardsData = [];
+
+    for (let counter = 0; counter < 52; ++counter) {
+        let k = Math.floor(Math.random() * deck.length);
+        let cardID = deck[k];
+        let moveVal;
+        let displayVal;
+
+        let rank = cardID % 13; 
+        
+        if (rank === 1) { 
+            displayVal = 1; // Ace is 1
+            moveVal = 1;
+        } else if (rank === 11 || rank === 12 || rank === 0) { 
+            displayVal = 5; // Face cards (J, Q, K) are 5
+            moveVal = 5;
+        } else {
+            displayVal = rank; // 2-10 are face value
+            moveVal = rank;
+        }
+
+        let isTrap = false;
+        if (counter === tame) {
+            tame += moveVal;
+            if (tame > 51) {
+                isTrap = true;
+                tame = -1; // Stop tracking path
+            }
+        }
+
+        cardsData.push({ val: displayVal, trap: isTrap });
+        deck.splice(k, 1);
+    }
+
+    // Render cards to the grid
+    cardsData.forEach(card => {
+        const div = document.createElement('div');
+        div.className = 'card';
+        // Add this part:
+        if (card.trap) {
+            div.id = 'the-trap'; // Give it an ID so we can find it later
+            div.classList.add('trap-style');
+        }
+        
+        div.innerHTML = card.val;
+        div.onclick = function() { this.classList.add('clicked'); };
+        
+        board.appendChild(div);
+    });
+
+    function revealTrap() {
+        const trap = document.getElementById('the-trap');
+        if (trap) {
+            trap.classList.add('revealed');
+        }
+    }
+</script>
+
+</body>
+</html>
