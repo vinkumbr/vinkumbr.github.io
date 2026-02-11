@@ -12,6 +12,10 @@
     margin-bottom: 10px;
   }
 
+  #controls input[type="number"] {
+  width: 100px;
+}
+
   #board {
     display: grid;
     grid-template-columns: repeat(8, 60px);
@@ -62,7 +66,7 @@
 </head>
 
 <body>
-
+<p>Select a starting square and the number of steps you want the knight to move. The heatmap obtained after 10 seconds shows the fraction of visits to each of the 64 squares.</p>
 <div id="controls">
   Start square:
   <input id="startSquare" value="e4" size="2">
@@ -73,6 +77,22 @@
 
 <div id="board"></div>
 <div id="probabilities"></div>
+
+<br><br>
+<p>From the same starting square as chosen above, we now move the knight for the number of steps input below and record the end square. This is repeated for the number of iterations indicated below. The fraction of iterations ending in each square is plotted. The laziness parameter helps to make the knight random walk aperiodic (but retain its stationary distribution).</p>
+<div id="controls">
+Steps per run:
+<input id="mcSteps" type="number" value="500" size="2">
+
+Iterations:
+<input id="mcRuns" type="number" value="5000" size="3">
+
+Laziness (0–1):
+<input id="laziness" type="number" step="0.05" value="0" min="0" max="1" size="2">
+
+<button onclick="runMonteCarlo()">Run End-Square Experiment</button>
+</div>
+<p>This experiment illustrates the ergodic theorem for Markov chains.</p>
 
 <script>
 const boardEl = document.getElementById("board");
@@ -215,6 +235,101 @@ function startSimulation() {
 }
 
 drawBoard();
+
+// This is where the Monte Carlo experiment code starts
+
+const MONTE_CARLO_TIME = 10000; // 10 seconds
+
+// Run one lazy Markov chain for T steps
+function runLazyChain(start, steps, epsilon) {
+  let current = start;
+
+  for (let i = 0; i < steps; i++) {
+    if (Math.random() < epsilon) continue; // stay put
+
+    const moves = legalMoves(current);
+    current = moves[Math.floor(Math.random() * moves.length)];
+  }
+
+  return current;
+}
+
+function runMonteCarlo() {
+  drawBoard();
+
+  const steps = +document.getElementById("mcSteps").value;
+  const runs = +document.getElementById("mcRuns").value;
+  const epsilon = +document.getElementById("laziness").value;
+
+  const start = parseSquare(
+    document.getElementById("startSquare").value
+  );
+
+  const counts = Array(64).fill(0);
+
+  // ---- Run ALL simulations instantly (fast) ----
+  const endSquares = [];
+
+  const MAX_FRAMES = 100;
+  const stride = Math.max(1, Math.floor(runs / MAX_FRAMES));
+
+  for (let i = 0; i < runs; i++) {
+    const end = runLazyChain(start, steps, epsilon);
+    counts[end]++;
+
+    if (i % stride === 0) {
+      endSquares.push(end);
+    }
+  }
+
+  // ---- Animate ONLY the end squares ----
+  animateEndSquares(endSquares);
+
+  // ---- Show final distribution after 10 seconds ----
+  setTimeout(() => {
+    renderMonteCarloDistribution(counts, runs);
+  }, MONTE_CARLO_TIME);
+}
+
+
+// Animate one end-square per iteration (guaranteed 10s total)
+function animateEndSquares(endSquares) {
+  let i = 0;
+  const delay = MONTE_CARLO_TIME / endSquares.length;
+
+  const id = setInterval(() => {
+    squares.forEach(s => s.querySelector(".knight")?.remove());
+
+    const k = document.createElement("div");
+    k.textContent = "♞";
+    k.className = "knight";
+    squares[endSquares[i]].appendChild(k);
+
+    i++;
+    if (i >= endSquares.length) clearInterval(id);
+
+  }, delay);
+}
+
+
+// Render empirical distribution
+function renderMonteCarloDistribution(counts, runs) {
+  probEl.innerHTML = "";
+  const max = Math.max(...counts);
+
+  counts.forEach(c => {
+    const p = c / runs;
+
+    const cell = document.createElement("div");
+    cell.className = "prob-cell";
+    cell.style.background =
+      `rgba(220, 0, 0, ${c / max})`;
+
+    cell.textContent = p.toFixed(3);
+    probEl.appendChild(cell);
+  });
+}
+
 </script>
 
 </body>
