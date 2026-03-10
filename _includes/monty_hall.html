@@ -1,0 +1,154 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Monty Hall Lab</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: sans-serif; text-align: center; background: #f4f4f9; padding: 20px; }
+        .door-container { display: flex; justify-content: center; gap: 20px; margin: 20px 0; }
+        .door { width: 100px; height: 150px; background: #8b4513; border: 4px solid #5d2e0a; 
+                display: flex; align-items: center; justify-content: center; 
+                color: white; font-size: 2rem; cursor: pointer; transition: 0.3s; }
+        .door.selected { border-color: #ff0; box-shadow: 0 0 15px #ff0; }
+        .door.revealed { background: #ddd; color: #333; cursor: default; }
+        .hidden { display: none; }
+        button { padding: 10px 20px; font-size: 1rem; cursor: pointer; margin: 5px; }
+        #simulation { margin-top: 50px; border-top: 2px solid #ccc; padding-top: 30px; }
+        canvas { max-width: 500px; margin: 0 auto; }
+    </style>
+</head>
+<body>
+
+    <h1>Interactive Monty Hall</h1>
+    <p id="status">Pick a door!</p>
+    
+    <div class="door-container" id="door-area">
+        <div class="door" onclick="selectDoor(0)" id="door-0">1</div>
+        <div class="door" onclick="selectDoor(1)" id="door-1">2</div>
+        <div class="door" onclick="selectDoor(2)" id="door-2">3</div>
+    </div>
+
+    <div id="switch-controls" class="hidden">
+        <p>I've opened a door to reveal a GOAT. Do you want to switch your choice?</p>
+        <button onclick="handleSwitch(true)">Yes, Switch</button>
+        <button onclick="handleSwitch(false)">No, Stay</button>
+    </div>
+
+    <button id="reset-btn" class="hidden" onclick="resetGame()">Play Again</button>
+
+    <div id="simulation">
+        <h2>1,000 Trial Simulation</h2>
+        <p>Pre-set your strategy:</p>
+        <button onclick="runSimulation(true)">Simulate: Always Switch</button>
+        <button onclick="runSimulation(false)">Simulate: Always Stay</button>
+        <div style="height: 300px;"><canvas id="simChart"></canvas></div>
+    </div>
+
+<script>
+    // --- GAME LOGIC ---
+    let carPos, userPick, revealedGoat;
+    let gameState = 'PICK'; // PICK, SWITCH, END
+
+    function initGame() {
+        carPos = Math.floor(Math.random() * 3);
+        gameState = 'PICK';
+        updateUI();
+    }
+
+    function selectDoor(idx) {
+        if (gameState !== 'PICK') return;
+        userPick = idx;
+        
+        // Host opens a door that isn't the car and isn't the user pick
+        let possibleDoors = [0, 1, 2].filter(d => d !== carPos && d !== userPick);
+        revealedGoat = possibleDoors[Math.floor(Math.random() * possibleDoors.length)];
+        
+        gameState = 'SWITCH';
+        updateUI();
+    }
+
+    function handleSwitch(didSwitch) {
+        if (gameState !== 'SWITCH') return;
+        if (didSwitch) {
+            userPick = [0, 1, 2].find(d => d !== userPick && d !== revealedGoat);
+        }
+        gameState = 'END';
+        updateUI();
+    }
+
+    function updateUI() {
+        for (let i = 0; i < 3; i++) {
+            const el = document.getElementById(`door-${i}`);
+            el.classList.remove('selected', 'revealed');
+            el.innerHTML = i + 1;
+
+            if (gameState === 'SWITCH' && i === revealedGoat) {
+                el.classList.add('revealed');
+                el.innerHTML = '🐐';
+            }
+            if (gameState === 'END') {
+                el.innerHTML = (i === carPos) ? '🚗' : '🐐';
+                if (i === userPick) el.classList.add('selected');
+            } else if (i === userPick) {
+                el.classList.add('selected');
+            }
+        }
+
+        document.getElementById('switch-controls').classList.toggle('hidden', gameState !== 'SWITCH');
+        document.getElementById('reset-btn').classList.toggle('hidden', gameState !== 'END');
+        
+        const status = document.getElementById('status');
+        if (gameState === 'PICK') status.innerText = "Pick a door!";
+        if (gameState === 'SWITCH') status.innerText = "Switch or Stay?";
+        if (gameState === 'END') {
+            status.innerText = (userPick === carPos) ? "You won the CAR! 🚗" : "You got a goat. 🐐";
+        }
+    }
+
+    function resetGame() { initGame(); }
+
+    // --- SIMULATION LOGIC ---
+    let chart;
+    function runSimulation(shouldSwitch) {
+        let wins = 0;
+        let losses = 0;
+        const trials = 1000;
+
+        for (let i = 0; i < trials; i++) {
+            const car = Math.floor(Math.random() * 3);
+            let pick = Math.floor(Math.random() * 3);
+            
+            // Host reveals a goat
+            const goat = [0, 1, 2].find(d => d !== car && d !== pick);
+            
+            if (shouldSwitch) {
+                pick = [0, 1, 2].find(d => d !== pick && d !== goat);
+            }
+
+            if (pick === car) wins++; else losses++;
+        }
+
+        updateChart(wins, losses, shouldSwitch ? "Switching" : "Staying");
+    }
+
+    function updateChart(wins, losses, strategy) {
+        const ctx = document.getElementById('simChart').getContext('2d');
+        if (chart) chart.destroy();
+        chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Wins', 'Losses'],
+                datasets: [{
+                    label: `Results for '${strategy}' strategy`,
+                    data: [wins, losses],
+                    backgroundColor: ['#4caf50', '#f44336']
+                }]
+            },
+            options: { scales: { y: { beginAtZero: true, max: 1000 } } }
+        });
+    }
+
+    initGame();
+</script>
+</body>
+</html>
