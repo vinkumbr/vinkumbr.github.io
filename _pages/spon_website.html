@@ -1,0 +1,858 @@
+---
+layout: null
+permalink: /spon2026/
+---
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stochastic Processes on Networks (SPoN) 2026</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        network: {
+                            deep: '#0F172A', // Slate 900
+                            node: '#38BDF8', // Sky 400
+                            nodeActive: '#F43F5E', // Rose 500
+                            link: '#334155', // Slate 700
+                            accent: '#F59E0B' // Amber 500
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar and premium blur-effects */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #38bdf8;
+        }
+        .canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-color: #0b0f19;
+            overflow: hidden;
+        }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-panel-light {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .neon-text-glow {
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5), 0 0 20px rgba(56, 189, 248, 0.2);
+        }
+    </style>
+</head>
+<body class="text-slate-100 font-sans antialiased bg-slate-950 overflow-x-hidden">
+
+    <!-- Interactive Network Background Simulation -->
+    <div class="canvas-container">
+        <canvas id="networkCanvas"></canvas>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <nav class="fixed top-0 left-0 w-full z-50 glass-panel border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2 bg-sky-500/10 rounded-lg border border-sky-500/20">
+                        <i data-lucide="git-branch" class="w-6 h-6 text-sky-400 animate-pulse"></i>
+                    </div>
+                    <span class="font-extrabold text-lg sm:text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-sky-200 to-indigo-400">
+                        SPoN 2026
+                    </span>
+                </div>
+                <div class="hidden md:flex space-x-8 text-sm font-semibold">
+                    <a href="#about" class="text-slate-300 hover:text-sky-400 transition-colors flex items-center gap-1"><i data-lucide="info" class="w-4 h-4"></i> About</a>
+                    <a href="#speakers" class="text-slate-300 hover:text-sky-400 transition-colors flex items-center gap-1"><i data-lucide="users" class="w-4 h-4"></i> Lecturers</a>
+                    <a href="#schedule" class="text-slate-300 hover:text-sky-400 transition-colors flex items-center gap-1"><i data-lucide="calendar" class="w-4 h-4"></i> Schedule</a>
+                    <a href="#competition" class="text-slate-300 hover:text-sky-400 transition-colors flex items-center gap-1"><i data-lucide="code-2" class="w-4 h-4"></i> Vibe Coding</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Body -->
+    <main class="relative z-10 pt-24 pb-16">
+
+        <!-- Hero Section -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 lg:py-24 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-panel-light text-xs sm:text-sm font-medium text-sky-400 border border-sky-500/20 mb-6 animate-bounce">
+                <span class="w-2 h-2 rounded-full bg-sky-400 animate-ping"></span>
+                <span>SCPP Workshop</span>
+            </div>
+            
+            <h1 class="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight mb-6">
+                Stochastic Processes <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indigo-300 to-pink-500 neon-text-glow">
+                    on Networks
+                </span>
+            </h1>
+            
+            <p class="max-w-2xl mx-auto text-base sm:text-xl text-slate-300 mb-8 leading-relaxed">
+                Exploring modern mathematical paradigms of diffusion, random walks, percolation, and dynamic processes running across physical and computational networks.
+            </p>
+
+            <!-- Event Details Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto mb-10">
+                <div class="glass-panel p-5 rounded-2xl flex items-center space-x-4 transition-all hover:border-sky-500/30">
+                    <div class="p-3 bg-sky-500/10 rounded-xl text-sky-400">
+                        <i data-lucide="calendar" class="w-6 h-6"></i>
+                    </div>
+                    <div class="text-left">
+                        <p class="text-xs text-slate-400 uppercase tracking-widest font-semibold">Date</p>
+                        <p class="font-bold text-slate-100">August 2 - 3, 2026</p>
+                    </div>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl flex items-center space-x-4 transition-all hover:border-sky-500/30">
+                    <div class="p-3 bg-purple-500/10 rounded-xl text-purple-400">
+                        <i data-lucide="sparkles" class="w-6 h-6"></i>
+                    </div>
+                    <div class="text-left">
+                        <p class="text-xs text-slate-400 uppercase tracking-widest font-semibold">Distinguished Lecturers</p>
+                        <p class="font-bold text-slate-100">A. Ganesh & V. Shneer</p>
+                    </div>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl flex items-center space-x-4 transition-all hover:border-sky-500/30">
+                    <div class="p-3 bg-amber-500/10 rounded-xl text-amber-400">
+                        <i data-lucide="gamepad-2" class="w-6 h-6"></i>
+                    </div>
+                    <div class="text-left">
+                        <p class="text-xs text-slate-400 uppercase tracking-widest font-semibold">Coding Challenge</p>
+                        <p class="font-bold text-slate-100">SPoN Vibe (Teams of 2)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactivity Instruction Box -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-lg glass-panel-light text-xs text-slate-400">
+                <i data-lucide="mouse-pointer-click" class="w-4 h-4 text-sky-400 animate-pulse"></i>
+                <span>Interaction tip: Click the background to inject random walkers & explore dynamic diffusion!</span>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 scroll-mt-20">
+            <div class="glass-panel rounded-3xl p-8 sm:p-12 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-sky-500/5 rounded-full filter blur-3xl"></div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-2xl sm:text-4xl font-extrabold text-white mb-6">
+                            Understanding SPoN 2026
+                        </h2>
+                        <p class="text-slate-300 mb-6 leading-relaxed">
+                            Networks constitute the backbone of modern structural representations, ranging from neural systems and social platforms to power grids and epidemic pathways. The SPoN workshop addresses how system dynamics behave over these topologies.
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flex gap-3">
+                                <div class="flex-none mt-1"><i data-lucide="check-circle-2" class="w-5 h-5 text-sky-400"></i></div>
+                                <p class="text-slate-300"><strong class="text-slate-100">Day 1 Focus:</strong> Pedagogy & Foundational Lectures covering limits of random walks and network queueing theories.</p>
+                            </div>
+                            <div class="flex gap-3">
+                                <div class="flex-none mt-1"><i data-lucide="check-circle-2" class="w-5 h-5 text-sky-400"></i></div>
+                                <p class="text-slate-300"><strong class="text-slate-100">Day 2 Focus:</strong> Research talks showcasing leading global findings on percolation and structural network evolution.</p>
+                            </div>
+                            <div class="flex gap-3">
+                                <div class="flex-none mt-1"><i data-lucide="check-circle-2" class="w-5 h-5 text-sky-400"></i></div>
+                                <p class="text-slate-300"><strong class="text-slate-100">Coordinated Vibe:</strong> Hands-on team coding event where participants implement networks with rapid code development loops.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-slate-900/40 p-6 rounded-2xl border border-slate-800">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs uppercase tracking-widest text-slate-400 font-bold">Stochastic Simulator Live Stats</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-sky-500/20 text-sky-300 border border-sky-500/30">Active</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="glass-panel-light p-4 rounded-xl text-center">
+                                <p id="nodes-count" class="text-2xl sm:text-3xl font-extrabold text-sky-400">0</p>
+                                <p class="text-xs text-slate-400 mt-1">Network Nodes</p>
+                            </div>
+                            <div class="glass-panel-light p-4 rounded-xl text-center">
+                                <p id="edges-count" class="text-2xl sm:text-3xl font-extrabold text-indigo-400">0</p>
+                                <p class="text-xs text-slate-400 mt-1">Edges (Connections)</p>
+                            </div>
+                            <div class="glass-panel-light p-4 rounded-xl text-center">
+                                <p id="walkers-count" class="text-2xl sm:text-3xl font-extrabold text-pink-400">0</p>
+                                <p class="text-xs text-slate-400 mt-1">Stochastic Particles</p>
+                            </div>
+                            <div class="glass-panel-light p-4 rounded-xl text-center">
+                                <p id="infection-rate" class="text-2xl sm:text-3xl font-extrabold text-amber-400">0%</p>
+                                <p class="text-xs text-slate-400 mt-1">Infected Nodes</p>
+                            </div>
+                        </div>
+                        <div class="mt-6 text-center">
+                            <button id="add-nodes-btn" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-semibold rounded-lg text-slate-300 border border-slate-700 transition duration-200">
+                                Inject Spark Particles
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Speaker Section -->
+        <section id="speakers" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Distinguished Lecturers</h2>
+                <p class="text-slate-400 mt-2 max-w-xl mx-auto">Get to know the leading academics delivering deep-dive lectures on Day 1.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Speaker 1 -->
+                <div class="glass-panel rounded-2xl overflow-hidden group hover:border-sky-500/40 transition duration-300 flex flex-col justify-between">
+                    <div class="p-8">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-sky-400 to-indigo-600 flex items-center justify-center text-white font-black text-2xl shadow-lg shadow-sky-500/20 group-hover:scale-105 transition-transform">
+                                AG
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white group-hover:text-sky-400 transition-colors">Ayalvadi Ganesh</h3>
+                                <p class="text-sm text-sky-400">University of Bristol</p>
+                            </div>
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                            Ayalvadi Ganesh is a premier researcher operating at the boundaries of queuing theory, stochastic networks, and epidemical processes on graphs. His work details how localized rules dictate macroscopic phase transitions in dynamic networks.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs px-2.5 py-1 bg-sky-950 text-sky-400 rounded-full border border-sky-900">Queuing Networks</span>
+                            <span class="text-xs px-2.5 py-1 bg-sky-950 text-sky-400 rounded-full border border-sky-900">Epidemics on Graphs</span>
+                            <span class="text-xs px-2.5 py-1 bg-sky-950 text-sky-400 rounded-full border border-sky-900">Stochastic Approximation</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-900/60 p-4 border-t border-slate-800 text-center">
+                        <span class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Topic: Rumour spreading on networks</span>
+                    </div>
+                </div>
+
+                <!-- Speaker 2 -->
+                <div class="glass-panel rounded-2xl overflow-hidden group hover:border-pink-500/40 transition duration-300 flex flex-col justify-between">
+                    <div class="p-8">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-pink-500 to-amber-500 flex items-center justify-center text-white font-black text-2xl shadow-lg shadow-pink-500/20 group-hover:scale-105 transition-transform">
+                                VS
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white group-hover:text-pink-400 transition-colors">Vsevolod (Seva) Shneer</h3>
+                                <p class="text-sm text-pink-400">Heriot-Watt University</p>
+                            </div>
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                            Seva Shneer is well known for his substantial contributions in applied probability, queueing networks, and stochastic models for wireless communication networks. He covers spatial models where stochastic flow interaction dictates operational throughput.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs px-2.5 py-1 bg-pink-950/50 text-pink-400 rounded-full border border-pink-900">Applied Probability</span>
+                            <span class="text-xs px-2.5 py-1 bg-pink-950/50 text-pink-400 rounded-full border border-pink-900">Spatial Queueing</span>
+                            <span class="text-xs px-2.5 py-1 bg-pink-950/50 text-pink-400 rounded-full border border-pink-900">Random Graphs</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-900/60 p-4 border-t border-slate-800 text-center">
+                        <span class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Title: First passage percolation</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <!-- Compact Schedule Section -->
+        <section id="schedule" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 scroll-mt-20">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Workshop Schedule</h2>
+                <p class="text-slate-400 text-xs sm:text-sm mt-1">Both days of foundational series lectures & research presentations at a glance.</p>
+            </div>
+
+            <!-- 2-Column Dashboard Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
+                
+                <!-- Day 1 List Column -->
+                <div class="glass-panel p-4 rounded-2xl border border-slate-800/80 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-2 mb-4 pb-2 border-b border-slate-800">
+                            <i data-lucide="calendar" class="w-4 h-4 text-sky-400"></i>
+                            <h3 class="font-bold text-sm uppercase tracking-widest text-sky-400">Day 1 &middot; Sunday, Aug 2, 2026</h3>
+                        </div>
+                        <div class="space-y-1 text-xs">
+                            <div class="flex items-center justify-between p-2 rounded bg-slate-900/40 border border-slate-800/40 hover:border-sky-500/20 transition-all">
+                                <span class="font-mono text-sky-400 font-semibold w-24">09:30 - 10:15</span>
+                                <span class="text-slate-200 font-semibold text-right">Lecture 1: Ayalvadi Ganesh</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 rounded bg-slate-900/40 border border-slate-800/40 hover:border-sky-500/20 transition-all">
+                                <span class="font-mono text-sky-400 font-semibold w-24">10:20 - 11:05</span>
+                                <span class="text-slate-200 font-semibold text-right">Lecture 2: Ayalvadi Ganesh</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 rounded bg-amber-500/5 border border-amber-500/10 hover:border-amber-500/20 transition-all">
+                                <span class="font-mono text-amber-400 font-semibold w-24">11:05 - 11:25</span>
+                                <span class="text-amber-300 font-medium text-right flex items-center gap-1"><i data-lucide="coffee" class="w-3.5 h-3.5 inline"></i> Coffee Break</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 rounded bg-slate-900/40 border border-slate-800/40 hover:border-purple-500/20 transition-all">
+                                <span class="font-mono text-purple-400 font-semibold w-24">11:25 - 12:10</span>
+                                <span class="text-slate-200 font-semibold text-right">Lecture 1: Seva Shneer</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 rounded bg-slate-900/40 border border-slate-800/40 hover:border-purple-500/20 transition-all">
+                                <span class="font-mono text-purple-400 font-semibold w-24">12:15 - 13:00</span>
+                                <span class="text-slate-200 font-semibold text-right">Lecture 2: Seva Shneer</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 rounded bg-emerald-500/5 border border-emerald-500/10 hover:border-emerald-500/20 transition-all">
+                                <span class="font-mono text-emerald-400 font-semibold w-24">13:00 - 14:00</span>
+                                <span class="text-emerald-300 font-medium text-right flex items-center gap-1"><i data-lucide="utensils" class="w-3.5 h-3.5 inline"></i> Lunch Break</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 rounded bg-amber-500/10 border border-amber-500/20 hover:border-amber-500/40 transition-all">
+                                <span class="font-mono text-amber-400 font-bold w-24">14:00 - 14:30</span>
+                                <span class="text-amber-200 font-bold text-right flex items-center gap-1"><i data-lucide="sparkles" class="w-3.5 h-3.5 inline"></i> SPoN Vibe Coding Registration</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 rounded bg-slate-900/40 border border-slate-800/40 hover:border-sky-500/20 transition-all">
+                                <span class="font-mono text-sky-400 font-semibold w-24">14:30 - 15:30</span>
+                                <span class="text-slate-200 font-semibold text-right">Lecture 3: Ayalvadi Ganesh</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 rounded bg-amber-500/5 border border-amber-500/10 hover:border-amber-500/20 transition-all">
+                                <span class="font-mono text-amber-400 font-semibold w-24">15:30 - 16:00</span>
+                                <span class="text-amber-300 font-medium text-right flex items-center gap-1"><i data-lucide="cookie" class="w-3.5 h-3.5 inline"></i> High Tea Session</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 rounded bg-slate-900/40 border border-slate-800/40 hover:border-purple-500/20 transition-all">
+                                <span class="font-mono text-purple-400 font-semibold w-24">16:00 - 17:00</span>
+                                <span class="text-slate-200 font-semibold text-right">Lecture 3: Seva Shneer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 2 List Column -->
+                <div class="glass-panel p-4 rounded-2xl border border-slate-800/80 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-2 mb-4 pb-2 border-b border-slate-800">
+                            <i data-lucide="calendar" class="w-4 h-4 text-pink-400"></i>
+                            <h3 class="font-bold text-sm uppercase tracking-widest text-pink-400">Day 2 &middot; Monday, Aug 3, 2026</h3>
+                        </div>
+                        <div class="space-y-1 text-xs">
+                            <div class="flex items-center justify-between p-1.5 rounded bg-slate-900/40 border border-slate-800/40 hover:border-pink-500/20 transition-all">
+                                <span class="font-mono text-pink-400 font-semibold w-24">09:30 - 10:00</span>
+                                <span class="text-slate-200 font-medium text-right truncate pl-2">Talk 1: Emerging Network Paradigms</span>
+                            </div>
+                            <div class="flex items-center justify-between p-1.5 rounded bg-slate-900/40 border border-slate-800/40 hover:border-pink-500/20 transition-all">
+                                <span class="font-mono text-pink-400 font-semibold w-24">10:00 - 10:30</span>
+                                <span class="text-slate-200 font-medium text-right truncate pl-2">Talk 2: Dynamic Walkers & Limits</span>
+                            </div>
+                            <div class="flex items-center justify-between p-1.5 rounded bg-slate-900/40 border border-slate-800/40 hover:border-pink-500/20 transition-all">
+                                <span class="font-mono text-pink-400 font-semibold w-24">10:30 - 11:00</span>
+                                <span class="text-slate-200 font-medium text-right truncate pl-2">Talk 3: Spectral Graph Properties</span>
+                            </div>
+                            <div class="flex items-center justify-between p-1.5 rounded bg-amber-500/5 border border-amber-500/10 hover:border-amber-500/20 transition-all">
+                                <span class="font-mono text-amber-400 font-semibold w-24">11:00 - 11:30</span>
+                                <span class="text-amber-300 font-medium text-right flex items-center gap-1"><i data-lucide="coffee" class="w-3.5 h-3.5 inline"></i> Tea Break & Networking</span>
+                            </div>
+                            <div class="flex items-center justify-between p-1.5 rounded bg-slate-900/40 border border-slate-800/40 hover:border-pink-500/20 transition-all">
+                                <span class="font-mono text-pink-400 font-semibold w-24">11:30 - 12:00</span>
+                                <span class="text-slate-200 font-medium text-right truncate pl-2">Talk 4: Quantum Random Walks</span>
+                            </div>
+                            <div class="flex items-center justify-between p-1.5 rounded bg-amber-500/10 border border-amber-500/20 hover:border-amber-500/40 transition-all">
+                                <span class="font-mono text-amber-400 font-bold w-24">12:00 - 13:00</span>
+                                <span class="text-amber-200 font-bold text-right flex items-center gap-1"><i data-lucide="play" class="w-3.5 h-3.5 inline"></i> SPoN Vibe Coding Demos</span>
+                            </div>
+                            <div class="flex items-center justify-between p-1.5 rounded bg-emerald-500/5 border border-emerald-500/10 hover:border-emerald-500/20 transition-all">
+                                <span class="font-mono text-emerald-400 font-semibold w-24">13:00 - 14:30</span>
+                                <span class="text-emerald-300 font-medium text-right flex items-center gap-1"><i data-lucide="utensils" class="w-3.5 h-3.5 inline"></i> Lunch Break</span>
+                            </div>
+                            <div class="flex items-center justify-between p-1.5 rounded bg-slate-900/40 border border-slate-800/40 hover:border-pink-500/20 transition-all">
+                                <span class="font-mono text-pink-400 font-semibold w-24">14:30 - 15:00</span>
+                                <span class="text-slate-200 font-medium text-right truncate pl-2">Talk 5: Scale-Free Phase Transitions</span>
+                            </div>
+                            <div class="flex items-center justify-between p-1.5 rounded bg-slate-900/40 border border-slate-800/40 hover:border-pink-500/20 transition-all">
+                                <span class="font-mono text-pink-400 font-semibold w-24">15:00 - 15:30</span>
+                                <span class="text-slate-200 font-medium text-right truncate pl-2">Talk 6: Dynamic Diffusion Control</span>
+                            </div>
+                            <div class="flex items-center justify-between p-1.5 rounded bg-amber-500/5 border border-amber-500/10 hover:border-amber-500/20 transition-all">
+                                <span class="font-mono text-amber-400 font-semibold w-24">15:30 - 16:00</span>
+                                <span class="text-amber-300 font-medium text-right flex items-center gap-1"><i data-lucide="cookie" class="w-3.5 h-3.5 inline"></i> High Tea Break</span>
+                            </div>
+                            <div class="flex items-center justify-between p-1.5 rounded bg-slate-900/40 border border-slate-800/40 hover:border-pink-500/20 transition-all">
+                                <span class="font-mono text-pink-400 font-semibold w-24">16:00 - 16:30</span>
+                                <span class="text-slate-200 font-medium text-right truncate pl-2">Talk 7: Percolation Theory Limits</span>
+                            </div>
+                            <div class="flex items-center justify-between p-1.5 rounded bg-emerald-500/10 border border-emerald-500/20 hover:border-emerald-500/40 transition-all">
+                                <span class="font-mono text-emerald-400 font-bold w-24">16:30 - 17:00</span>
+                                <span class="text-emerald-200 font-bold text-right flex items-center gap-1"><i data-lucide="award" class="w-3.5 h-3.5 inline"></i> Vote of thanks and prize distribution</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SPoN Vibe Coding Section -->
+        <section id="competition" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 scroll-mt-20">
+            <div class="relative glass-panel rounded-3xl p-8 sm:p-12 overflow-hidden border border-amber-500/20">
+                <div class="absolute -right-16 -top-16 w-72 h-72 bg-amber-500/10 rounded-full filter blur-3xl"></div>
+                <div class="absolute -left-16 -bottom-16 w-72 h-72 bg-sky-500/10 rounded-full filter blur-3xl"></div>
+                
+                <div class="max-w-3xl mx-auto text-center mb-10">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-semibold mb-4 border border-amber-500/20">
+                        <i data-lucide="zap" class="w-3 h-3"></i>
+                        <span>Teams of 2 Challenge</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-white">SPoN Vibe Coding Competition</h2>
+                    <p class="text-slate-300 mt-3 text-base sm:text-lg">
+                        Test your speed, algorithmic knowledge, and intuitive reasoning while "vibe coding" stochastic processes on networks in a competitive marathon. Bring your teammate and craft unique simulations!
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-10">
+                    <div class="glass-panel-light p-6 rounded-2xl border border-slate-800">
+                        <i data-lucide="users-2" class="w-8 h-8 text-amber-400 mb-3"></i>
+                        <h4 class="font-bold text-lg text-white mb-2">Team Composition</h4>
+                        <p class="text-xs sm:text-sm text-slate-300">Exactly 2 members per team. Share planning, execution, and present together on Day 2.</p>
+                    </div>
+                    <div class="glass-panel-light p-6 rounded-2xl border border-slate-800">
+                        <i data-lucide="laptop" class="w-8 h-8 text-sky-400 mb-3"></i>
+                        <h4 class="font-bold text-lg text-white mb-2">The Prompt</h4>
+                        <p class="text-xs sm:text-sm text-slate-300">Build a stochastic simulation/visualizer or make a video  representing a stochastic process on a network. More details during the workshop.</p>
+                    </div>
+                    <div class="glass-panel-light p-6 rounded-2xl border border-slate-800">
+                        <i data-lucide="award" class="w-8 h-8 text-emerald-400 mb-3"></i>
+                        <h4 class="font-bold text-lg text-white mb-2">Exciting Prizes</h4>
+                        <p class="text-xs sm:text-sm text-slate-300">Prizes worth up to INR 10000 to be won.</p>
+                    </div>
+                </div>
+
+                <!-- Registration Form Block 
+                <div class="max-w-2xl mx-auto bg-slate-950/80 p-6 sm:p-8 rounded-2xl border border-slate-800">
+                    <h3 class="text-xl font-bold text-white mb-4 text-center">Team Registration Form</h3>
+                    
+                    <form id="registration-form" onsubmit="handleRegistration(event)">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Team Name</label>
+                                <input type="text" required id="team-name" placeholder="eg. Markov Mavericks" class="w-full px-4 py-2 bg-slate-900 border border-slate-800 rounded-lg text-white text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Primary Email</label>
+                                <input type="email" required id="team-email" placeholder="contact@example.com" class="w-full px-4 py-2 bg-slate-900 border border-slate-800 rounded-lg text-white text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Member 1 Name</label>
+                                <input type="text" required id="member1" placeholder="First Last" class="w-full px-4 py-2 bg-slate-900 border border-slate-800 rounded-lg text-white text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Member 2 Name</label>
+                                <input type="text" required id="member2" placeholder="First Last" class="w-full px-4 py-2 bg-slate-900 border border-slate-800 rounded-lg text-white text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 rounded-lg bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 font-bold text-sm tracking-widest uppercase transition duration-300 shadow-lg shadow-amber-500/15">
+                            Submit Registration
+                        </button>
+                    </form>
+
+                    Success Message (Initially Hidden) 
+                    <div id="form-success" class="hidden mt-4 p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-lg text-center text-sm">
+                        <i data-lucide="check" class="inline w-5 h-5 mr-1 align-middle"></i>
+                        <span>Team Registered Successfully! Prepare your keyboards.</span>
+                    </div>
+                </div>-->
+            </div>
+        </section>
+
+        <!-- Dynamic Math Theory Spotlight / FAQ -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-extrabold text-white">Workshop FAQs</h2>
+                <p class="text-slate-400 mt-2">Essential information for attendees, students, and participants.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+                <div class="glass-panel p-6 rounded-2xl">
+                    <h4 class="font-bold text-white mb-2">Who can attend SPoN 2026?</h4>
+                    <p class="text-slate-300 text-sm">The lectures are tailored for graduate students, researchers, and advanced undergraduates interested in probability theory, operations research, computer science, and network physics.</p>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl">
+                    <h4 class="font-bold text-white mb-2">Do I need to sign up for Vibe Coding separately?</h4>
+                    <p class="text-slate-300 text-sm">Yes. The registration will be conducted during the workshop. You need to registed for the workshop in order to participate in the SPoN vibe coding competition. Workshop registration is free for IITB students and faculty and other invited individuals.</p>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl">
+                    <h4 class="font-bold text-white mb-2">What background is required for lectures?</h4>
+                    <p class="text-slate-300 text-sm">Basic probability (Markov chains, continuous-time processes) and rudimentary graph theory will help you extract the maximum learning value from the sessions.</p>
+                </div>
+                <!-- <div class="glass-panel p-6 rounded-2xl">
+                    <h4 class="font-bold text-white mb-2">Will the sessions be recorded?</h4>
+                    <p class="text-slate-300 text-sm">Yes, all lectures by Ayalvadi Ganesh and Seva Shneer, alongside the Day 2 research presentations, will be cataloged and uploaded post-event.</p>
+                </div> -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-slate-900 bg-slate-950/90 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div class="p-2 bg-sky-500/10 rounded-lg text-sky-400">
+                    <i data-lucide="git-branch" class="w-5 h-5"></i>
+                </div>
+                <span class="font-bold text-slate-200">SPoN 2026</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-500">
+                &copy; 2026 Stochastic Processes on Networks Workshop. Built for academics, explorers & vibe-coders.
+            </p>
+            <div class="flex space-x-4 text-xs text-slate-400">
+                <span class="hover:text-sky-400 transition cursor-pointer">Privacy Policy</span>
+                <span>&middot;</span>
+                <span class="hover:text-sky-400 transition cursor-pointer">Terms & Conditions</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript For Interactivity and Simulation -->
+    <script>
+        // Switch between Day 1 and Day 2 schedules
+        function switchDay(day) {
+            const day1Btn = document.getElementById('day1-btn');
+            const day2Btn = document.getElementById('day2-btn');
+            const day1Content = document.getElementById('day1-content');
+            const day2Content = document.getElementById('day2-content');
+
+            if (day === 1) {
+                day1Btn.className = "px-6 py-2.5 text-sm font-bold rounded-lg transition duration-200 bg-sky-500 text-slate-950 shadow-md shadow-sky-500/20";
+                day2Btn.className = "px-6 py-2.5 text-sm font-bold rounded-lg transition duration-200 text-slate-400 hover:text-slate-100";
+                day1Content.classList.remove('hidden');
+                day2Content.classList.add('hidden');
+            } else {
+                day2Btn.className = "px-6 py-2.5 text-sm font-bold rounded-lg transition duration-200 bg-sky-500 text-slate-950 shadow-md shadow-sky-500/20";
+                day1Btn.className = "px-6 py-2.5 text-sm font-bold rounded-lg transition duration-200 text-slate-400 hover:text-slate-100";
+                day2Content.classList.remove('hidden');
+                day1Content.classList.add('hidden');
+            }
+        }
+
+        // Handle Registration Form submission
+        function handleRegistration(event) {
+            event.preventDefault();
+            const form = document.getElementById('registration-form');
+            const successMsg = document.getElementById('form-success');
+            
+            // Collect info
+            const teamName = document.getElementById('team-name').value;
+            const email = document.getElementById('team-email').value;
+            const m1 = document.getElementById('member1').value;
+            const m2 = document.getElementById('member2').value;
+
+            if (teamName && email && m1 && m2) {
+                form.classList.add('hidden');
+                successMsg.classList.remove('hidden');
+                
+                // Inject custom confetti injection or walker spark onto the interactive canvas
+                for(let i=0; i<30; i++) {
+                    spawnRandomWalker();
+                }
+            }
+        }
+
+        // --- STOCHASTIC PROCESS NETWORK SIMULATION CANVAS ---
+        const canvas = document.getElementById('networkCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        // Configuration (Enforce minimum 15 nodes, safe guarding iframe/small viewport rendering)
+        const NODE_COUNT = Math.max(15, Math.min(65, Math.floor((width * height) / 18000)));
+        const CONNECTION_DISTANCE = 155;
+        const nodes = [];
+        const walkers = [];
+
+        // UI elements updater metrics
+        const nodesCounter = document.getElementById('nodes-count');
+        const edgesCounter = document.getElementById('edges-count');
+        const walkersCounter = document.getElementById('walkers-count');
+        const infectionRateCounter = document.getElementById('infection-rate');
+
+        class Node {
+            constructor(x, y) {
+                this.x = x || Math.random() * width;
+                this.y = y || Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
+                this.radius = Math.random() * 3 + 3;
+                this.baseColor = 'rgba(56, 189, 248, 0.55)'; // sky-400
+                this.state = 'susceptible'; // susceptible, infected, refractory
+                this.stateTimer = 0;
+                this.connections = [];
+            }
+
+            update() {
+                // Gentle drift
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Boundary bounce
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+
+                // State decay logic (stochastic process epidemic cycle: SIS or SIR)
+                if (this.state === 'infected') {
+                    this.stateTimer--;
+                    if (this.stateTimer <= 0) {
+                        this.state = Math.random() > 0.4 ? 'susceptible' : 'refractory';
+                        this.stateTimer = this.state === 'refractory' ? 200 : 0;
+                    }
+                } else if (this.state === 'refractory') {
+                    this.stateTimer--;
+                    if (this.stateTimer <= 0) {
+                        this.state = 'susceptible';
+                    }
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                
+                if (this.state === 'infected') {
+                    ctx.fillStyle = '#f43f5e'; // rose-500
+                    ctx.shadowColor = '#f43f5e';
+                    ctx.shadowBlur = 8;
+                } else if (this.state === 'refractory') {
+                    ctx.fillStyle = '#fbbf24'; // amber-400
+                    ctx.shadowColor = '#fbbf24';
+                    ctx.shadowBlur = 4;
+                } else {
+                    ctx.fillStyle = 'rgba(56, 189, 248, 0.8)'; // sky-400
+                    ctx.shadowBlur = 0;
+                }
+                
+                ctx.fill();
+                ctx.shadowBlur = 0; // reset
+            }
+        }
+
+        // Stochastic particles moving randomly across structural connections
+        class Walker {
+            constructor(currentNode) {
+                this.currentNode = currentNode;
+                this.targetNode = null;
+                this.progress = 0;
+                this.speed = Math.random() * 0.02 + 0.015;
+                this.color = ['#f43f5e', '#38bdf8', '#fbbf24', '#c084fc'][Math.floor(Math.random() * 4)];
+            }
+
+            update() {
+                if (!this.targetNode) {
+                    // Pick a stochastic neighbor transition (Markovian transition matrix weight)
+                    const neighbors = this.currentNode.connections;
+                    if (neighbors && neighbors.length > 0) {
+                        this.targetNode = neighbors[Math.floor(Math.random() * neighbors.length)];
+                        this.progress = 0;
+                        
+                        // Infectious process on contact
+                        if (Math.random() < 0.25) {
+                            if (this.currentNode.state === 'infected' && this.targetNode.state === 'susceptible') {
+                                this.targetNode.state = 'infected';
+                                this.targetNode.stateTimer = 180; // duration of infection
+                            } else if (this.targetNode.state === 'infected' && this.currentNode.state === 'susceptible') {
+                                this.currentNode.state = 'infected';
+                                this.currentNode.stateTimer = 180;
+                            }
+                        }
+                    } else {
+                        // Dead end, jump to random node
+                        this.currentNode = nodes[Math.floor(Math.random() * nodes.length)];
+                        return;
+                    }
+                }
+
+                this.progress += this.speed;
+                if (this.progress >= 1) {
+                    this.currentNode = this.targetNode;
+                    this.targetNode = null;
+                    this.progress = 0;
+                }
+            }
+
+            draw() {
+                let x, y;
+                if (this.targetNode) {
+                    x = this.currentNode.x + (this.targetNode.x - this.currentNode.x) * this.progress;
+                    y = this.currentNode.y + (this.targetNode.y - this.currentNode.y) * this.progress;
+                } else {
+                    x = this.currentNode.x;
+                    y = this.currentNode.y;
+                }
+
+                ctx.beginPath();
+                ctx.arc(x, y, 4.5, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.shadowColor = this.color;
+                ctx.shadowBlur = 10;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        // Initialize Nodes
+        function initNetwork() {
+            nodes.length = 0;
+            for (let i = 0; i < NODE_COUNT; i++) {
+                nodes.push(new Node());
+            }
+            
+            // Safe guard check against 0 or empty node sets
+            if (nodes.length > 0) {
+                // Infect a patient zero
+                nodes[0].state = 'infected';
+                nodes[0].stateTimer = 300;
+            }
+
+            // Spawn stochastic walkers
+            walkers.length = 0;
+            if (nodes.length > 0) {
+                const walkerCount = Math.min(25, Math.floor(nodes.length / 2.5));
+                for (let i = 0; i < walkerCount; i++) {
+                    const randomNode = nodes[Math.floor(Math.random() * nodes.length)];
+                    walkers.push(new Walker(randomNode));
+                }
+            }
+        }
+
+        function calculateConnections() {
+            let totalEdges = 0;
+            // Clear past connections list
+            nodes.forEach(node => node.connections = []);
+
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const dx = nodes[i].x - nodes[j].x;
+                    const dy = nodes[i].y - nodes[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < CONNECTION_DISTANCE) {
+                        nodes[i].connections.push(nodes[j]);
+                        nodes[j].connections.push(nodes[i]);
+                        totalEdges++;
+
+                        // Draw edge link line with opacity proportionate to closeness
+                        const alpha = (1 - (dist / CONNECTION_DISTANCE)) * 0.16;
+                        ctx.beginPath();
+                        ctx.moveTo(nodes[i].x, nodes[i].y);
+                        ctx.lineTo(nodes[j].x, nodes[j].y);
+                        ctx.strokeStyle = `rgba(56, 189, 248, ${alpha})`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            }
+            return totalEdges;
+        }
+
+        function spawnRandomWalker() {
+            if (nodes.length > 0) {
+                const node = nodes[Math.floor(Math.random() * nodes.length)];
+                node.state = 'infected';
+                node.stateTimer = 200;
+                walkers.push(new Walker(node));
+            }
+        }
+
+        // User interacts with the stochastic field by clicking
+        window.addEventListener('click', (e) => {
+            // Ignore if clicked header navigation or structured buttons
+            if (e.target.closest('nav') || e.target.closest('button') || e.target.closest('form') || e.target.closest('a')) {
+                return;
+            }
+            
+            // Add a new node at click location
+            const newNode = new Node(e.clientX, e.clientY);
+            newNode.state = 'infected';
+            newNode.stateTimer = 250;
+            nodes.push(newNode);
+
+            // Trigger supplementary walker
+            walkers.push(new Walker(newNode));
+        });
+
+        document.getElementById('add-nodes-btn').addEventListener('click', () => {
+            for(let i=0; i<5; i++) {
+                spawnRandomWalker();
+            }
+        });
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initNetwork();
+        });
+
+        // Primary animation loop
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            // Compute dynamic connectivity matrix & draw links
+            const currentEdgesCount = calculateConnections();
+
+            // Update & Draw Nodes
+            let infectedCount = 0;
+            nodes.forEach(node => {
+                node.update();
+                node.draw();
+                if (node.state === 'infected') infectedCount++;
+            });
+
+            // Update & Draw Walkers
+            walkers.forEach(walker => {
+                walker.update();
+                walker.draw();
+            });
+
+            // Periodic updates to user stats card
+            if (nodesCounter) nodesCounter.innerText = nodes.length;
+            if (edgesCounter) edgesCounter.innerText = currentEdgesCount;
+            if (walkersCounter) walkersCounter.innerText = walkers.length;
+            if (infectionRateCounter) {
+                const percentage = nodes.length > 0 ? Math.round((infectedCount / nodes.length) * 100) : 0;
+                infectionRateCounter.innerText = `${percentage}%`;
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        // Startup triggers
+        window.onload = function () {
+            // Load interactive icons
+            lucide.createIcons();
+            
+            // Bootstrap simulation
+            initNetwork();
+            animate();
+        }
+    </script>
+</body>
+</html>

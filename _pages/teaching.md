@@ -6,6 +6,16 @@ description: I have taught the following courses.
 nav: true
 nav_order: 2
 ---
+## @IITB
+
+#### Aug-Dec 2026
+**IE 307: Stochastic Processes and Queueing Systems**
+
+#### Jan-May 2026
+**IE 622: Probability and Stochastic Processes II**- jointly with Sarath Yasodharan.
+
+
+## Before IITB
 ### Lecturer
 ***Network Statistics*** in Sep-Nov 2024 offered with Pim van der Hoorn at TU Eindhoven.
 
