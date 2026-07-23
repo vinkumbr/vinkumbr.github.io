@@ -32,6 +32,15 @@ permalink: /spon2026/
             }
         }
     </script>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['\\(', '\\)']],
+          displayMath: [['\\[', '\\]']]
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         /* Custom scrollbar and premium blur-effects */
         ::-webkit-scrollbar {
@@ -342,15 +351,23 @@ permalink: /spon2026/
                         </div>
                         <div class="space-y-1 text-xs">
                             <div class="flex items-center justify-between p-2 rounded bg-slate-900/40 border border-slate-800/40 hover:border-sky-500/20 transition-all">
+                                <span class="font-mono text-sky-400 font-semibold w-24">09:00 - 09:20</span>
+                                <span class="text-slate-200 font-semibold text-right">Registration opens</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 rounded bg-slate-900/40 border border-slate-800/40 hover:border-sky-500/20 transition-all">
+                                <span class="font-mono text-emerald-400 font-semibold w-24">09:20 - 09:30</span>
+                                <span class="text-emerald-300 font-semibold text-right">Welcome address</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 rounded bg-slate-900/40 border border-slate-800/40 hover:border-sky-500/20 transition-all">
                                 <span class="font-mono text-sky-400 font-semibold w-24">09:30 - 10:20</span>
                                 <span class="text-slate-200 font-semibold text-right">Lecture 1: Ayalvadi Ganesh</span>
                             </div>
                             <div class="flex items-center justify-between p-2 rounded bg-slate-900/40 border border-slate-800/40 hover:border-sky-500/20 transition-all">
-                                <span class="font-mono text-amber-400 font-bold w-24">10:20 - 10:50</span>
+                                <span class="font-mono text-amber-400 font-bold w-24">10:20 - 10:40</span>
                                 <span class="text-amber-200 font-bold text-right flex items-center gap-1"><i data-lucide="sparkles" class="w-3.5 h-3.5 inline"></i>SPoN Vibe Coding Registration</span>
                             </div>
                             <div class="flex items-center justify-between p-2 rounded bg-amber-500/5 border border-amber-500/10 hover:border-amber-500/20 transition-all">
-                                <span class="font-mono text-amber-400 font-semibold w-24">10:50 - 11:15</span>
+                                <span class="font-mono text-amber-400 font-semibold w-24">10:40 - 11:15</span>
                                 <span class="text-amber-300 font-medium text-right flex items-center gap-1"><i data-lucide="coffee" class="w-3.5 h-3.5 inline"></i> Coffee Break</span>
                             </div>
                             <div class="flex items-center justify-between p-2 rounded bg-slate-900/40 border border-slate-800/40 hover:border-purple-500/20 transition-all">
@@ -571,26 +588,23 @@ permalink: /spon2026/
                             <div class="space-y-4 text-sm leading-relaxed">
                                 <div>
                                     <h4 class="text-xs uppercase tracking-wider text-sky-400 font-bold mb-1">Talk Title</h4>
-                                    <p class="text-white font-semibold">TBA (To Be Announced)</p>
+                                    <p class="text-white font-semibold">Memory Tampered Elephant Random Walk</p>
                                 </div>
                                 <div>
                                     <h4 class="text-xs uppercase tracking-wider text-sky-400 font-bold mb-1">Abstract</h4>
-                                    <p class="text-slate-300">The abstract details for this lecture are pending.</p>
+                                    <p class="text-slate-300">The Elephant Random Walk (ERW), introduced by Schütz and Trimper in 2004, is a memory-based random walk in which the next step depends on its entire past history. In this talk, we introduce a variation of the classical ERW obtained by tampering with the memory. At any time \( n > 1 \), the tampered-memory ERW evolves as a classical ERW when the uniformly chosen memory index lies in a prescribed subset \( D_{n-1} \subset \{1, \dots, n - 1\} \), but follows a different update rule when the index belongs to its complement.</p>
+                                    <p class="text-slate-300">Our aim is to understand how much memory is enough to observe an ERW-like behaviour. We discuss limit theorems for this model and show how the asymptotic behaviour of the walk depends on the size and structure of the sets \( D_n \). In particular, we illustrate that in order to obtain a phase transition, the size of \( D_n^c \) needs to be more than half the entire memory. This talk is based on joint work with Dr. Debleena Thacker and Vinita Mulay.</p>
                                 </div>
                                 <div>
                                     <h4 class="text-xs uppercase tracking-wider text-sky-400 font-bold mb-1">Biography</h4>
                                     <div class="rounded-xl border border-slate-800/80 bg-slate-900/60 p-4 text-slate-300 leading-relaxed">
-                                        <p>TBA.</p>
+                                        <p>Neeraja Sahasrabudhe is an Assistant Professor at the Department of Mathematical Sciences of Indian Institute of Science Education and Research Mohali. Prior to joining IISER Mohali, she spent a few years at the Indian Statistical Institute as a visiting scientist and at Indian Institute of Technology Bombay as a postdoctoral researcher. Her work focuses on reinforcement driven stochastic processes, including interacting urn processes, random walks with memory, random graphs and opinion dynamics.  </p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
-                                <div class="h-full min-h-[220px] rounded-xl border border-dashed border-slate-700 bg-gradient-to-br from-slate-800/80 to-slate-900/80 flex flex-col items-center justify-center text-center px-4">
-                                    <div class="w-14 h-14 rounded-full bg-sky-500/10 text-sky-400 flex items-center justify-center">
-                                        <i data-lucide="image" class="w-7 h-7"></i>
-                                    </div>
-                                    <p class="font-semibold text-slate-200 mt-3">Speaker image placeholder</p>
-                                    <p class="text-xs text-slate-500 mt-1">Replace with a photo when available.</p>
+                            <div class="p-4">
+                                <div class="min-h-[220px] flex items-center justify-center rounded-xl border border-slate-700/70 bg-slate-950/60 p-2 overflow-hidden">
+                                    <img src="/assets/img/spon2026/Neeraja.png" alt="Neeraja Sahasrabudhe" class="max-w-full max-h-[260px] w-auto object-contain rounded-lg" />
                                 </div>
                             </div>
                         </div>
