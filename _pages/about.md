@@ -23,6 +23,7 @@ I am an Assistant Professor in the <a href='https://www.ieor.iitb.ac.in/'>Depart
 
 Broadly, my research falls in the area of ***random graphs*** and ***network science***. I am interested in problems that involve a graph structure and complex interactions between the network elements. My research goal is to propose and analyze robust mathematical models that capture different physical phenomena observed on practical networks.
 
+<!--
 <div style="max-width:640px; margin:3rem auto 0; clear:both; text-align:center; padding:2rem; background: linear-gradient(135deg, rgba(56, 189, 248, 0.06), rgba(99, 102, 241, 0.06)); border-radius:12px; border:2px solid rgba(56, 189, 248, 0.12);">
   <h3 style="color: #38BDF8; margin-bottom: 0.5rem; font-weight:700;">🚀 Stochastic Processes on Networks 2026</h3>
   <p style="color: #94A3B8; margin-bottom: 1.5rem; font-size:0.95rem;">Join us for an exciting workshop on diffusion, epidemic spreading, random walks, and percolation on networks!</p>
@@ -31,3 +32,4 @@ Broadly, my research falls in the area of ***random graphs*** and ***network sci
   </a>
 </div>
 ---
+-->
