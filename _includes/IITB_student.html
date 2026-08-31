@@ -1,0 +1,1088 @@
+<style>
+    #iitb-markov-container {
+        width: 100%;
+        max-width: 1600px;
+        margin: 0 auto;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: #f8fafc;
+        color: #1e293b;
+    }
+    
+    #iitb-markov-container canvas {
+        touch-action: none;
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+    
+    .iitb-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.5rem;
+        padding: 0.9rem 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .iitb-header {
+        border-bottom: 1px solid #e2e8f0;
+        padding-bottom: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .iitb-header h1 {
+        font-size: 1.875rem;
+        font-weight: bold;
+        color: #1e293b;
+        margin-bottom: 0.5rem;
+        margin-top: 0;
+    }
+    
+    .iitb-header p {
+        color: #64748b;
+        font-size: 0.875rem;
+        margin: 0;
+    }
+    
+    .iitb-badge {
+        background-color: #f1f5f9;
+        border: 1px solid #cbd5e1;
+        border-radius: 0.375rem;
+        padding: 0.375rem 0.75rem;
+        font-size: 0.75rem;
+        font-family: monospace;
+        color: #475569;
+    }
+    
+    .iitb-canvas-wrapper {
+        background-color: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 8.5;
+        min-height: 320px;
+        max-height: 460px;
+    }
+    
+    .iitb-canvas-wrapper canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .iitb-button {
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .iitb-button svg {
+        width: 1rem;
+        height: 1rem;
+    }
+    
+    .iitb-button-primary {
+        background-color: #3f3f46;
+        color: white;
+    }
+    
+    .iitb-button-primary:hover {
+        background-color: #27272a;
+    }
+    
+    .iitb-button-success {
+        background-color: #059669;
+        color: white;
+    }
+    
+    .iitb-button-success:hover {
+        background-color: #047857;
+    }
+    
+    .iitb-button-info {
+        background-color: #4f46e5;
+        color: white;
+    }
+    
+    .iitb-button-info:hover {
+        background-color: #4338ca;
+    }
+    
+    .iitb-button-secondary {
+        background-color: #f1f5f9;
+        color: #334155;
+        border: 1px solid #cbd5e1;
+    }
+    
+    .iitb-button-secondary:hover {
+        background-color: #e2e8f0;
+    }
+    
+    .iitb-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    
+    .iitb-stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+    
+    .iitb-stat-box {
+        background-color: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.5rem;
+        padding: 0.75rem;
+        text-align: center;
+    }
+    
+    .iitb-stat-label {
+        font-size: 0.75rem;
+        color: #64748b;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+    
+    .iitb-stat-value {
+        font-size: 1.125rem;
+        font-weight: bold;
+        color: #1e293b;
+        font-family: monospace;
+        margin-bottom: 0.25rem;
+    }
+    
+    .iitb-stat-frac {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #475569;
+        font-family: monospace;
+    }
+    
+    .iitb-dark-box {
+        background-color: #1e293b;
+        color: white;
+        border: 1px solid #334155;
+    }
+    
+    .iitb-dark-box h2 {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #94a3b8;
+        margin-bottom: 1rem;
+        margin-top: 0;
+    }
+    
+    .iitb-dark-stat-box {
+        background-color: rgba(15, 23, 42, 0.6);
+        border: 1px solid #334155;
+        border-radius: 0.5rem;
+        padding: 0.75rem;
+        text-align: center;
+    }
+    
+    .iitb-dark-stat-label {
+        font-size: 0.75rem;
+        color: #94a3b8;
+        margin-bottom: 0.25rem;
+    }
+    
+    .iitb-dark-stat-value {
+        font-size: 1.125rem;
+        font-weight: bold;
+        font-family: monospace;
+        margin: 0;
+    }
+    
+    .iitb-transition-matrix {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.875rem;
+        text-align: center;
+    }
+    
+    .iitb-transition-matrix th {
+        padding: 0.5rem;
+        color: #64748b;
+        border-bottom: 1px solid #e2e8f0;
+        font-weight: 600;
+    }
+    
+    .iitb-transition-matrix td {
+        padding: 0.5rem;
+        border-bottom: 1px solid #f1f5f9;
+    }
+    
+    .iitb-transition-matrix tr {
+        font-family: monospace;
+    }
+    
+    .iitb-transition-matrix input {
+        width: 4rem;
+        padding: 0.25rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.25rem;
+        text-align: center;
+        background-color: #f8fafc;
+        font-family: monospace;
+    }
+    
+    .iitb-transition-matrix input:focus {
+        background-color: white;
+        outline: none;
+        border-color: #cbd5e1;
+    }
+    
+    .iitb-init-dist {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+        font-size: 0.75rem;
+    }
+    
+    .iitb-init-dist-item {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .iitb-init-dist-item label {
+        color: #64748b;
+        font-size: 0.7rem;
+        margin-bottom: 0.25rem;
+    }
+    
+    .iitb-init-dist-item input {
+        padding: 0.25rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.25rem;
+        text-align: center;
+        background-color: #f8fafc;
+        font-family: monospace;
+    }
+    
+    .iitb-init-dist-item input:focus {
+        background-color: white;
+        outline: none;
+        border-color: #cbd5e1;
+    }
+    
+    .iitb-chart-container {
+        position: relative;
+        height: 16rem;
+        width: 100%;
+    }
+    
+    @media (max-width: 992px) {
+        .iitb-main-row {
+            display: block;
+        }
+        
+        .iitb-left-panel {
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+        
+        .iitb-right-panel {
+            width: 100%;
+        }
+    }
+    
+    @media (min-width: 993px) {
+        .iitb-main-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1.7fr) minmax(300px, 1fr);
+            gap: 1rem;
+            align-items: start;
+        }
+
+        .iitb-left-panel,
+        .iitb-right-panel {
+            min-width: 0;
+        }
+    }
+</style>
+
+<div id="iitb-markov-container">
+    <!-- Header -->
+    <div class="iitb-header">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;">
+            <div>
+                <h1>Markoviit Bombaykar: IITB Student Routine</h1>
+                <p>Demonstrating State Visit Frequencies &amp; Convergence to Stationary Distribution (&pi;P = &pi;)</p>
+            </div>
+            <div class="iitb-badge">Course Demo: Markov Chains (IITB)</div>
+        </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="iitb-main-row">
+        <!-- Left Panel: State Diagram, Simulation Controls & Visit Stats -->
+        <div class="iitb-left-panel">
+            
+            <!-- Canvas Container -->
+            <div class="iitb-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b;">State Transition Canvas</span>
+                    <div style="font-size: 0.75rem; color: #475569;">
+                        <span>Step Count: <strong id="step-counter" style="color: #1e293b; font-family: monospace; font-size: 0.875rem;">0</strong></span>
+                    </div>
+                </div>
+                <div class="iitb-canvas-wrapper">
+                    <canvas id="mc-canvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Simulation Controls -->
+            <div class="iitb-card" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 1rem;">
+                <div style="display: flex; flex-wrap: wrap; align-items: center;">
+                    <button id="btn-step" class="iitb-button iitb-button-primary">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
+                        Step (+1)
+                    </button>
+                    <button id="btn-play" class="iitb-button iitb-button-success">
+                        <svg id="play-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span id="play-text">Play</span>
+                    </button>
+                    <button id="btn-ff" class="iitb-button iitb-button-info">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        Fast Forward (+1000)
+                    </button>
+                </div>
+                <button id="btn-reset" class="iitb-button iitb-button-secondary">Reset Simulation</button>
+            </div>
+
+            <!-- Empirical Stats Display -->
+            <div class="iitb-card">
+                <h2 style="font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; margin-top: 0; margin-bottom: 0.75rem;">Empirical Visits &amp; Fractions</h2>
+                <div class="iitb-stats-grid">
+                    <div class="iitb-stat-box">
+                        <div class="iitb-stat-label">Hostel (H)</div>
+                        <div id="count-h" class="iitb-stat-value">0</div>
+                        <div id="frac-h" class="iitb-stat-frac">0.0000</div>
+                    </div>
+                    <div class="iitb-stat-box">
+                        <div class="iitb-stat-label">Mess (M)</div>
+                        <div id="count-m" class="iitb-stat-value">0</div>
+                        <div id="frac-m" class="iitb-stat-frac">0.0000</div>
+                    </div>
+                    <div class="iitb-stat-box">
+                        <div class="iitb-stat-label">Lecture (L)</div>
+                        <div id="count-l" class="iitb-stat-value">0</div>
+                        <div id="frac-l" class="iitb-stat-frac">0.0000</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theoretical Stationary Distribution Box -->
+            <div class="iitb-card iitb-dark-box">
+                <h2 style="margin-top: 0; margin-bottom: 0.75rem;">Theoretical Stationary Distribution (&pi;)</h2>
+                <div style="display: inline-block; font-size: 0.75rem; background-color: #334155; color: #cbd5e1; padding: 0.25rem 0.5rem; border-radius: 0.25rem; margin-bottom: 0.75rem;">Exact Solution (&pi;P = &pi;)</div>
+                <div class="iitb-stats-grid">
+                    <div class="iitb-dark-stat-box">
+                        <div class="iitb-dark-stat-label">&pi;<sub>H</sub> (Hostel)</div>
+                        <div id="pi-h" class="iitb-dark-stat-value" style="color: #10b981;">0.0000</div>
+                    </div>
+                    <div class="iitb-dark-stat-box">
+                        <div class="iitb-dark-stat-label">&pi;<sub>M</sub> (Mess)</div>
+                        <div id="pi-m" class="iitb-dark-stat-value" style="color: #f59e0b;">0.0000</div>
+                    </div>
+                    <div class="iitb-dark-stat-box">
+                        <div class="iitb-dark-stat-label">&pi;<sub>L</sub> (Lecture)</div>
+                        <div id="pi-l" class="iitb-dark-stat-value" style="color: #6366f1;">0.0000</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Panel: Configurations & Convergence Plots -->
+        <div class="iitb-right-panel">
+
+            <!-- Parameters: Matrix & Initial Distribution -->
+            <div class="iitb-card">
+                <h2 style="font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; margin-top: 0; margin-bottom: 0.75rem;">Transition Matrix <i>P</i></h2>
+                
+                <div style="overflow-x: auto;">
+                    <table class="iitb-transition-matrix">
+                        <thead>
+                            <tr>
+                                <th>From \ To</th>
+                                <th>Hostel</th>
+                                <th>Mess</th>
+                                <th>Lecture</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-weight: 600; color: #475569;">Hostel</td>
+                                <td><input type="number" step="0.05" min="0" max="1" id="p-hh" value="0.5"></td>
+                                <td><input type="number" step="0.05" min="0" max="1" id="p-hm" value="0.3"></td>
+                                <td><input type="number" step="0.05" min="0" max="1" id="p-hl" value="0.2"></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600; color: #475569;">Mess</td>
+                                <td><input type="number" step="0.05" min="0" max="1" id="p-mh" value="0.4"></td>
+                                <td><input type="number" step="0.05" min="0" max="1" id="p-mm" value="0.0"></td>
+                                <td><input type="number" step="0.05" min="0" max="1" id="p-ml" value="0.6"></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600; color: #475569;">Lecture</td>
+                                <td><input type="number" step="0.05" min="0" max="1" id="p-lh" value="0.3"></td>
+                                <td><input type="number" step="0.05" min="0" max="1" id="p-lm" value="0.3"></td>
+                                <td><input type="number" step="0.05" min="0" max="1" id="p-ll" value="0.4"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="border-top: 1px solid #e2e8f0; margin-top: 0.75rem; padding-top: 0.75rem;">
+                    <label style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; display: block; margin-bottom: 0.5rem;">Initial Distribution (&mu;<sub>0</sub>)</label>
+                    <div class="iitb-init-dist">
+                        <div class="iitb-init-dist-item">
+                            <label>Hostel:</label>
+                            <input type="number" step="0.01" min="0" max="1" id="init-h" value="1.0">
+                        </div>
+                        <div class="iitb-init-dist-item">
+                            <label>Mess:</label>
+                            <input type="number" step="0.01" min="0" max="1" id="init-m" value="0.0">
+                        </div>
+                        <div class="iitb-init-dist-item">
+                            <label>Lecture:</label>
+                            <input type="number" step="0.01" min="0" max="1" id="init-l" value="0.0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Convergence Plot -->
+            <div class="iitb-card">
+                <span style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; display: block; margin-bottom: 0.5rem;">Convergence Plot</span>
+                <div class="iitb-chart-container">
+                    <canvas id="chart-canvas"></canvas>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // --- State Management ---
+    const STATES = { HOSTEL: 0, MESS: 1, LECTURE: 2 };
+    const STATE_NAMES = ['Hostel', 'Mess', 'Lecture'];
+    const STATE_COLORS = ['#10b981', '#f59e0b', '#6366f1'];
+
+    let P = [
+        [0.5, 0.3, 0.2],
+        [0.4, 0.0, 0.6],
+        [0.3, 0.3, 0.4]
+    ];
+
+    let initDist = [1.0, 0.0, 0.0];
+    let stationaryDist = [0, 0, 0];
+    let currentState = STATES.HOSTEL;
+    let stepCount = 0;
+    let stateCounts = [0, 0, 0];
+    
+    let isPlaying = false;
+    let animationInterval = null;
+    let isAnimatingStep = false;
+    let animProgress = 1.0;
+    let animFromState = STATES.HOSTEL;
+    let animToState = STATES.HOSTEL;
+    let animStartTime = 0;
+    const ANIM_DURATION = 400;
+
+    let chartDataHistory = {
+        labels: [],
+        h: [],
+        m: [],
+        l: []
+    };
+
+    const canvas = document.getElementById('mc-canvas');
+    const ctx = canvas.getContext('2d');
+    const btnStep = document.getElementById('btn-step');
+    const btnPlay = document.getElementById('btn-play');
+    const btnFF = document.getElementById('btn-ff');
+    const btnReset = document.getElementById('btn-reset');
+    const playText = document.getElementById('play-text');
+
+    let convergenceChart;
+    function initChart() {
+        const chartCtx = document.getElementById('chart-canvas').getContext('2d');
+        convergenceChart = new Chart(chartCtx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [
+                    { label: 'Hostel Frac', data: [], borderColor: STATE_COLORS[0], borderWidth: 1.5, pointRadius: 0, fill: false },
+                    { label: 'Mess Frac', data: [], borderColor: STATE_COLORS[1], borderWidth: 1.5, pointRadius: 0, fill: false },
+                    { label: 'Lecture Frac', data: [], borderColor: STATE_COLORS[2], borderWidth: 1.5, pointRadius: 0, fill: false },
+                    { label: 'π_H', data: [], borderColor: STATE_COLORS[0], borderWidth: 1, borderDash: [4, 4], pointRadius: 0, fill: false },
+                    { label: 'π_M', data: [], borderColor: STATE_COLORS[1], borderWidth: 1, borderDash: [4, 4], pointRadius: 0, fill: false },
+                    { label: 'π_L', data: [], borderColor: STATE_COLORS[2], borderWidth: 1, borderDash: [4, 4], pointRadius: 0, fill: false }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: false,
+                scales: {
+                    x: { title: { display: true, text: 'Steps', font: { size: 10 } }, ticks: { font: { size: 9 } } },
+                    y: { min: 0, max: 1, title: { display: true, text: 'Fraction', font: { size: 10 } }, ticks: { font: { size: 9 } } }
+                },
+                plugins: {
+                    legend: { labels: { boxWidth: 10, font: { size: 10 } } }
+                }
+            }
+        });
+    }
+
+    function computeStationaryDistribution() {
+        const A = [
+            [P[0][0] - 1, P[1][0], P[2][0]],
+            [P[0][1], P[1][1] - 1, P[2][1]],
+            [1, 1, 1]
+        ];
+        const B = [0, 0, 1];
+
+        for (let i = 0; i < 3; i++) {
+            let maxRow = i;
+            for (let k = i + 1; k < 3; k++) {
+                if (Math.abs(A[k][i]) > Math.abs(A[maxRow][i])) maxRow = k;
+            }
+            [A[i], A[maxRow]] = [A[maxRow], A[i]];
+            [B[i], B[maxRow]] = [B[maxRow], B[i]];
+
+            for (let k = i + 1; k < 3; k++) {
+                const c = -A[k][i] / A[i][i];
+                for (let j = i; j < 3; j++) {
+                    if (i === j) A[k][j] = 0;
+                    else A[k][j] += c * A[i][j];
+                }
+                B[k] += c * B[i];
+            }
+        }
+
+        const x = [0, 0, 0];
+        for (let i = 2; i >= 0; i--) {
+            let sum = 0;
+            for (let j = i + 1; j < 3; j++) sum += A[i][j] * x[j];
+            x[i] = (B[i] - sum) / A[i][i];
+        }
+
+        stationaryDist = x.map(v => Math.max(0, v));
+        const sum = stationaryDist.reduce((a, b) => a + b, 0);
+        stationaryDist = stationaryDist.map(v => v / sum);
+
+        document.getElementById('pi-h').innerText = stationaryDist[0].toFixed(4);
+        document.getElementById('pi-m').innerText = stationaryDist[1].toFixed(4);
+        document.getElementById('pi-l').innerText = stationaryDist[2].toFixed(4);
+    }
+
+    function sampleInitialState() {
+        const r = Math.random();
+        if (r < initDist[0]) return STATES.HOSTEL;
+        if (r < initDist[0] + initDist[1]) return STATES.MESS;
+        return STATES.LECTURE;
+    }
+
+    function getNextState(fromState) {
+        const r = Math.random();
+        const row = P[fromState];
+        if (r < row[0]) return STATES.HOSTEL;
+        if (r < row[0] + row[1]) return STATES.MESS;
+        return STATES.LECTURE;
+    }
+
+    function executeStep() {
+        const next = getNextState(currentState);
+        animFromState = currentState;
+        animToState = next;
+        currentState = next;
+        
+        stepCount++;
+        stateCounts[currentState]++;
+        
+        updateUIStats();
+        recordChartPoint();
+
+        animProgress = 0;
+        animStartTime = performance.now();
+        isAnimatingStep = true;
+    }
+
+    function fastForward(steps = 1000) {
+        for (let i = 0; i < steps; i++) {
+            currentState = getNextState(currentState);
+            stepCount++;
+            stateCounts[currentState]++;
+        }
+        animFromState = currentState;
+        animToState = currentState;
+        animProgress = 1.0;
+        isAnimatingStep = false;
+        
+        updateUIStats();
+        recordChartPoint();
+        convergenceChart.update();
+    }
+
+    function resetSimulation() {
+        if (isPlaying) togglePlay();
+        
+        let sum = initDist.reduce((a,b) => a+b, 0);
+        if(sum === 0) { initDist = [1, 0, 0]; sum = 1; }
+        initDist = initDist.map(v => v/sum);
+
+        currentState = sampleInitialState();
+        stepCount = 1;
+        stateCounts = [0, 0, 0];
+        stateCounts[currentState] = 1;
+
+        animFromState = currentState;
+        animToState = currentState;
+        animProgress = 1.0;
+        isAnimatingStep = false;
+
+        chartDataHistory = { labels: [], h: [], m: [], l: [] };
+        
+        updateUIStats();
+        recordChartPoint();
+        convergenceChart.update();
+    }
+
+    function recordChartPoint() {
+        const fh = stateCounts[0] / stepCount;
+        const fm = stateCounts[1] / stepCount;
+        const fl = stateCounts[2] / stepCount;
+
+        if (stepCount <= 100 || stepCount % Math.floor(stepCount / 50) === 0 || isPlaying) {
+            chartDataHistory.labels.push(stepCount);
+            chartDataHistory.h.push(fh);
+            chartDataHistory.m.push(fm);
+            chartDataHistory.l.push(fl);
+
+            if (chartDataHistory.labels.length > 100) {
+                chartDataHistory.labels.shift();
+                chartDataHistory.h.shift();
+                chartDataHistory.m.shift();
+                chartDataHistory.l.shift();
+            }
+
+            convergenceChart.data.labels = chartDataHistory.labels;
+            convergenceChart.data.datasets[0].data = chartDataHistory.h;
+            convergenceChart.data.datasets[1].data = chartDataHistory.m;
+            convergenceChart.data.datasets[2].data = chartDataHistory.l;
+            
+            convergenceChart.data.datasets[3].data = Array(chartDataHistory.labels.length).fill(stationaryDist[0]);
+            convergenceChart.data.datasets[4].data = Array(chartDataHistory.labels.length).fill(stationaryDist[1]);
+            convergenceChart.data.datasets[5].data = Array(chartDataHistory.labels.length).fill(stationaryDist[2]);
+
+            convergenceChart.update('none');
+        }
+    }
+
+    function updateUIStats() {
+        document.getElementById('step-counter').innerText = stepCount;
+        document.getElementById('count-h').innerText = stateCounts[0];
+        document.getElementById('count-m').innerText = stateCounts[1];
+        document.getElementById('count-l').innerText = stateCounts[2];
+
+        const fh = stepCount > 0 ? (stateCounts[0] / stepCount).toFixed(4) : "0.0000";
+        const fm = stepCount > 0 ? (stateCounts[1] / stepCount).toFixed(4) : "0.0000";
+        const fl = stepCount > 0 ? (stateCounts[2] / stepCount).toFixed(4) : "0.0000";
+
+        document.getElementById('frac-h').innerText = fh;
+        document.getElementById('frac-m').innerText = fm;
+        document.getElementById('frac-l').innerText = fl;
+    }
+
+    function resizeCanvas() {
+        const rect = canvas.parentElement.getBoundingClientRect();
+        canvas.width = rect.width * window.devicePixelRatio;
+        canvas.height = rect.height * window.devicePixelRatio;
+    }
+
+    function getNodesPositions() {
+        const w = canvas.width;
+        const h = canvas.height;
+        const r = Math.min(w, h) * 0.13;
+
+        return [
+            { id: 0, name: "Hostel (H)", x: w * 0.25, y: h * 0.72, radius: r, color: STATE_COLORS[0] },
+            { id: 1, name: "Mess (M)", x: w * 0.50, y: h * 0.25, radius: r, color: STATE_COLORS[1] },
+            { id: 2, name: "Lecture (L)", x: w * 0.75, y: h * 0.72, radius: r, color: STATE_COLORS[2] }
+        ];
+    }
+
+    const ARC_OFFSET_VAL = 35;
+
+    function drawDirectedEdge(ctx, fromNode, toNode, prob) {
+        ctx.save();
+        ctx.strokeStyle = '#94a3b8';
+        ctx.fillStyle = '#64748b';
+        ctx.lineWidth = 2 * window.devicePixelRatio;
+
+        const curveOffset = ARC_OFFSET_VAL * window.devicePixelRatio;
+        const fX = fromNode.x;
+        const fY = fromNode.y;
+        const tX = toNode.x;
+        const tY = toNode.y;
+
+        const midX = (fX + tX) / 2;
+        const midY = (fY + tY) / 2;
+        const dx = tX - fX;
+        const dy = tY - fY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        
+        const nx = -dy / dist;
+        const ny = dx / dist;
+
+        const ctrlX = midX + nx * curveOffset;
+        const ctrlY = midY + ny * curveOffset;
+
+        const getBezierPoint = (t) => {
+            const x = (1 - t) * (1 - t) * fX + 2 * (1 - t) * t * ctrlX + t * t * tX;
+            const y = (1 - t) * (1 - t) * fY + 2 * (1 - t) * t * ctrlY + t * t * tY;
+            return { x, y };
+        };
+
+        let tStart = 0;
+        for (let t = 0; t <= 0.5; t += 0.02) {
+            const pt = getBezierPoint(t);
+            if (Math.hypot(pt.x - fX, pt.y - fY) >= fromNode.radius) {
+                tStart = t;
+                break;
+            }
+        }
+
+        let tEnd = 1.0;
+        for (let t = 1.0; t >= 0.5; t -= 0.02) {
+            const pt = getBezierPoint(t);
+            if (Math.hypot(pt.x - tX, pt.y - tY) >= toNode.radius) {
+                tEnd = t;
+                break;
+            }
+        }
+
+        const pStart = getBezierPoint(tStart);
+        const pEnd = getBezierPoint(tEnd);
+
+        ctx.beginPath();
+        ctx.moveTo(pStart.x, pStart.y);
+        ctx.quadraticCurveTo(ctrlX, ctrlY, pEnd.x, pEnd.y);
+        ctx.stroke();
+
+        const prevPt = getBezierPoint(tEnd - 0.04);
+        const angle = Math.atan2(pEnd.y - prevPt.y, pEnd.x - prevPt.x);
+        const arrowSize = 8 * window.devicePixelRatio;
+
+        ctx.beginPath();
+        ctx.moveTo(pEnd.x, pEnd.y);
+        ctx.lineTo(pEnd.x - arrowSize * Math.cos(angle - Math.PI / 6), pEnd.y - arrowSize * Math.sin(angle - Math.PI / 6));
+        ctx.lineTo(pEnd.x - arrowSize * Math.cos(angle + Math.PI / 6), pEnd.y - arrowSize * Math.sin(angle + Math.PI / 6));
+        ctx.closePath();
+        ctx.fill();
+
+        const labelPt = getBezierPoint(0.5);
+        const labelText = `P=${prob.toFixed(2)}`;
+        
+        ctx.font = `${11 * window.devicePixelRatio}px sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        
+        const textWidth = ctx.measureText(labelText).width;
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+        ctx.fillRect(labelPt.x - textWidth/2 - 3, labelPt.y - 7 * window.devicePixelRatio, textWidth + 6, 14 * window.devicePixelRatio);
+        
+        ctx.fillStyle = '#0f172a';
+        ctx.fillText(labelText, labelPt.x, labelPt.y);
+
+        ctx.restore();
+    }
+
+    function drawSelfLoop(ctx, node, label, positionAngle) {
+        ctx.save();
+        ctx.strokeStyle = '#94a3b8';
+        ctx.fillStyle = '#64748b';
+        ctx.lineWidth = 2 * window.devicePixelRatio;
+
+        const loopRadius = node.radius * 0.55;
+        const cx = node.x + (node.radius + loopRadius * 0.7) * Math.cos(positionAngle);
+        const cy = node.y + (node.radius + loopRadius * 0.7) * Math.sin(positionAngle);
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, loopRadius, 0, 2 * Math.PI);
+        ctx.stroke();
+
+        const arrowAngle = positionAngle + Math.PI / 4;
+        const ax = cx + loopRadius * Math.cos(arrowAngle);
+        const ay = cy + loopRadius * Math.sin(arrowAngle);
+        
+        const arrowSize = 8 * window.devicePixelRatio;
+        ctx.beginPath();
+        ctx.moveTo(ax, ay);
+        ctx.lineTo(ax - arrowSize * Math.cos(arrowAngle - Math.PI / 4), ay - arrowSize * Math.sin(arrowAngle - Math.PI / 4));
+        ctx.lineTo(ax - arrowSize * Math.cos(arrowAngle + Math.PI / 2), ay - arrowSize * Math.sin(arrowAngle + Math.PI / 2));
+        ctx.closePath();
+        ctx.fill();
+
+        if (label) {
+            const lx = cx + (loopRadius + 12 * window.devicePixelRatio) * Math.cos(positionAngle);
+            const ly = cy + (loopRadius + 12 * window.devicePixelRatio) * Math.sin(positionAngle);
+            
+            ctx.font = `${11 * window.devicePixelRatio}px sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            const textWidth = ctx.measureText(label).width;
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.fillRect(lx - textWidth/2 - 3, ly - 7 * window.devicePixelRatio, textWidth + 6, 14 * window.devicePixelRatio);
+
+            ctx.fillStyle = '#0f172a';
+            ctx.fillText(label, lx, ly);
+        }
+
+        ctx.restore();
+    }
+
+    function drawStickFigure(ctx, x, y) {
+        ctx.save();
+        ctx.strokeStyle = '#0f172a';
+        ctx.fillStyle = '#0f172a';
+        ctx.lineWidth = 2.5 * window.devicePixelRatio;
+
+        const scale = window.devicePixelRatio * 0.85;
+
+        ctx.beginPath();
+        ctx.arc(x, y - 18 * scale, 5 * scale, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(x, y - 13 * scale);
+        ctx.lineTo(x, y - 2 * scale);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(x - 7 * scale, y - 9 * scale);
+        ctx.lineTo(x + 7 * scale, y - 9 * scale);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(x, y - 2 * scale);
+        ctx.lineTo(x - 6 * scale, y + 8 * scale);
+        ctx.moveTo(x, y - 2 * scale);
+        ctx.lineTo(x + 6 * scale, y + 8 * scale);
+        ctx.stroke();
+
+        ctx.restore();
+    }
+
+    function getInterpolatedPosition(nodes, fromIdx, toIdx, t) {
+        const fromNode = nodes[fromIdx];
+        const toNode = nodes[toIdx];
+
+        if (fromIdx === toIdx) {
+            const angle = fromIdx === 0 ? Math.PI * 0.85 : (fromIdx === 2 ? Math.PI * 0.15 : -Math.PI / 2);
+            const loopRadius = fromNode.radius * 0.55;
+            const cx = fromNode.x + (fromNode.radius + loopRadius * 0.7) * Math.cos(angle);
+            const cy = fromNode.y + (fromNode.radius + loopRadius * 0.7) * Math.sin(angle);
+            
+            const currentAngle = angle + t * Math.PI * 2;
+            return {
+                x: cx + loopRadius * Math.cos(currentAngle),
+                y: cy + loopRadius * Math.sin(currentAngle)
+            };
+        }
+
+        const curveOffset = ARC_OFFSET_VAL * window.devicePixelRatio;
+        const dx = toNode.x - fromNode.x;
+        const dy = toNode.y - fromNode.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const nx = -dy / dist;
+        const ny = dx / dist;
+
+        const midX = (fromNode.x + toNode.x) / 2;
+        const midY = (fromNode.y + toNode.y) / 2;
+        const ctrlX = midX + nx * curveOffset;
+        const ctrlY = midY + ny * curveOffset;
+
+        const x = (1 - t) * (1 - t) * fromNode.x + 2 * (1 - t) * t * ctrlX + t * t * toNode.x;
+        const y = (1 - t) * (1 - t) * fromNode.y + 2 * (1 - t) * t * ctrlY + t * t * toNode.y;
+
+        return { x, y };
+    }
+
+    function renderCanvas(timestamp) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const nodes = getNodesPositions();
+        
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                const prob = P[i][j];
+                if (prob > 0) {
+                    if (i === j) {
+                        const angle = i === 0 ? Math.PI * 0.85 : (i === 2 ? Math.PI * 0.15 : -Math.PI / 2);
+                        drawSelfLoop(ctx, nodes[i], `P=${prob.toFixed(2)}`, angle);
+                    } else {
+                        drawDirectedEdge(ctx, nodes[i], nodes[j], prob);
+                    }
+                }
+            }
+        }
+
+        nodes.forEach((node, idx) => {
+            ctx.save();
+            
+            const isActive = (idx === currentState);
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+            
+            ctx.lineWidth = (isActive ? 4 : 2) * window.devicePixelRatio;
+            ctx.strokeStyle = isActive ? node.color : '#cbd5e1';
+            ctx.stroke();
+
+            if (isActive) {
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, node.radius - 4 * window.devicePixelRatio, 0, Math.PI * 2);
+                ctx.fillStyle = node.color + '15';
+                ctx.fill();
+            }
+
+            ctx.font = `bold ${12 * window.devicePixelRatio}px sans-serif`;
+            ctx.fillStyle = '#1e293b';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(node.name, node.x, node.y - 6 * window.devicePixelRatio);
+
+            ctx.font = `${10 * window.devicePixelRatio}px sans-serif`;
+            ctx.fillStyle = '#64748b';
+            ctx.fillText(`Visits: ${stateCounts[idx]}`, node.x, node.y + 10 * window.devicePixelRatio);
+
+            ctx.restore();
+        });
+
+        if (isAnimatingStep) {
+            const elapsed = timestamp - animStartTime;
+            animProgress = Math.min(1.0, elapsed / ANIM_DURATION);
+            if (animProgress >= 1.0) {
+                isAnimatingStep = false;
+            }
+        }
+
+        const figurePos = getInterpolatedPosition(nodes, animFromState, animToState, animProgress);
+        drawStickFigure(ctx, figurePos.x, figurePos.y);
+
+        requestAnimationFrame(renderCanvas);
+    }
+
+    function togglePlay() {
+        isPlaying = !isPlaying;
+        if (isPlaying) {
+            playText.innerText = 'Pause';
+            document.getElementById('play-icon').innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
+            btnStep.disabled = true;
+            btnStep.style.opacity = '0.5';
+            animationInterval = setInterval(() => {
+                executeStep();
+            }, ANIM_DURATION + 50);
+        } else {
+            playText.innerText = 'Play';
+            document.getElementById('play-icon').innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
+            btnStep.disabled = false;
+            btnStep.style.opacity = '1';
+            clearInterval(animationInterval);
+        }
+    }
+
+    function readMatrixInputs() {
+        const getVal = id => Math.max(0, parseFloat(document.getElementById(id).value) || 0);
+        
+        let r0 = [getVal('p-hh'), getVal('p-hm'), getVal('p-hl')];
+        let r1 = [getVal('p-mh'), getVal('p-mm'), getVal('p-ml')];
+        let r2 = [getVal('p-lh'), getVal('p-lm'), getVal('p-ll')];
+
+        const norm = row => {
+            const s = row.reduce((a,b)=>a+b, 0);
+            return s > 0 ? row.map(v => v/s) : [1/3, 1/3, 1/3];
+        };
+
+        P = [norm(r0), norm(r1), norm(r2)];
+
+        const setRow = (prefix, row) => {
+            const ids = [`p-${prefix}h`, `p-${prefix}m`, `p-${prefix}l`];
+            ids.forEach((id, idx) => {
+                document.getElementById(id).value = row[idx].toFixed(2);
+            });
+        };
+
+        setRow('h', P[0]);
+        setRow('m', P[1]);
+        setRow('l', P[2]);
+
+        computeStationaryDistribution();
+    }
+
+    function readInitialDistInputs() {
+        const getVal = id => Math.max(0, parseFloat(document.getElementById(id).value) || 0);
+        const dist = [getVal('init-h'), getVal('init-m'), getVal('init-l')];
+        const sum = dist.reduce((a,b)=>a+b, 0);
+        initDist = sum > 0 ? dist.map(v => v/sum) : [1, 0, 0];
+        
+        document.getElementById('init-h').value = initDist[0].toFixed(2);
+        document.getElementById('init-m').value = initDist[1].toFixed(2);
+        document.getElementById('init-l').value = initDist[2].toFixed(2);
+    }
+
+    const matrixInputIds = ['p-hh','p-hm','p-hl','p-mh','p-mm','p-ml','p-lh','p-lm','p-ll'];
+    matrixInputIds.forEach(id => {
+        document.getElementById(id).addEventListener('change', () => {
+            readMatrixInputs();
+            resetSimulation();
+        });
+    });
+
+    ['init-h', 'init-m', 'init-l'].forEach(id => {
+        document.getElementById(id).addEventListener('change', () => {
+            readInitialDistInputs();
+            resetSimulation();
+        });
+    });
+
+    btnStep.addEventListener('click', () => { if (!isPlaying) executeStep(); });
+    btnPlay.addEventListener('click', togglePlay);
+    btnFF.addEventListener('click', () => fastForward(1000));
+    btnReset.addEventListener('click', resetSimulation);
+
+    window.addEventListener('resize', resizeCanvas);
+
+    document.addEventListener('DOMContentLoaded', () => {
+        resizeCanvas();
+        initChart();
+        readMatrixInputs();
+        readInitialDistInputs();
+        resetSimulation();
+        requestAnimationFrame(renderCanvas);
+    });
+</script>
