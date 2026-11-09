@@ -26,6 +26,11 @@ jobs:
       with:
         ruby-version: '3.2'
         bundler-cache: true
+    - name: Setup Python 🐍
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        cache: 'pip' # cache pip dependencies to speed up future runs
     - name: Install and Build 🔧
       run: |
         sudo apt-get update
