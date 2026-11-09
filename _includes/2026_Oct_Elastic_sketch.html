@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Elastic Sketch: Near-Optimal Configuration</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Reveal.js CDN CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/dracula.min.css">
+  <style>
+    .reveal h1, .reveal h2, .reveal h3 { text-transform: none; }
+    .highlight { color: #f1fa8c; font-weight: bold; }
+    .box { background: #44475a; padding: 15px; border-radius: 8px; margin-top: 15px; }
+    .flex-container { display: flex; justify-content: space-between; align-items: center; }
+    .col { flex: 1; padding: 10px; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Slide 1 -->
+      <section>
+        <h2>Elastic Sketch</h2>
+        <h3>Near-Optimal Configuration & Data Stream Summarization</h3>
+        <p><small>Based on Ben Mazziane, Vinay Kumar B. R. (IIT Bombay IEOR), & Marfoq (2026)</small></p>
+        <p style="margin-top: 40px; color: #bd93f9;"><strong>Department of IEOR, IIT Bombay</strong></p>
+      </section>
+
+      <!-- Slide 2 -->
+      <section>
+        <h2>The Stream Counting Problem</h2>
+        <div class="box">
+          <p><strong>Interactive Exercise:</strong> Track counts of incoming items on the fly!</p>
+          <p style="font-size: 1.5em; letter-spacing: 5px;">&#9651; &#9675; &#9633; &#9651; &#9733; &#9651; &#9675; &#9633; &#9651;</p>
+        </div>
+        <ul>
+          <li><strong>Massive Stream ($M \to \infty$):</strong> Items drawn from universe $\mathcal{I}$ of size $n_{\mathcal{I}}$.</li>
+          <li><strong>Strict Constraints:</strong> Sublinear memory $m \ll n_{\mathcal{I}}$, line-rate $O(1)$ per-item update time.</li>
+        </ul>
+      </section>
+
+      <!-- Slide 3 -->
+      <section>
+        <h2>Top-K Heavy Hitters & Memory Trade-Off</h2>
+        <ul>
+          <li>Real-world workloads are skewed (Zipfian): a few <em>"elephants"</em> cause most traffic.</li>
+          <li><strong>Counter-Based (Misra-Gries / Space Saving):</strong> Exact top-$k$ counts, but evictions are heavy; hard to handle deletions/turnstile streams.</li>
+          <li><strong>Sketch-Based:</strong> Compact hash arrays; constant time updates, but hash collisions create estimation errors.</li>
+        </ul>
+      </section>
+
+      <!-- Slide 4 -->
+      <section>
+        <h2>AMS & Count Sketch</h2>
+        <div class="flex-container">
+          <div class="col box">
+            <h4>AMS Sketch</h4>
+            <p>Uses sign hash $s_j(i) \in \{-1, +1\}$.</p>
+            <p><span class="highlight">Drawback:</span> Updates ALL $m$ counters per item ($O(m)$ time).</p>
+          </div>
+          <div class="col box" style="margin-left:15px;">
+            <h4>Count Sketch</h4>
+            <p>Hashing trick ($1$ bucket + $1$ sign per row); median estimator.</p>
+            <p><span class="highlight">Drawback:</span> Variance $\propto \|f\|_2^2$; elephants pollute mice.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 5 -->
+      <section>
+        <h2>Count-Min Sketch (CMS) & Its Flaw</h2>
+        <ul>
+          <li>$d \times w$ counter array with $d$ hash functions.</li>
+          <li>Query: $\hat{f}_i = \min_j C[j, h_j(i)]$. Fast $O(d)$ time, $O(1/\epsilon)$ space.</li>
+          <li class="box" style="color: #ff5555;">
+            <strong>The Elephant Pollution Flaw:</strong> Elephant flows hash to counters shared with mice, blowing up small item estimates by $\|f\|_1$.
+          </li>
+        </ul>
+      </section>
+
+      <!-- Slide 6 -->
+      <section>
+        <h2>Elastic Sketch Architecture</h2>
+        <div class="flex-container">
+          <div class="col box">
+            <h4>Heavy Part ($m_1$ buckets)</h4>
+            <p>Hash table tracking popular flows: <code>(key, V+, V-, flag)</code></p>
+          </div>
+          <div class="col box" style="margin-left:15px;">
+            <h4>Light Part ($m_2$ counters)</h4>
+            <p>Count-Min Sketch storing residual mouse flows.</p>
+          </div>
+        </div>
+        <p style="margin-top: 20px;"><em>Result: Elephants filtered into Heavy Part; Mice stay in Light Part!</em></p>
+      </section>
+
+      <!-- Slide 7 -->
+      <section>
+        <h2>Ostracism & Memory Interpolation</h2>
+        <ul>
+          <li><strong>Ostracism Voting:</strong> Matching item $\to V^+ ++$; Mismatch $\to V^- ++$.</li>
+          <li><strong>Eviction Threshold ($\lambda$):</strong> Evict if $V^- / V^+ \ge \lambda$.</li>
+          <li><strong>Interpolation Spectrum:</strong>
+            <ul>
+              <li>$\lambda \to \infty$: Never evicts (fixed cache).</li>
+              <li>$\lambda \to 0$: Always evicts (pure Count-Min Sketch).</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Slide 8 -->
+      <section>
+        <h2>Addressing Classical Sketch Drawbacks</h2>
+        <div class="box">
+          <p><strong>Tighter Error Bounds:</strong> Light Part error is bounded by $\epsilon \|f_L\|_1$ (residual stream) instead of $\epsilon \|f\|_1$.</p>
+        </div>
+        <ul>
+          <li><strong>Zero Error for Elephants:</strong> Heavy Part items with <code>flag = False</code> have exact counts.</li>
+          <li><strong>Memory Savings:</strong> Light Part uses small 8-bit counters because elephant counts are removed.</li>
+        </ul>
+      </section>
+
+      <!-- Slide 9 -->
+      <section>
+        <h2>Star-Shaped Markov Chain Model</h2>
+        <ul>
+          <li><strong>Stationary Stream Model:</strong> $R_t \sim p = (p_1, \dots, p_{n_{\mathcal{I}}})$.</li>
+          <li>Heavy bucket dynamics map to an <em>asymmetric random walk on a star graph</em>:
+            <ul>
+              <li><strong>Central Hub $0_b$:</strong> State when potential $U_b = \lambda V^+ - V^- = 0$.</li>
+              <li><strong>Radial Branches:</strong> One branch per item $i$ hashing to bucket $b$.</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Slide 10 -->
+      <section>
+        <h2>Recurrence vs. Transience</h2>
+        <p>Threshold parameter: $\lambda_i(\beta) = \frac{\mu_b - p_i}{p_i}$</p>
+        <div class="flex-container">
+          <div class="col box">
+            <h4>Recurrent ($\lambda < \lambda_b^{(1)}$)</h4>
+            <p>Elected items switch infinitely often $\to$ Heavy Part is unstable.</p>
+          </div>
+          <div class="col box" style="margin-left:15px;">
+            <h4>Transient ($\lambda > \lambda_b^{(1)}$)</h4>
+            <p>Most popular item becomes <strong>permanently elected</strong> with prob $a_{i,\beta}(\lambda)$.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 11 -->
+      <section>
+        <h2>Limiting Error & Configuration</h2>
+        <p>Limiting Expected Error ($d=1$):</p>
+        <p class="highlight">$\mathbb{E}[\overline{\text{Err}}_\infty] = \frac{1}{m_2} (1 - \mathbb{E}_\beta[g_\beta(\lambda)])$</p>
+        <ul>
+          <li>Optimal threshold: $\lambda^*(\beta) = O(n_{\mathcal{I}} / m_1)$ with high probability.</li>
+          <li>Search pruned to finite candidate set $\Lambda(m_1)$ ($\approx 20\text{--}30$ values), evaluable in $O(n_{\mathcal{I}})$ time!</li>
+        </ul>
+      </section>
+
+      <!-- Slide 12 -->
+      <section>
+        <h2>Workload Skewness ($\alpha$) Insights</h2>
+        <ul>
+          <li><strong>Higher Skewness ($\alpha \uparrow$, e.g., $1.2$ vs $0.8$):</strong>
+            <ul>
+              <li>A few dominant elephants take over the stream.</li>
+              <li>Optimal eviction threshold $\lambda^*$ <span class="highlight">decreases</span>.</li>
+              <li>Heavy Part memory fraction $\gamma^*$ <span class="highlight">increases</span> (e.g., $20\%$ vs $8\%$).</li>
+            </ul>
+          </li>
+          <li>Highly skewed traffic demands more Heavy Part memory and lower eviction resistance!</li>
+        </ul>
+      </section>
+
+      <!-- Slide 13 -->
+      <section>
+        <h2>Summary & Takeaways</h2>
+        <ol>
+          <li><strong>Hybrid Design:</strong> Elastic Sketch combines counter-based filtering with sketching via Ostracism.</li>
+          <li><strong>Collision Elimination:</strong> Elephant isolation drops estimation error from $\|f\|_1$ to $\|f_L\|_1$.</li>
+          <li><strong>Theoretical Grounding:</strong> Star-shaped Markov chains characterize exact limiting performance.</li>
+          <li><strong>Practical Tuning:</strong> Skewed workloads need larger Heavy Part allocations and lower $\lambda^*$.</li>
+        </ol>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Reveal.js CDN JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+  <script>
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      center: true,
+      hash: true,
+      transition: 'slide'
+    });
+  </script>
+</body>
+</html>
