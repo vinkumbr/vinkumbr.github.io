@@ -28,12 +28,10 @@ jobs:
         bundler-cache: true
     - name: Install and Build 🔧
       run: |
-        pip3 install --upgrade pip
-        pip3 install jupyter nbconvert
-        npm install -g mermaid.cli
-        JUPYTER_PATH=$(which jupyter || echo "$HOME/.local/bin/jupyter")
+        sudo apt-get update
+        sudo apt-get install -y jupyter python3-nbconvert
         export JEKYLL_ENV=production
-        PATH="$(dirname $JUPYTER_PATH):$PATH" bundle exec jekyll build
+        bundle exec jekyll build
     - name: Deploy 🚀
       if: github.event_name != 'pull_request'
       uses: JamesIves/github-pages-deploy-action@v4
