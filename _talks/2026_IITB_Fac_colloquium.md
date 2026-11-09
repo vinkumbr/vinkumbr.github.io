@@ -1,6 +1,6 @@
 ---
 layout: post
-date: 2026-11-04 13:00:00-14:00
+date: 2026-11-04 13:00:00-0400
 inline: true
 related_posts: false
 location: Dept. of IEOR, IIT Bombay
